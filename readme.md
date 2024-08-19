@@ -1,0 +1,1 @@
+This project uses the targets package as an R pipeline.  To run all of the targets, call `tar_make()`. To load the targets run `tar_load(target_name)` changing target_name to hte name of the target. You can also run `tar_load_everything()` to load all of the targets at once.  
