@@ -4,7 +4,7 @@ build_imbcr_trend <- function(x) {
     filter(str_detect(stratum, "^NE|^SD")) |>
     filter(stratum %in% c("NE-BCR18", "NE-BCR18-GG", "SD-BCR17", "SD-BCR17-BG", "SD-BCR17-FP")) |>
     rename(common_name = species)
-
+  tempt <- "ready_test"
   common_names <- imbcr_for_ks_ne |>
     count(common_name) |>
     pull(common_name)

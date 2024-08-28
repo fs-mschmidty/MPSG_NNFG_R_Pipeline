@@ -41,7 +41,12 @@ build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_
 
   taxon_problems <- find_problems |>
     filter(n > 1) |>
+<<<<<<< HEAD
     arrange(scientific_name) |>
+=======
+    pull(narrative)
+  arrange(scientific_name) |>
+>>>>>>> 16cd89ebca4ac821c03513ec1c6ef537e59ccd51
     select(-n)
 
   no_taxon_problems <- find_problems |>
