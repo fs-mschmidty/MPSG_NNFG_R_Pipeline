@@ -1,25 +1,25 @@
 build_output_eligible_lists <- function(x, output_path) {
-  wb<-createWorkbook()
+  wb <- createWorkbook()
 
-  output_name <- paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_Eligible_Species_Lists.xlsx", sep="_")
+  output_name <- paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_Eligible_Species_Lists.xlsx", sep = "_")
 
   addWorksheet(wb, "Species_Overviews_Eligible_List")
-  writeDataTable(wb, "Species_Overviews_Eligible_List", x$current_eligible_list, tableStyle="TableStyleLight1") 
+  writeDataTable(wb, "Species_Overviews_Eligible_List", x$current_eligible_list, tableStyle = "TableStyleLight1")
 
-  eligible_taxon_problems<-x$eligible_taxon_problems |>
+  eligible_taxon_problems <- x$eligible_taxon_problems |>
     mutate(
       final_scientific_name = NA,
       rationale_for_classification = NA,
       needs_overview = NA
     )
-  
+
   addWorksheet(wb, "Eligible_Need_Taxon_Review")
   writeDataTable(wb, "Eligible_Need_Taxon_Review", eligible_taxon_problems, tableStyle = "TableStyleLight1")
 
   addWorksheet(wb, "Comp_NatServe_SD&NE")
-  writeDataTable(wb,   "Comp_NatServe_SD&NE", x$ns_state_eligible, tableStyle = "TableStyleLight1")
+  writeDataTable(wb, "Comp_NatServe_SD&NE", x$ns_state_eligible, tableStyle = "TableStyleLight1")
 
-  species_to_add<-tibble(
+  species_to_add <- tibble(
     scientific_name = NA,
     common_name = NA,
     reason_for_addition = NA,
@@ -29,6 +29,6 @@ build_output_eligible_lists <- function(x, output_path) {
   addWorksheet(wb, "Species_to_Add")
   writeData(wb, "Species_to_Add", species_to_add)
 
-  saveWorkbook(wb, file.path(output_path, output_name), overwrite=T)
+  saveWorkbook(wb, file.path(output_path, output_name), overwrite = T)
   output_name
 }
