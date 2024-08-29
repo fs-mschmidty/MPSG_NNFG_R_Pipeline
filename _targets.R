@@ -19,7 +19,8 @@ tar_option_set(
     "janitor",
     "httr2",
     "natserv",
-    "openxlsx"
+    "openxlsx",
+    "glue"
   )
 )
 
@@ -31,14 +32,21 @@ tar_source()
 list(
   tar_target(natureserve_state_data, get_natureserve_state_data()),
   tar_target(output_natureserve_state_data, build_output_natureserve_state_data(natureserve_state_data, "T:\\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData\\NatureServe", "NNFG_natureserve_state_data")),
-  tar_target(t_drive_lists, build_t_drive_lists(file.path("T:/FS/NFS/PSO/MPSG/2024_NebraskaNFG/1_PreAssessment","Projects/SpeciesList_NNFG", "reproduce"))),
   tar_target(nnfg_gdb, "T:/FS/NFS/PSO/MPSG/2024_NebraskaNFG/1_PreAssessment/Data/NNFG_BaseData.gdb"),
   tar_target(nnfg_bd, st_read(nnfg_gdb, "NNFG_AdminBdy")),
   tar_target(nnfg_crs, st_crs(nnfg_bd)),
   tar_target(nnfg_aoa, st_read(nnfg_gdb, "NNFG_AOA")),
   tar_target(nnfg_ownership, st_read(nnfg_gdb, "NNFG_BasicOwnership")),
   tar_target(nnfg_fs_ownership, nnfg_ownership |> filter(OWNERCLASSIFICATION == "USDA FOREST SERVICE")),
-  tar_target(summary_sheet_file, "T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG\\20240429_NNFG_SpeciesList.xlsx"),
+
+  ## Imbcr data cleaning and build narratives
+  tar_target(imbcr_trend, read_excel("T:\\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData\\2023_IMBCR_USFSdata\\Reg 2 grasslands estimates_8-8-24.xlsx", sheet = "trend") |> clean_names()),
+  tar_target(imbcr_trend_bcr18, read_excel("T:\\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData\\2023_IMBCR_USFSdata\\IMBCR BCR18 trends.xlsx") |> clean_names()),
+  tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend, imbcr_trend_bcr18)),
+  tar_target(imbcr_trend_narratives_w_taxonomy, build_imbcr_taxonomy(imbcr_trend_narratives)),
+
+  ## Build Occurrence Lists for eligible list
+  tar_target(t_drive_lists, build_t_drive_lists(file.path("T:/FS/NFS/PSO/MPSG/2024_NebraskaNFG/1_PreAssessment", "Projects/SpeciesList_NNFG", "reproduce"))),
   tar_target(sd_nhp_data, build_nhp_data("T:/FS/NFS/PSO/MPSG/Data/ExternalData/SD_NHP/20240123_SD_Natural_HeritagePrgm.gdb", "Natural_Heritage_Data_Restricted_Region2_FS_2024_01", nnfg_crs, nnfg_fs_ownership)),
   tar_target(ne_state_list, build_ne_state_list("T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG\\data\\state_lists\\nebraska\\Tier 1 and Tier 2 Species by Taxa plus Ranks_recieved_08262024.xlsx")),
   tar_target(sd_state_list, build_sd_state_list("T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG\\data\\state_lists\\south_dakota\\draft_SGCN_list_for_comment_July_2024.xlsx")),
@@ -47,6 +55,5 @@ list(
   tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output"))
   # tar_target(summary_sheet, build_summary_sheet(summary_sheet_file))
 
-  # tar_target(imbcr_trend, build_imbcr_trend("T:\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData\\2023_IMBCR_USFSdata\\Reg 2 grasslands estimates_8-8-24.csv"))
   # tar_quarto(reports, "qmd/")
 )
