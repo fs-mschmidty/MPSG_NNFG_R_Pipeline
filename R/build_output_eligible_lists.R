@@ -1,4 +1,4 @@
-build_output_eligible_lists <- function(x, output_path) {
+build_output_eligible_lists <- function(x, output_path, transient_birds) {
   wb <- createWorkbook()
 
   output_name <- paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_Eligible_Species_Lists.xlsx", sep = "_")
@@ -29,6 +29,19 @@ build_output_eligible_lists <- function(x, output_path) {
   addWorksheet(wb, "Species_to_Add")
   writeData(wb, "Species_to_Add", species_to_add)
 
+  tb <- transient_birds |>
+    distinct() |>
+    rowwise() |>
+    mutate(should_remain_eligible = if_any(.cols = c("breeding_on_unit", "wintering_on_unit", "resident_on_unit"), isTRUE)) |>
+    ungroup()
+
+
+  addWorksheet(wb, "Transient_Bird_Analysis")
+  writeDataTable(wb, "Transient_Bird_Analysis", tb, tableStyle = "TableStyleLight1")
+
   saveWorkbook(wb, file.path(output_path, output_name), overwrite = T)
+  saveWorkbook(wb, file.path("T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG", output_name), overwrite = T)
+
+  wb_fixes <- creeateWorkbook()
   output_name
 }

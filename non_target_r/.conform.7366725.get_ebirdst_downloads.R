@@ -83,7 +83,7 @@ ggplot() +
 aoa <- tar_read(nnfg_aoa) |>
   st_transform(4326)
 
-bird <- load_ranges(eligible_birds_sci_names[1], resolution = "27k")
+bird <- load_ranges(eligible_birds_sci_names[5], resolution = "27k")
 
 v_ranges_overlap <- bird |>
   st_intersection(aoa) |>
@@ -92,4 +92,3 @@ v_ranges_overlap <- bird |>
 
 breeding_status <- ("breeding" %in% v_ranges_overlap)
 wintering_status <- ("nonbreeding" %in% v_ranges_overlap)
-migration_status <- (TRUE %in% str_detect(v_ranges_overlap, "migration"))
