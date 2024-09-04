@@ -21,7 +21,8 @@ tar_option_set(
     "natserv",
     "openxlsx",
     "glue",
-    "ebirdst"
+    "ebirdst",
+    "fs"
   )
 )
 
@@ -54,7 +55,8 @@ list(
   tar_target(r2_ss_list, build_r2_ss_list("data/fs/2023_R2_RegionalForestersSensitiveSppList.xlsx")),
   tar_target(eligible_lists, build_eligible_list(natureserve_state_data, t_drive_lists, ne_state_list, sd_state_list, r2_ss_list)),
   tar_target(transient_birds, build_transient_birds(eligible_lists, nnfg_aoa)),
-  tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output", transient_birds))
+  tar_target(native_known_need_check, build_native_known_need_check(eligible_lists)),
+  tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output", transient_birds, native_known_need_check))
   # tar_target(summary_sheet, build_summary_sheet(summary_sheet_file))
 
   # tar_quarto(reports, "qmd/")

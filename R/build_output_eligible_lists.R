@@ -1,7 +1,9 @@
-build_output_eligible_lists <- function(x, output_path, transient_birds) {
+build_output_eligible_lists <- function(x, output_path, transient_birds, n_n_check) {
   wb <- createWorkbook()
-
-  output_name <- paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_Eligible_Species_Lists.xlsx", sep = "_")
+  t_drive_path <- "T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG"
+  output_eligible_list <- paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_Eligible_Species_Lists.xlsx", sep = "_")
+  species_list_sp <- file.path(Sys.getenv("USERPROFILE"), "Mountain Planning Service Group - SCC Library", "03_Nebraska NFG", "Species List", fsep = "\\")
+  output_need_edits <- paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_Species_List_Edit_Tables.xlsx", sep = "_")
 
   addWorksheet(wb, "Species_Overviews_Eligible_List")
   writeDataTable(wb, "Species_Overviews_Eligible_List", x$current_eligible_list, tableStyle = "TableStyleLight1")
@@ -13,11 +15,20 @@ build_output_eligible_lists <- function(x, output_path, transient_birds) {
       needs_overview = NA
     )
 
-  addWorksheet(wb, "Eligible_Need_Taxon_Review")
-  writeDataTable(wb, "Eligible_Need_Taxon_Review", eligible_taxon_problems, tableStyle = "TableStyleLight1")
 
   addWorksheet(wb, "Comp_NatServe_SD&NE")
   writeDataTable(wb, "Comp_NatServe_SD&NE", x$ns_state_eligible, tableStyle = "TableStyleLight1")
+
+
+
+  saveWorkbook(wb, file.path(output_path, paste("DO_NOT_EDIT", output_eligible_list, sep = "_")), overwrite = T)
+  saveWorkbook(wb, file.path(t_drive_path, paste("DO_NOT_EDIT", output_eligible_list, sep = "_")), overwrite = T)
+  saveWorkbook(wb, file.path(species_list_sp, paste("DO_NOT_EDIT", output_eligible_list, sep = "_")), overwrite = T)
+
+  wb_fixes <- createWorkbook()
+
+  addWorksheet(wb_fixes, "Eligible_Need_Taxon_Review")
+  writeDataTable(wb_fixes, "Eligible_Need_Taxon_Review", eligible_taxon_problems, tableStyle = "TableStyleLight1")
 
   species_to_add <- tibble(
     scientific_name = NA,
@@ -26,8 +37,8 @@ build_output_eligible_lists <- function(x, output_path, transient_birds) {
     source_for_native_and_known_to_occur = NA,
     taxon_id_from_comprehensiv_list = NA
   )
-  addWorksheet(wb, "Species_to_Add")
-  writeData(wb, "Species_to_Add", species_to_add)
+  addWorksheet(wb_fixes, "Species_to_Add")
+  writeData(wb_fixes, "Species_to_Add", species_to_add)
 
   tb <- transient_birds |>
     distinct() |>
@@ -36,12 +47,16 @@ build_output_eligible_lists <- function(x, output_path, transient_birds) {
     ungroup()
 
 
-  addWorksheet(wb, "Transient_Bird_Analysis")
-  writeDataTable(wb, "Transient_Bird_Analysis", tb, tableStyle = "TableStyleLight1")
+  addWorksheet(wb_fixes, "Transient_Bird_Analysis")
+  writeDataTable(wb_fixes, "Transient_Bird_Analysis", tb, tableStyle = "TableStyleLight1")
 
-  saveWorkbook(wb, file.path(output_path, output_name), overwrite = T)
-  saveWorkbook(wb, file.path("T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG", output_name), overwrite = T)
+  addWorksheet(wb_fixes, "Native_Known_Verify")
+  writeDataTable(wb_fixes, "Native_Known_Verify", n_n_check, tableStyle = "TableStyleLight1")
 
-  wb_fixes <- creeateWorkbook()
-  output_name
+  saveWorkbook(wb_fixes, file.path(output_path, paste("OPEN_TO_EDITING", output_need_edits, sep = "_")), overwrite = T)
+  saveWorkbook(wb_fixes, file.path(t_drive_path, paste("OPEN_TO_EDITING", output_need_edits, sep = "_")), overwrite = T)
+  saveWorkbook(wb_fixes, file.path(species_list_sp, paste("OPEN_TO_EDITING", output_need_edits, sep = "_")), overwrite = T)
+
+
+  output_eligible_list
 }
