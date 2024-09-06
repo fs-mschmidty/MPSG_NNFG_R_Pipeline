@@ -63,8 +63,10 @@ list(
   ## IUCN available spatial data analysis and make internal shapes
   tar_target(mammal_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "MAMMALS.shp"), eligible_lists, nnfg_bd)),
   tar_target(amphibian1_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "AMPHIBIANS_PART1.shp"), eligible_lists, nnfg_bd)),
-  tar_target(amphibian2_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "AMPHIBIANS_PART2.shp"), eligible_lists, nnfg_bd))
-
+  tar_target(amphibian2_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "AMPHIBIANS_PART2.shp"), eligible_lists, nnfg_bd)),
+  tar_target(reptiles1_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "REPTILES_PART1.shp"), eligible_lists, nnfg_bd)),
+  tar_target(reptiles2_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "REPTILES_PART2.shp"), eligible_lists, nnfg_bd)),
+  tar_target(all_iucn_map, build_all_iucn_map(mammal_iucn_map_list, amphibian2_iucn_map_list, amphibian1_iucn_map_list, reptiles1_iucn_map_list, reptiles2_iucn_map_list))
   # tar_target(summary_sheet, build_summary_sheet(summary_sheet_file))
 
   # tar_quarto(reports, "qmd/")

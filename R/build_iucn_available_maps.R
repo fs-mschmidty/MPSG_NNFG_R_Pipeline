@@ -25,7 +25,8 @@ build_iucn_available_maps <- function(path_to_shp, eligible_lists, nnfg_bd) {
   available_maps <- el_taxon_ids |>
     left_join(iucn_taxon_id, by = "taxon_id") |>
     filter(!is.na(sci_name)) |>
-    rename(query_name = sci_name)
+    rename(query_name = sci_name) |>
+    mutate(file_path = path_to_shp)
 
   available_maps
 }
