@@ -1,2 +1,4 @@
 /tmp
 .Renviron
+/output/bien_test/
+.conform*.R

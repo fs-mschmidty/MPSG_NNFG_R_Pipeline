@@ -4,7 +4,11 @@ library(targets)
 library(rgbif)
 library(sf)
 
+options("scipen"=100, "digits"=4)
+
 el_list <- tar_read(eligible_lists)$current_eligible_list
+t_ids<-el_list |>
+  pull(taxon_id)
 
 scientific_names <- el_list |>
   pull(scientific_name)
@@ -37,7 +41,17 @@ t_path <- file.path("T:/FS/NFS/PSO/MPSG/2024_NebraskaNFG/1_PreAssessment", "Proj
 gbif_rdat <- file.path(t_path, "reproduce", "gbif.RData")
 attach(gbif_rdat)
 
-sf_gbif_unit
+sf_gbif_unit |>
+  mutate(taxon_id = acceptedTaxonKey) |>
+  filter(taxon_id %in% t_ids)  |> 
+  mutate(gbif_id = as.numeric(gbifID)) |> 
+  mutate(gbif_occ_url = paste("https://www.gbif.org/occurrence", gbifID, sep="/")) |>
+  select(gbif_id)
+
+eligible_occ_gbif |>
+  head(40) |> 
+  select(gbif_occ_url)  
+
 
 el_minimal <- el_list |>
   select(taxon_id, scientific_name)
@@ -89,9 +103,9 @@ idb_occ_synonyms <- idb_list |>
 detach()
 
 
-# eligible_species<-eligible_GBIF |>
-#   left_join(unit_eligible, by=c("GBIF_taxonID"="taxonKey")) |>
-#   mutate(gbif_occ_url = paste("https://www.gbif.org/occurrence", gbif_ID, sep="/"))
+eligible_species<-eligible_GBIF |>
+  # left_join(unit_eligible, by=c("GBIF_taxonID"="taxonKey")) |>
+  mutate(gbif_occ_url = paste("https://www.gbif.org/occurrence", gbif_ID, sep="/"))
 #
 # eligible_species |>
 #   group_by(taxon_id) |>
