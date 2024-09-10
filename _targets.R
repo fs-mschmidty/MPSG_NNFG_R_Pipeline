@@ -1,4 +1,4 @@
-# fCreated by use_targets().
+# rfCreated by use_targets().
 # Follow the comments below to fill in this target script.
 # Then follow the manual to check and run the pipeline:
 #   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
@@ -30,6 +30,9 @@ tar_option_set(
 tar_source()
 # tar_source("other_functions.R") # Source other scripts as needed.
 
+t_path_sp_list <- file.path("T:/FS/NFS/PSO/MPSG/2024_NebraskaNFG", "1_PreAssessment/Projects/SpeciesList_NNFG")
+t_path_sp_list_rp <- file.path(t_path_sp_list, "reproduce")
+
 # Replace the target list below with your own:
 list(
   tar_target(natureserve_state_data, get_natureserve_state_data()),
@@ -41,6 +44,7 @@ list(
   tar_target(nnfg_aoa, st_read(nnfg_gdb, "NNFG_AOA")),
   tar_target(nnfg_ownership, st_read(nnfg_gdb, "NNFG_BasicOwnership")),
   tar_target(nnfg_fs_ownership, nnfg_ownership |> filter(OWNERCLASSIFICATION == "USDA FOREST SERVICE")),
+
 
   ## Imbcr data cleaning and build narratives
   tar_target(imbcr_trend, read_excel("T:\\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData\\2023_IMBCR_USFSdata\\Reg 2 grasslands estimates_8-8-24.xlsx", sheet = "trend") |> clean_names()),
@@ -58,7 +62,23 @@ list(
   tar_target(eligible_lists, build_eligible_list(natureserve_state_data, t_drive_lists, ne_state_list, sd_state_list, r2_ss_list)),
   tar_target(transient_birds, build_transient_birds(eligible_lists, nnfg_aoa)),
   tar_target(native_known_need_check, build_native_known_need_check(eligible_lists)),
-  tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output", transient_birds, native_known_need_check)),
+  # tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output", transient_birds, native_known_need_check)),
+
+  ## Spatial data
+  # tar_target(nhp_data, build_nhp_spatial_data(fp, "state_nhp.RData")),
+  tar_target(idb_spatial_data, build_idb_spatial_data(t_path_sp_list_rp, "idigbio.RData")),
+  tar_target(idb_spatial_eligible, build_spatial_eligible_and_unit(idb_spatial_data, nnfg_fs_ownership, eligible_lists$current_eligible_list)),
+  tar_target(seinet_spatial_data, build_seinet_spatial_data(t_path_sp_list_rp, "seinet.RData")),
+  tar_target(seinet_spatial_eligible, build_spatial_eligible_and_unit(seinet_spatial_data, nnfg_fs_ownership, eligible_lists$current_eligible_list)),
+  tar_target(gbif_spatial_data, build_gbif_spatial_data(t_path_sp_list_rp, "gbif.RData", eligible_lists$current_eligible_list)),
+  tar_target(gbif_spatial_eligible, build_spatial_eligible_and_unit(gbif_spatial_data, nnfg_fs_ownership, eligible_lists$current_eligible_list)),
+  tar_target(imbcr_spatial_data, build_imbcr_spatial_data(t_path_sp_list_rp, "imbcr.RData")),
+  tar_target(imbcr_spatial_eligible, build_spatial_eligible_and_unit(imbcr_spatial_data, nnfg_fs_ownership, eligible_lists$current_eligible_list)),
+  tar_target(output_eligible_idb_spatial_data, output_eligible_spatial_data(idb_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "idb")),
+  tar_target(output_eligible_seinet_spatial_data, output_eligible_spatial_data(seinet_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "seinet")),
+  tar_target(output_eligible_gbif_spatial_data, output_eligible_spatial_data(gbif_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "gbif")),
+  tar_target(output_eligible_imbcr_spatial_data, output_eligible_spatial_data(imbcr_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "imbcr")),
+
 
   ## IUCN available spatial data analysis and make internal shapes
   tar_target(mammal_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "MAMMALS.shp"), eligible_lists, nnfg_bd)),

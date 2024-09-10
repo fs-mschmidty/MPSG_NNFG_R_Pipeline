@@ -26,7 +26,7 @@ eligible_birds_sci_names <- eligible_birds_w_dist |>
 ## this downloads all of the bird distribution models from cornel.
 lapply(eligible_birds_sci_names, ebirdst_download_status, download_ranges = T, pattern = "range_smooth_27km|range_smooth_9km")
 
-test <- load_ranges(eligible_birds_sci_names[5], resolution = "9k") |>
+test <- load_ranges("Aechmophorus clarkii", resolution = "9k") |>
   mutate(
     season = case_when(
       season == "breeding" ~ "Breeding",
@@ -93,3 +93,6 @@ v_ranges_overlap <- bird |>
 breeding_status <- ("breeding" %in% v_ranges_overlap)
 wintering_status <- ("nonbreeding" %in% v_ranges_overlap)
 migration_status <- (TRUE %in% str_detect(v_ranges_overlap, "migration"))
+
+
+path <- "T:\\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData\\eBird\\2022\\clagre\\ranges"
