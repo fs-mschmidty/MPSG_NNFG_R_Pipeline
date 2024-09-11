@@ -75,7 +75,7 @@ load(file.path(t_path, "reproduce", "spp_list.RData"))
 # State Heritage Program ----
 load(file.path(t_path, "reproduce", "state_nhp.RData"))
 
-sf_nenhp_unit
+sf_nenhp
 
 arcgisbinding::arc.write(
   path = file.path(pre_gdb, "species", "SDNHP_all"),
@@ -296,6 +296,10 @@ arcgisbinding::arc.write(
 
 # IMBCR ----
 load(file.path(t_path, "reproduce", "imbcr.RData"))
+
+sf_imbcr |>
+  head(100) |>
+  View()
 
 arcgisbinding::arc.write(
   path = file.path(pre_gdb, "species", "IMBCR_all"),

@@ -10,7 +10,7 @@ library(extrafont)
 loadfonts()
 sf_use_s2(FALSE)
 
-
+t_path <- file.path("T:/FS/NFS/PSO/MPSG/Data/ExternalData/IUCN")
 
 
 t_mammals <- mammals |>
@@ -38,9 +38,19 @@ map <- ter_mammal_maps |>
   sample_n(1) |>
   pull(query_name)
 
-st_layers(file.path(t_path, "MAMMALS_TERRESTRIAL_ONLY.shp"))
+st_layers(file.path(t_path, "MAMMALS.shp"))
 
-test <- st_read(file.path(t_path, "MAMMALS_TERRESTRIAL_ONLY.shp"), query = glue("SELECT * FROM MAMMALS_TERRESTRIAL_ONLY WHERE sci_name =  '{map}'"))
+ad_bd<-tar_read(nnfg_aoa)
+
+wkt<-ad_bd |>
+  st_transform(4326) |> 
+  st_geometry() |>
+  st_as_text()
+
+test <- st_read(file.path(t_path, "MAMMALS.shp"), query = glue("SELECT * FROM MAMMALS WHERE sci_name =  '{map}'"))
+Sys.time()
+test2 <-st_read(file.path(t_path, "MAMMALS.shp"), wkt_filter=wkt)
+Sys.time()
 
 states <- ne_states(country = c("United States of America", "Canada", "Mexico")) |>
   st_as_sf() |>
