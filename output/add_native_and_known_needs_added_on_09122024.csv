@@ -1,0 +1,19 @@
+taxon_id,scientific_name,common_name,NENHP_nObs,NENHP_minYear,NENHP_maxYear,SDNHP_nObs,SDNHP_minYear,SDNHP_maxYear,SEI_nObs,SEI_minYear,SEI_maxYear,GBIF_nObs,GBIF_minYear,GBIF_maxYear,iDB_nObs,iDB_minYear,iDB_maxYear,IMBCR_nObs,IMBCR_minYear,IMBCR_maxYear,sum_nObs,max_overall_year,kingdom,phylum,class,order,family,Is the Species Native and Known to Occur,Justification for 'no',Supporting information (if needed) and BASI
+5229743,Contopus cooperi,Olive-sided Flycatcher,0,NA,NA,0,NA,NA,0,NA,NA,3,2020,2020,0,NA,NA,0,NA,NA,3,2020,Animalia,Chordata,Aves,Passeriformes,Tyrannidae,NA,NA,NA
+5229498,Gymnorhinus cyanocephalus,Pinyon Jay,1,2006,2006,0,NA,NA,0,NA,NA,2,2017,2021,0,NA,NA,1,2012,2012,4,2021,Animalia,Chordata,Aves,Passeriformes,Corvidae,NA,NA,NA
+2439566,Perognathus flavus,Silky Pocket Mouse,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,1,Inf,-Inf,0,NA,NA,1,-Inf,Animalia,Chordata,Mammalia,Rodentia,Heteromyidae,NA,NA,NA
+2436108,Sorex nanus,Dwarf Shrew,1,2004,2004,1,1970,1970,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,2,2004,Animalia,Chordata,Mammalia,Soricomorpha,Soricidae,NA,NA,NA
+1911246,Coenonympha california,Common Ringlet,1,2000,2000,0,NA,NA,0,NA,NA,1,Inf,-Inf,0,NA,NA,0,NA,NA,2,2000,Animalia,Arthropoda,Insecta,Lepidoptera,Nymphalidae,NA,NA,NA
+11776315,Lon taxiles,Taxiles Skipper,2,2020,2020,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,2,2020,Animalia,Arthropoda,Insecta,Lepidoptera,Hesperiidae,NA,NA,NA
+5714788,Satyrium liparops,Striped Hairstreak,1,2001,2001,0,NA,NA,0,NA,NA,3,Inf,-Inf,0,NA,NA,0,NA,NA,4,2001,Animalia,Arthropoda,Insecta,Lepidoptera,Lycaenidae,NA,NA,NA
+1865345,Hemileuca hera,Hera Sheepmoth,2,2014,2019,0,NA,NA,0,NA,NA,3,Inf,-Inf,0,NA,NA,0,NA,NA,5,2019,Animalia,Arthropoda,Insecta,Lepidoptera,Saturniidae,NA,NA,NA
+2856745,Allium cernuum,Nodding Onion,3,1889,1991,0,NA,NA,1,1991,1991,0,NA,NA,1,1991,1991,0,NA,NA,5,1991,Plantae,Tracheophyta,Liliopsida,Asparagales,Amaryllidaceae,NA,NA,NA
+3043348,Boechera grahamii,Graham's Rockcress,3,1991,2015,0,NA,NA,1,1974,1974,0,NA,NA,1,1974,1974,0,NA,NA,5,2015,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,NA,NA,NA
+3033734,Delphinium nuttallianum,Nuttall's Larkspur,6,1898,1996,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,6,1996,Plantae,Tracheophyta,Magnoliopsida,Ranunculales,Ranunculaceae,NA,NA,NA
+3048294,Erysimum inconspicuum,Small-flower Prairie Wallflower,1,1911,1911,0,NA,NA,3,2004,2005,0,NA,NA,0,NA,NA,0,NA,NA,4,2005,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,NA,NA,NA
+5367733,Potentilla hippiana,Horse Cinquefoil,6,1889,2016,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,6,2016,Plantae,Tracheophyta,Magnoliopsida,Rosales,Rosaceae,NA,NA,NA
+5334184,Pterospora andromedea,Giant Pinedrops,4,1991,2008,0,NA,NA,2,2006,2008,0,NA,NA,0,NA,NA,0,NA,NA,6,2008,Plantae,Tracheophyta,Magnoliopsida,Ericales,Ericaceae,NA,NA,NA
+5373055,Salix bebbiana,Bebb's Willow,3,1889,1940,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,0,NA,NA,3,1940,Plantae,Tracheophyta,Magnoliopsida,Malpighiales,Salicaceae,NA,NA,NA
+7225656,Stanleya pinnata var. pinnata,Desert Prince's-plume,0,NA,NA,0,NA,NA,5,1991,2004,0,NA,NA,1,1991,1991,0,NA,NA,6,2004,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,NA,NA,NA
+1699015,Melanoplus punctulatus,Pine Tree Spur-throat Grasshopper,1,2020,2020,0,NA,NA,0,NA,NA,1,Inf,-Inf,0,NA,NA,0,NA,NA,2,2020,Animalia,Arthropoda,Insecta,Orthoptera,Acrididae,NA,NA,NA
+5385499,Antennaria rosea,Rosy Pussytoes,0,NA,NA,0,NA,NA,4,2004,2005,0,NA,NA,0,NA,NA,0,NA,NA,4,2005,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,NA,NA,NA

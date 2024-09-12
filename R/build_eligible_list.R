@@ -14,9 +14,9 @@ build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_
     select(taxon_id, r2_ss_list)
 
   ns_state_eligible <- state_lists$unit_nature_serve_list |>
-    left_join(ne_swap_eligible, by = "taxon_id") |>
-    left_join(sd_te_eligible, by = "taxon_id") |>
-    left_join(rfss_ss, by = "taxon_id") |>
+    full_join(ne_swap_eligible, by = "taxon_id") |>
+    full_join(sd_te_eligible, by = "taxon_id") |>
+    full_join(rfss_ss, by = "taxon_id") |>
     rename(rounded_gRank = nature_serve_rounded_global_rank) |>
     filter(
       str_detect(rounded_gRank, "[GT][123]") |
@@ -53,14 +53,16 @@ build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_
     left_join(select(occ_lists$sdnhp_list, -scientific_name), by = "taxon_id") |>
     left_join(select(occ_lists$seinet_list, -scientific_name), by = "taxon_id") |>
     left_join(select(occ_lists$gbif_list, -scientific_name), by = "taxon_id") |>
-    left_join(select(occ_lists$idb_list, -scientific_name), by = "taxon_id")
+    left_join(select(occ_lists$idb_list, -scientific_name), by = "taxon_id") |>
+    left_join(select(occ_lists$imbcr_list, -scientific_name), by = "taxon_id")
 
 
   curr_eligible_list <- joined_lists |>
     mutate_at(vars(matches("nObs")), .funs = ~ replace_na(.x, 0)) |>
-    mutate(sum_nObs = SDNHP_nObs + NENHP_nObs + SEI_nObs + GBIF_nObs + iDB_nObs) |>
+    mutate(sum_nObs = SDNHP_nObs + NENHP_nObs + SEI_nObs + GBIF_nObs + iDB_nObs + IMBCR_nObs) |>
     filter(sum_nObs > 0) |>
-    select(taxon_id:nebraska_swap, NENHP_nObs:sum_nObs, kingdom:form)
+    select(taxon_id:nebraska_swap, NENHP_nObs:sum_nObs, kingdom:form) |>
+    distinct()
 
   eligible_lists <- list()
 

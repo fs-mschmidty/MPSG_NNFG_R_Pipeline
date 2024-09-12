@@ -54,5 +54,7 @@ test <- ter_habs[[1]][[1]][glue("{all_hab_names[1]}Habitat")]
 
 test$terrestrialHabitat$terrestrialHabitatDescEn
 test[[1]][[2]]
+
 lapply(ter_habs, function(x) print(x))
-lapply(function(x) print(x[glue("{all_hab_names[1]}Habitat")][glue("{all_hab_names[1]}HabitatDescEn")]))
+
+lapply(ter_habs, function(x) print(x[glue("{all_hab_names[1]}Habitat")][glue("{all_hab_names[1]}HabitatDescEn")]))

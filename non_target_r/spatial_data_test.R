@@ -1,4 +1,5 @@
 library(sf)
+library(mapview)
 library(tidyverse)
 library(targets)
 
@@ -34,3 +35,13 @@ gbif_short <- c(
 
 gbif_cl_all <- eligible_gbif |>
   select(all_of(gbif_short))
+
+seinet <- tar_read(seinet_spatial_eligible)
+names(seinet)
+
+fs <- tar_read(nnfg_bd)
+
+c_plant <- seinet$eligible |>
+  filter(taxon_id == "2873769")
+
+mapview(list(fs, c_plant))
