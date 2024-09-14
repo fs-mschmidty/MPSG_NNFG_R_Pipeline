@@ -1,5 +1,26 @@
-build_all_iucn_map <- function(mammals, amphibians1, amphibians2, reptiles1, reptiles2) {
-  all_maps <- bind_rows(mammals, amphibians1, amphibians2, reptiles1, reptiles2)
+build_all_iucn_map <- function(
+    mammals,
+    amphibians1,
+    amphibians2,
+    reptiles1,
+    reptiles2,
+    fwfish1,
+    fwfish2,
+    molluscs,
+    odonata,
+    crayfish) {
+  all_maps <- bind_rows(
+    mammals,
+    amphibians1,
+    amphibians2,
+    reptiles1,
+    reptiles2,
+    fwfish1,
+    fwfish2,
+    molluscs,
+    odonata,
+    crayfish
+  )
 
   t_ids <- all_maps |>
     select(taxon_id, query_name)

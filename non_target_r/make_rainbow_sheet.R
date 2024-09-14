@@ -48,7 +48,6 @@ nn_df <- raw_nn_df |>
   select(taxon_id, specialist_verified_max_year, `Is the Species Native and Known to Occur`, basi_rat = 28)
 
 rainbow_sheet <- el_list |>
-  left_join(tb_df, by = "taxon_id") |>
   left_join(nn_df, by = "taxon_id") |>
   mutate(
     max_overall_year = ifelse(is.na(specialist_verified_max_year), max_overall_year, specialist_verified_max_year),
@@ -98,4 +97,4 @@ writeDataTable(wb, "SCC Eligible Matrix", rainbow_sheet, tableStyle = "TableStyl
 addWorksheet(wb, "Non Known - within 1km")
 writeDataTable(wb, "Non Known - within 1km", within_buff, tableStyle = "TableStyleLight1")
 
-saveWorkbook(wb, file.path(fp, paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_SCC_Matrix.xlsx", sep = "_")), overwrite = T)
+saveWorkbook(wb, file.path(fp, paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_SCC_Species_Evaluation_Matrix.xlsx", sep = "_")), overwrite = T)
