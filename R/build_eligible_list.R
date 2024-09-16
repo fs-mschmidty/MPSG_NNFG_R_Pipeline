@@ -1,4 +1,4 @@
-build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_list, r2_ss_list) {
+build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_list, r2_ss_list, native_and_known) {
   ne_swap_eligible <- ne_state_list |>
     mutate(
       nebraska_swap = status_r
@@ -55,6 +55,7 @@ build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_
     left_join(select(occ_lists$gbif_list, -scientific_name), by = "taxon_id") |>
     left_join(select(occ_lists$idb_list, -scientific_name), by = "taxon_id") |>
     left_join(select(occ_lists$imbcr_list, -scientific_name), by = "taxon_id")
+
 
 
   curr_eligible_list <- joined_lists |>

@@ -32,7 +32,12 @@ build_all_iucn_map <- function(
     mutate(layer_n = case_when(
       str_detect(file_path, "AMPHIBIANS") ~ "AMPHIBIANS_PART2",
       str_detect(file_path, "MAMMALS") ~ "MAMMALS",
-      str_detect(file_path, "REPTILES_PART1") ~ "REPTILES_PART1"
+      str_detect(file_path, "REPTILES_PART1") ~ "REPTILES_PART1",
+      str_detect(file_path, "FW_FISH_PART1") ~ "FW_FISH_PART1",
+      str_detect(file_path, "FW_FISH_PART2") ~ "FW_FISH_PART2",
+      str_detect(file_path, "FW_CRAYFISH") ~ "FW_CRAYFISH",
+      str_detect(file_path, "FW_MOLLUSCS") ~ "FW_MOLLUSCS",
+      str_detect(file_path, "FW_ODONATA") ~ "FW_ODONATA"
     ))
 
   test_f <- function(file_path, where_in, layer_n) {

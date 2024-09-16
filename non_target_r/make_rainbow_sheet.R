@@ -63,6 +63,8 @@ rainbow_sheet <- el_list |>
     "Most Recent Occurrence Record" = max_overall_year,
     "What is the rationale and supporting BASI for recommending that an observation does not meet the requirements of native to, and known to occur in the plan area?" = basi_rat
   )
+
+
 el_t_ids <- el_list |>
   select(taxon_id)
 
@@ -98,3 +100,41 @@ addWorksheet(wb, "Non Known - within 1km")
 writeDataTable(wb, "Non Known - within 1km", within_buff, tableStyle = "TableStyleLight1")
 
 saveWorkbook(wb, file.path(fp, paste(str_replace_all(Sys.Date(), "-", ""), "NNFG_SCC_Species_Evaluation_Matrix.xlsx", sep = "_")), overwrite = T)
+
+add_to_rainbow <- tar_read(output_dne_eligible_lists) |>
+  filter(!str_detect(usfws_status, "Threatened|Endangered") | is.na(usfws_status)) |>
+  rowwise() |>
+  mutate(
+    max_overall_year = max(c_across(contains("maxYear")), na.rm = T)
+  ) |>
+  ungroup() |>
+  select(
+    taxon_id,
+    scientific_name,
+    common_name,
+    kingdom:genus,
+    "NatServ Global Rank" = rounded_gRank,
+    "NE State Rank" = NE_sRank,
+    "SD State Rank" = SD_sRank,
+    "FWS ESA Status" = usfws_status,
+    "Region 2 Sensitive Species Status" = r2_ss_list,
+    "SD State Status" = sd_te,
+    "NE State Status" = nebraska_swap,
+    "Total Obs all Occurrence DBs" = sum_nObs,
+    "Most Recent Occurrence Record" = max_overall_year,
+    `Is the Species Native and Known to Occur`,
+    `What is the rationale and supporting BASI for recommending that an observation does not meet the requirements of native to, and known to occur in the plan area?`
+  )
+
+
+
+
+
+write_csv(add_to_rainbow, "output/add_to_rainbow_09162024.csv")
+
+wb2 <- createWorkbook()
+
+addWorksheet(wb2, "to_rewrite_rainbow")
+writeData(wb2, "to_rewrite_rainbow", add_to_rainbow)
+
+saveWorkbook(wb2, "output/add_to_rainbow_09162024.xlsx", overwrite = T)

@@ -1,38 +1,21 @@
 build_output_eligible_lists <- function(x, output_path, transient_birds, n_n_check) {
-  wb <- createWorkbook()
-  date_string <- str_replace_all(Sys.Date(), "-", "")
-  t_drive_path <- "T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG"
-  output_eligible_list <- paste(date_string, "NNFG_Eligible_Species_Lists.xlsx", sep = "_")
-  species_list_sp <- file.path(Sys.getenv("USERPROFILE"), "USDA", "Mountain Planning Service Group - SCC Library", "03_Nebraska NFG", "Species List", fsep = "\\")
-  output_need_edits <- paste(date_string, "NNFG_Species_List_Edit_Tables.xlsx", sep = "_")
-
   file_path_last_editable <- list.files(species_list_sp, pattern = "OPEN_TO_EDITING", full.names = TRUE)
   if (length(file_path_last_editable) > 1) {
     file_path_last_editable <- file_path_last_editable[grepl(date_string, file_path_last_editable)]
   }
   dropdowns <- read_excel(file_path_last_editable, sheet = "Drop down categories")
 
-  addWorksheet(wb, "Species_Overviews_Eligible_List")
-  writeDataTable(wb, "Species_Overviews_Eligible_List", x$current_eligible_list, tableStyle = "TableStyleLight1")
-
-  eligible_taxon_problems <- x$eligible_taxon_problems |>
-    mutate(
-      final_scientific_name = NA,
-      rationale_for_classification = NA,
-      needs_overview = NA
-    )
-
-
-  addWorksheet(wb, "Comp_NatServe_SD&NE")
-  writeDataTable(wb, "Comp_NatServe_SD&NE", x$ns_state_eligible, tableStyle = "TableStyleLight1")
-
-
-
-  saveWorkbook(wb, file.path(output_path, paste("DO_NOT_EDIT", output_eligible_list, sep = "_")), overwrite = T)
-  saveWorkbook(wb, file.path(t_drive_path, paste("DO_NOT_EDIT", output_eligible_list, sep = "_")), overwrite = T)
-  saveWorkbook(wb, file.path(species_list_sp, paste("DO_NOT_EDIT", output_eligible_list, sep = "_")), overwrite = T)
 
   wb_fixes <- createWorkbook()
+
+eligible_taxon_problems <- x$eligible_taxon_problems |>
+      mutate(
+        final_scientific_name = NA,
+        rationale_for_classification = NA,
+        needs_overview = NA
+      )
+
+
 
   addWorksheet(wb_fixes, "Eligible_Need_Taxon_Review")
   writeDataTable(wb_fixes, "Eligible_Need_Taxon_Review", eligible_taxon_problems, tableStyle = "TableStyleLight1")

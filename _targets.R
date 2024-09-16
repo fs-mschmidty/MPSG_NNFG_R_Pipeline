@@ -32,6 +32,7 @@ tar_source()
 
 t_path_sp_list <- file.path("T:/FS/NFS/PSO/MPSG/2024_NebraskaNFG", "1_PreAssessment/Projects/SpeciesList_NNFG")
 t_path_sp_list_rp <- file.path(t_path_sp_list, "reproduce")
+species_list_sp <- file.path(Sys.getenv("USERPROFILE"), "USDA", "Mountain Planning Service Group - SCC Library", "03_Nebraska NFG", "Species List", fsep = "\\")
 
 # Replace the target list below with your own:
 list(
@@ -55,7 +56,10 @@ list(
   tar_target(eligible_lists, build_eligible_list(natureserve_state_data, t_drive_lists, ne_state_list, sd_state_list, r2_ss_list)),
   tar_target(transient_birds, build_transient_birds(eligible_lists, nnfg_aoa)),
   tar_target(native_known_need_check, build_native_known_need_check(eligible_lists)),
+  tar_target(input_round1_file, file.path(species_list_sp, "OPEN_TO_EDITING_20240909_NNFG_Species_List_Edit_Tables.xlsx"), format = "file"),
+  tar_target(team_inputs_round1, build_team_inputs_nn_and_tax(input_round1_file)),
   # tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output", transient_birds, native_known_need_check)),
+  tar_target(output_dne_eligible_lists, build_output_dne_eligible_lists(eligible_lists, "output", t_path_sp_list, species_list_sp, team_inputs_round1)),
 
   # Spatial data
   ## Occurrence Lists
@@ -97,7 +101,9 @@ list(
     molluscs_iucn_map_list,
     odonata_iucn_map_list,
     crayfish_iucn_map_list
-  ))
+  )),
+  tar_target(bien_plant_maps, load_bien_plant_maps("output/bien_test/1", eligible_lists$current_eligible_list)),
+  tar_target(bird_maps, load_bird_maps(eligible_lists$current_eligible_list))
   # tar_target(summary_sheet, build_summary_sheet(summary_sheet_file))
 
   # ## Imbcr data cleaning and build narratives
