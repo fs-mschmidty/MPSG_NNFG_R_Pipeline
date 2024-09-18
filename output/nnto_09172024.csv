@@ -1,0 +1,187 @@
+taxon_id,scientific_name,common_name,kingdom,phylum,class,order,family,genus
+2427185,Lithobates pipiens,Northern Leopard Frog,Animalia,Chordata,Amphibia,Anura,Ranidae,Lithobates
+2480589,Accipiter atricapillus,American Goshawk,Animalia,Chordata,Aves,Accipitriformes,Accipitridae,Accipiter
+2491123,Ammodramus savannarum,Grasshopper Sparrow,Animalia,Chordata,Aves,Passeriformes,Passerellidae,Ammodramus
+2490268,Anthus spragueii,Sprague's Pipit,Animalia,Chordata,Aves,Passeriformes,Motacillidae,Anthus
+2497295,Asio flammeus,Short-eared Owl,Animalia,Chordata,Aves,Strigiformes,Strigidae,Asio
+2497240,Athene cunicularia,Burrowing Owl,Animalia,Chordata,Aves,Strigiformes,Strigidae,Athene
+2480566,Buteo regalis,Ferruginous Hawk,Animalia,Chordata,Aves,Accipitriformes,Accipitridae,Buteo
+2491893,Calamospiza melanocorys,Lark Bunting,Animalia,Chordata,Aves,Passeriformes,Passerellidae,Calamospiza
+2491677,Calcarius ornatus,Chestnut-collared Longspur,Animalia,Chordata,Aves,Passeriformes,Calcariidae,Calcarius
+5959240,Centrocercus urophasianus,Greater Sage-Grouse,Animalia,Chordata,Aves,Galliformes,Phasianidae,Centrocercus
+10783710,Centronyx bairdii,Baird's Sparrow,Animalia,Chordata,Aves,Passeriformes,Passerellidae,Centronyx
+10850807,Centronyx henslowii,Henslow's Sparrow,Animalia,Chordata,Aves,Passeriformes,Passerellidae,Centronyx
+9581157,Certhia americana,Brown Creeper,Animalia,Chordata,Aves,Passeriformes,Certhiidae,Certhia
+2481119,Chlidonias niger,Black Tern,Animalia,Chordata,Aves,Charadriiformes,Laridae,Chlidonias
+2480487,Circus hudsonius,Northern Harrier,Animalia,Chordata,Aves,Accipitriformes,Accipitridae,Circus
+2496286,Coccyzus erythropthalmus,Black-billed Cuckoo,Animalia,Chordata,Aves,Cuculiformes,Cuculidae,Coccyzus
+2482492,Corvus corax,Common Raven,Animalia,Chordata,Aves,Passeriformes,Corvidae,Corvus
+2498345,Cygnus buccinator,Trumpeter Swan,Animalia,Chordata,Aves,Anseriformes,Anatidae,Cygnus
+9813242,Falco columbarius,Merlin,Animalia,Chordata,Aves,Falconiformes,Falconidae,Falco
+2481000,Falco mexicanus,Prairie Falcon,Animalia,Chordata,Aves,Falconiformes,Falconidae,Falco
+2481047,Falco peregrinus,Peregrine Falcon,Animalia,Chordata,Aves,Falconiformes,Falconidae,Falco
+5229498,Gymnorhinus cyanocephalus,Pinyon Jay,Animalia,Chordata,Aves,Passeriformes,Corvidae,Gymnorhinus
+2490872,Hylocichla mustelina,Wood Thrush,Animalia,Chordata,Aves,Passeriformes,Turdidae,Hylocichla
+2492870,Lanius ludovicianus,Loggerhead Shrike,Animalia,Chordata,Aves,Passeriformes,Laniidae,Lanius
+2498155,Mareca americana,American Wigeon,Animalia,Chordata,Aves,Anseriformes,Anatidae,Mareca
+2478142,Melanerpes lewis,Lewis's Woodpecker,Animalia,Chordata,Aves,Piciformes,Picidae,Melanerpes
+2490849,Myadestes townsendi,Townsend's Solitaire,Animalia,Chordata,Aves,Passeriformes,Turdidae,Myadestes
+2481794,Numenius americanus,Long-billed Curlew,Animalia,Chordata,Aves,Charadriiformes,Scolopacidae,Numenius
+2494973,Oreoscoptes montanus,Sage Thrasher,Animalia,Chordata,Aves,Passeriformes,Mimidae,Oreoscoptes
+2480726,Pandion haliaetus,Osprey,Animalia,Chordata,Aves,Accipitriformes,Pandionidae,Pandion
+5229487,Pica hudsonia,Black-billed Magpie,Animalia,Chordata,Aves,Passeriformes,Corvidae,Pica
+2489129,Progne subis,Purple Martin,Animalia,Chordata,Aves,Passeriformes,Hirundinidae,Progne
+6093927,Rhynchophanes mccownii,Thick-billed Longspur,Animalia,Chordata,Aves,Passeriformes,Calcariidae,Rhynchophanes
+9345027,Spatula cyanoptera,Cinnamon Teal,Animalia,Chordata,Aves,Anseriformes,Anatidae,Spatula
+2492099,Spizella breweri,Brewer's Sparrow,Animalia,Chordata,Aves,Passeriformes,Passerellidae,Spizella
+5229247,Sterna forsteri,Forster's Tern,Animalia,Chordata,Aves,Charadriiformes,Laridae,Sterna
+2473510,Tympanuchus cupido,Greater Prairie-Chicken,Animalia,Chordata,Aves,Galliformes,Phasianidae,Tympanuchus
+9353154,Vireo plumbeus,Plumbeous Vireo,Animalia,Chordata,Aves,Passeriformes,Vireonidae,Vireo
+2432479,Corynorhinus townsendii,Townsend's Big-eared Bat,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Corynorhinus
+2437232,Cynomys ludovicianus,Black-tailed Prairie Dog,Animalia,Chordata,Mammalia,Rodentia,Sciuridae,Cynomys
+2432341,Lasionycteris noctivagans,Silver-haired Bat,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Lasionycteris
+5218543,Lasiurus borealis,Eastern Red Bat,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Lasiurus
+11138256,Lasiurus cinereus,Northern Hoary Bat,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Aeorestes
+2432406,Myotis lucifugus,Little Brown Myotis,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Myotis
+2432399,Myotis thysanodes,Fringed Myotis,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Myotis
+4266351,Myotis thysanodes pahasapensis,Fringe-tailed Myotis,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Myotis
+2432411,Myotis volans,Long-legged Myotis,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Myotis
+2437432,Neotamias minimus,Least Chipmunk,Animalia,Chordata,Mammalia,Rodentia,Sciuridae,Tamias
+2441119,Ovis canadensis,Bighorn Sheep,Animalia,Chordata,Mammalia,Artiodactyla,Bovidae,Ovis
+2439561,Perognathus fasciatus,Olive-backed Pocket Mouse,Animalia,Chordata,Mammalia,Rodentia,Heteromyidae,Perognathus
+2439566,Perognathus flavus,Silky Pocket Mouse,Animalia,Chordata,Mammalia,Rodentia,Heteromyidae,Perognathus
+2435099,Puma concolor,Cougar,Animalia,Chordata,Mammalia,Carnivora,Felidae,Puma
+2436108,Sorex nanus,Dwarf Shrew,Animalia,Chordata,Mammalia,Soricomorpha,Soricidae,Sorex
+5219290,Vulpes velox,Swift Fox,Animalia,Chordata,Mammalia,Carnivora,Canidae,Vulpes
+2457545,Thamnophis elegans,Terrestrial Gartersnake,Animalia,Chordata,Squamata,NA,Colubridae,Thamnophis
+5220530,Emydoidea blandingii,Blanding's Turtle,Animalia,Chordata,Testudines,NA,Emydidae,Emys
+5203693,Fundulus sciadicus,Plains Topminnow,Animalia,Chordata,NA,Cyprinodontiformes,Fundulidae,Fundulus
+2364397,Hybognathus argyritis,Western Silvery Minnow,Animalia,Chordata,NA,Cypriniformes,Cyprinidae,Hybognathus
+2364391,Hybognathus placitus,Plains Minnow,Animalia,Chordata,NA,Cypriniformes,Cyprinidae,Hybognathus
+2362060,Macrhybopsis gelida,Sturgeon Chub,Animalia,Chordata,NA,Cypriniformes,Cyprinidae,Macrhybopsis
+2362460,Platygobio gracilis,Flathead Chub,Animalia,Chordata,NA,Cypriniformes,Cyprinidae,Platygobio
+1340478,Bombus fervidus,Yellow Bumble Bee,Animalia,Arthropoda,Insecta,Hymenoptera,Apidae,Bombus
+1340432,Bombus fraternus,Southern Plains Bumble Bee,Animalia,Arthropoda,Insecta,Hymenoptera,Apidae,Bombus
+1340416,Bombus pensylvanicus,American Bumble Bee,Animalia,Arthropoda,Insecta,Hymenoptera,Apidae,Bombus
+1034935,Cicindela nebraskana,Prairie Long-lipped Tiger Beetle,Animalia,Arthropoda,Insecta,Coleoptera,Carabidae,Cicindela
+8177087,Ellipsoptera lepida,Ghost Tiger Beetle,Animalia,Arthropoda,Insecta,Coleoptera,Carabidae,Ellipsoptera
+9147984,Ellipsoptera nevadica makosika,Indian Creek Tiger Beetle,Animalia,Arthropoda,Insecta,Coleoptera,Carabidae,Ellipsoptera
+1905162,Argynnis idalia,Regal Fritillary,Animalia,Arthropoda,Insecta,Lepidoptera,Nymphalidae,Speyeria
+1911246,Coenonympha california,Common Ringlet,Animalia,Arthropoda,Insecta,Lepidoptera,Nymphalidae,Coenonympha
+5142328,Hesperia pahaska,Pahaska Skipper,Animalia,Arthropoda,Insecta,Lepidoptera,Hesperiidae,Hesperia
+5142319,Hesperia uncas,Uncas Skipper,Animalia,Arthropoda,Insecta,Lepidoptera,Hesperiidae,Hesperia
+11776315,Lon taxiles,Taxiles Skipper,Animalia,Arthropoda,Insecta,Lepidoptera,Hesperiidae,Lon
+1951340,Oarisma garita,Garita Skipperling,Animalia,Arthropoda,Insecta,Lepidoptera,Hesperiidae,Oarisma
+1918986,Phyciodes batesii,Tawny Crescent,Animalia,Arthropoda,Insecta,Lepidoptera,Nymphalidae,Phyciodes
+5137791,Pontia occidentalis,Western White,Animalia,Arthropoda,Insecta,Lepidoptera,Pieridae,Pontia
+1865345,Hemileuca hera,Hera Sheepmoth,Animalia,Arthropoda,Insecta,Lepidoptera,Saturniidae,Hemileuca
+1797397,Catocala nuptialis,Married Underwing,Animalia,Arthropoda,Insecta,Lepidoptera,Erebidae,Catocala
+5051883,Stylurus notatus,Elusive Clubtail,Animalia,Arthropoda,Insecta,Odonata,Gomphidae,Stylurus
+2687937,Equisetum fluviatile,Water Horsetail,Plantae,Tracheophyta,Polypodiopsida,Equisetales,Equisetaceae,Equisetum
+5275149,Dryopteris carthusiana,Spinulose Shieldfern,Plantae,Tracheophyta,Polypodiopsida,Polypodiales,Dryopteridaceae,Dryopteris
+2650190,Botrychium campestre,Prairie Dunewort,Plantae,Tracheophyta,Polypodiopsida,Ophioglossales,Ophioglossaceae,Botrychium
+2650138,Ophioglossum pusillum,Northern Adder's-tongue,Plantae,Tracheophyta,Polypodiopsida,Ophioglossales,Ophioglossaceae,Ophioglossum
+2684709,Juniperus communis,Ground Juniper,Plantae,Tracheophyta,Pinopsida,Pinales,Cupressaceae,Juniperus
+2684410,Juniperus horizontalis,Creeping Juniper,Plantae,Tracheophyta,Pinopsida,Pinales,Cupressaceae,Juniperus
+2856745,Allium cernuum,Nodding Onion,Plantae,Tracheophyta,Liliopsida,Asparagales,Amaryllidaceae,Allium
+2703671,Bromus inermis ssp. pumpellianus,Awnless Brome,Plantae,Tracheophyta,Liliopsida,Poales,Poaceae,Bromus
+2703686,Bromus marginatus,Large Mountain Brome,Plantae,Tracheophyta,Liliopsida,Poales,Poaceae,Bromus
+7676640,Carex aquatilis var. substricta,Calcareous Water Sedge,Plantae,Tracheophyta,Liliopsida,Poales,Cyperaceae,Carex
+2725002,Carex bebbii,Bebb's Sedge,Plantae,Tracheophyta,Liliopsida,Poales,Cyperaceae,Carex
+2723338,Carex xerantica,White-scaled Sedge,Plantae,Tracheophyta,Liliopsida,Poales,Cyperaceae,Carex
+2810284,Coeloglossum viride,Long-Bract Frog Orchid,Plantae,Tracheophyta,Liliopsida,Asparagales,Orchidaceae,Dactylorhiza
+2797273,Corallorhiza maculata,Spotted Coralroot,Plantae,Tracheophyta,Liliopsida,Asparagales,Orchidaceae,Corallorhiza
+2703267,Danthonia spicata,Poverty Oatgrass,Plantae,Tracheophyta,Liliopsida,Poales,Poaceae,Danthonia
+2702835,Festuca kingii,Spike Fescue,Plantae,Tracheophyta,Liliopsida,Poales,Poaceae,Festuca
+5300700,Fritillaria atropurpurea,Purple Missionbells,Plantae,Tracheophyta,Liliopsida,Liliales,Liliaceae,Fritillaria
+2840754,Goodyera oblongifolia,Giant Rattlesnake-plantain,Plantae,Tracheophyta,Liliopsida,Asparagales,Orchidaceae,Goodyera
+11712270,Liparis loeselii,Loesel's Twayblade,Animalia,Arthropoda,Insecta,Coleoptera,Curculionidae,Liparis
+2703943,Muhlenbergia filiformis,Pullup Muhly,Plantae,Tracheophyta,Liliopsida,Poales,Poaceae,Muhlenbergia
+5301163,Potamogeton diversifolius,Waterthread Pondweed,Plantae,Tracheophyta,Liliopsida,Alismatales,Potamogetonaceae,Potamogeton
+2705699,Pseudoroegneria spicata,Bluebunch Wheatgrass,Plantae,Tracheophyta,Liliopsida,Poales,Poaceae,Pseudoroegneria
+2705745,Schizachne purpurascens,Purple Oat,Plantae,Tracheophyta,Liliopsida,Poales,Poaceae,Schizachne
+2710743,Schoenoplectiella saximontana,Rocky Mountain Bulrush,Plantae,Tracheophyta,Liliopsida,Poales,Cyperaceae,Schoenoplectiella
+2717391,Scirpus microcarpus,Small-fruit Bulrush,Plantae,Tracheophyta,Liliopsida,Poales,Cyperaceae,Scirpus
+2702266,Sparganium emersum,Green-fruit Bur-reed,Plantae,Tracheophyta,Liliopsida,Poales,Typhaceae,Sparganium
+2865280,Triglochin palustris,Slender Bog Arrow-grass,Plantae,Tracheophyta,Liliopsida,Alismatales,Juncaginaceae,Triglochin
+2926406,Agastache foeniculum,Blue Giant-hyssop,Plantae,Tracheophyta,Magnoliopsida,Lamiales,Lamiaceae,Agastache
+7656548,Amorpha nana,Fragrant Indigobush,Plantae,Tracheophyta,Magnoliopsida,Fabales,Fabaceae,Amorpha
+4926336,Anaphalis margaritacea,Pearly Everlasting,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Anaphalis
+3170327,Asclepias lanuginosa,Woolly Milkweed,Plantae,Tracheophyta,Magnoliopsida,Gentianales,Apocynaceae,Asclepias
+5342849,Astragalus agrestis,Purple Milkvetch,Plantae,Tracheophyta,Magnoliopsida,Fabales,Fabaceae,Astragalus
+5354810,Astragalus barrii,Barr's Milkvetch,Plantae,Tracheophyta,Magnoliopsida,Fabales,Fabaceae,Astragalus
+7979948,Atriplex suckleyi,Suckley's Saltbush,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Amaranthaceae,Stutzia
+5421092,Bergia texana,Texas Bergia,Plantae,Tracheophyta,Magnoliopsida,Malpighiales,Elatinaceae,Bergia
+3043348,Boechera grahamii,Graham's Rockcress,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,Boechera
+5372488,Callitriche hermaphroditica,Autumnal Water-starwort,Plantae,Tracheophyta,Magnoliopsida,Lamiales,Plantaginaceae,Callitriche
+5372484,Callitriche palustris,Vernal Water-starwort,Plantae,Tracheophyta,Magnoliopsida,Lamiales,Plantaginaceae,Callitriche
+3083891,Chenopodium subglabrum,Smooth Goosefoot,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Amaranthaceae,Chenopodium
+3033734,Delphinium nuttallianum,Nuttall's Larkspur,Plantae,Tracheophyta,Magnoliopsida,Ranunculales,Ranunculaceae,Delphinium
+3084127,Echinocereus viridiflorus,Green-flower Hedgehog Cactus,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Cactaceae,Echinocereus
+3189073,Epilobium brachycarpum,Panicled Willowherb,Plantae,Tracheophyta,Magnoliopsida,Myrtales,Onagraceae,Epilobium
+4220298,Ericameria parryi var. howardii,Howard's Rabbitbrush,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Ericameria
+3147213,Erigeron caespitosus,Tufted Fleabane,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Erigeron
+8046603,Erigeron divergens,Spreading Fleabane,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Erigeron
+3146761,Erigeron ochroleucus,Buff Fleabane,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Erigeron
+8459913,Erigeron subtrinervis,Three-nerve Fleabane,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Erigeron
+2889654,Eriogonum gordonii,Gordon's Buckwheat,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Polygonaceae,Eriogonum
+2889449,Eriogonum visheri,Dakota Buckwheat,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Polygonaceae,Eriogonum
+3048294,Erysimum inconspicuum,Small-flower Prairie Wallflower,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,Erysimum
+5387821,Gaillardia pulchella,Fire-wheel Blanket-flower,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Gaillardia
+5390744,Gnaphalium palustre,Western Marsh Cudweed,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Gnaphalium
+3135329,Hieracium umbellatum,Umbellate Hawkweed,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Hieracium
+6394781,Ipomopsis congesta ssp. pseudotypica,Ball-head Standing-cypress,Plantae,Tracheophyta,Magnoliopsida,Ericales,Polemoniaceae,Ipomopsis
+5356371,Lathyrus ochroleucus,Pale Vetchling,Plantae,Tracheophyta,Magnoliopsida,Fabales,Fabaceae,Lathyrus
+7095916,Linum lewisii var. lewisii,Prairie Flax,Plantae,Tracheophyta,Magnoliopsida,Malpighiales,Linaceae,Linum
+8408864,Lithophragma parviflorum,Small-flower Woodland-star,Plantae,Tracheophyta,Magnoliopsida,Saxifragales,Saxifragaceae,Lithophragma
+5341244,Mertensia lanceolata,Prairie Bluebells,Plantae,Tracheophyta,Magnoliopsida,Boraginales,Boraginaceae,Mertensia
+5341179,Myosotis verna,Spring Forget-me-not,Plantae,Tracheophyta,Magnoliopsida,Boraginales,Boraginaceae,Myosotis
+4058016,Navarretia saximontana,Rocky Mountain Pincushion-plant,Plantae,Tracheophyta,Magnoliopsida,Ericales,Polemoniaceae,Navarretia
+3173298,Orobanche uniflora,One-flowered Broomrape,Plantae,Tracheophyta,Magnoliopsida,Lamiales,Orobanchaceae,Aphyllon
+4249110,Packera pseudaurea var. semicordata,Western Golden Groundsel,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Packera
+2927739,Phlox alyssifolia,Alyssum-leaf Phlox,Plantae,Tracheophyta,Magnoliopsida,Ericales,Polemoniaceae,Phlox
+4057955,Phlox gracilis ssp. humilis,Slender Phlox,Plantae,Tracheophyta,Magnoliopsida,Ericales,Polemoniaceae,Phlox
+7225662,Physaria arenosa ssp. arenosa,Great Plains Bladderpod,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,Physaria
+3049235,Physaria brassicoides,Rydberg's Double Twinpod,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,Physaria
+3049163,Physaria montana,Mountain Bladderpod,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,Physaria
+5334465,Polygonum douglasii,Douglas' Knotweed,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Polygonaceae,Polygonum
+7219337,Polygonum sawatchense ssp. sawatchense,Sawatch Knotweed,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Polygonaceae,Polygonum
+3040215,Populus tremuloides,Quaking Aspen,Plantae,Tracheophyta,Magnoliopsida,Malpighiales,Salicaceae,Populus
+3040193,Populus x acuminata,Lanceleaf Cottonwood,Plantae,Tracheophyta,Magnoliopsida,Malpighiales,Salicaceae,Populus
+5367733,Potentilla hippiana,Horse Cinquefoil,Plantae,Tracheophyta,Magnoliopsida,Rosales,Rosaceae,Potentilla
+5334184,Pterospora andromedea,Giant Pinedrops,Plantae,Tracheophyta,Magnoliopsida,Ericales,Ericaceae,Pterospora
+2986164,Ribes hirtellum,Smooth Gooseberry,Plantae,Tracheophyta,Magnoliopsida,Saxifragales,Grossulariaceae,Ribes
+3053227,Rorippa tenerrima,Modoc County Yellowcress,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,Rorippa
+7095876,Sedum lanceolatum var. lanceolatum,Lanceleaf Stonecrop,Plantae,Tracheophyta,Magnoliopsida,Saxifragales,Crassulaceae,Sedum
+6291148,Solidago speciosa var. pallida,Pale Showy Goldenrod,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Solidago
+7225656,Stanleya pinnata var. pinnata,Desert Prince's-plume,Plantae,Tracheophyta,Magnoliopsida,Brassicales,Brassicaceae,Stanleya
+5401962,Townsendia hookeri,Hooker's Townsend-daisy,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Townsendia
+3172414,Utricularia minor,Lesser Bladderwort,Plantae,Tracheophyta,Magnoliopsida,Lamiales,Lentibulariaceae,Utricularia
+5331199,Viola adunca,Sand Violet,Plantae,Tracheophyta,Magnoliopsida,Malpighiales,Violaceae,Viola
+5331175,Viola vallicola,Valley Violet,Plantae,Tracheophyta,Magnoliopsida,Malpighiales,Violaceae,Viola
+5372401,Vitis vulpina,Winter Grape,Plantae,Tracheophyta,Magnoliopsida,Vitales,Vitaceae,Vitis
+6091692,Peucaea cassinii,Cassin's Sparrow,Animalia,Chordata,Aves,Passeriformes,Passerellidae,Peucaea
+7261900,Myotis lucifugus lucifugus,Eastern Little Brown Myotis,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Myotis
+4264486,Thomomys talpoides pierreicolus,Pierre Northern Pocket Gopher,Animalia,Chordata,Mammalia,Rodentia,Geomyidae,Thomomys
+4990190,Coccinella novemnotata,Nine-spotted Lady Beetle,Animalia,Arthropoda,Insecta,Coleoptera,Coccinellidae,Coccinella
+8226569,Encoptolophus subgracilis,Southwestern Dusky Grasshopper,Animalia,Arthropoda,Insecta,Orthoptera,Acrididae,Nebulatettix
+1699015,Melanoplus punctulatus,Pine Tree Spur-throat Grasshopper,Animalia,Arthropoda,Insecta,Orthoptera,Acrididae,Melanoplus
+2703743,Bromus porteri,Porter's Chess,Plantae,Tracheophyta,Liliopsida,Poales,Poaceae,Bromus
+2723156,Carex diandra,Lesser Panicled Sedge,Plantae,Tracheophyta,Liliopsida,Poales,Cyperaceae,Carex
+2728532,Carex lasiocarpa var. americana,Slender Sedge,Plantae,Tracheophyta,Liliopsida,Poales,Cyperaceae,Carex
+2867614,Lemna minuta,Least Duckweed,Plantae,Tracheophyta,Liliopsida,Alismatales,Araceae,Lemna
+5384387,Amaranthus californicus,California Amaranth,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Amaranthaceae,Amaranthus
+5385499,Antennaria rosea,Rosy Pussytoes,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Antennaria
+8076188,Atriplex gardneri,Gardner's Saltbush,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Amaranthaceae,Atriplex
+7219352,Eriogonum brevicaule var. brevicaule,Shortstem Buckwheat,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Polygonaceae,Eriogonum
+6396091,Heliotropium curassavicum var. obovatum,Seaside Heliotrope,Plantae,Tracheophyta,Magnoliopsida,Boraginales,Heliotropiaceae,Heliotropium
+4274385,Hymenoxys richardsonii var. richardsonii,Richardson's Bitterweed,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Hymenoxys
+4022595,Phemeranthus calycinus,Large-Flower Fameflower,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Montiaceae,Phemeranthus
+4022511,Phemeranthus rugospermus,Prairie Fameflower,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Montiaceae,Phemeranthus
+5341810,Physalis pumila,Dwarf Ground-cherry,Plantae,Tracheophyta,Magnoliopsida,Solanales,Solanaceae,Physalis
+2888967,Rumex verticillatus,Swamp Dock,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Polygonaceae,Rumex
+4231219,Senecio integerrimus var. scribneri,Scribner's Ragwort,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Senecio
+3141090,Stephanomeria runcinata,Desert Skeletonplant,Plantae,Tracheophyta,Magnoliopsida,Asterales,Asteraceae,Stephanomeria
+3083649,Suckleya suckleyana,Poison Suckleya,Plantae,Tracheophyta,Magnoliopsida,Caryophyllales,Amaranthaceae,Suckleya
+2438444,Neotoma floridana,Eastern Woodrat,Animalia,Chordata,Mammalia,Rodentia,Cricetidae,Neotoma
+2438444,Neotoma floridana baileyi,Bailey's Eastern Woodrat,Animalia,Chordata,Mammalia,Rodentia,Cricetidae,Neotoma

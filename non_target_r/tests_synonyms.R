@@ -4,27 +4,29 @@ library(targets)
 library(rgbif)
 library(sf)
 
-options("scipen"=100, "digits"=4)
+options("scipen" = 100, "digits" = 4)
 
 el_list <- tar_read(eligible_lists)$current_eligible_list
-t_ids<-el_list |>
-  pull(taxon_id)
 
-scientific_names <- el_list |>
-  pull(scientific_name)
+sp_dat <- el_list |>
+  sample_n(1)
 
-sci_name <- str_replace(scientific_names[230], "ssp.", "")
+## GBIF example
+syns_gbif <- name_usage(key = sp_dat$taxon_id, data = "synonyms")
 
-t_id <- el_list |>
-  filter(scientific_name == sci_name) |>
-  pull(taxon_id)
+View(syns_gbif$data)
 
-synonyms <- name_lookup(sci_name)$data
+## ITIS example
+syns_itis <- synonyms(sp_dat$scientific_name, db = "itis")
 
-x <- name_backbone(name = sci_name)
-syns <- name_usage(key = t_id, data = "synonyms")
 names <- syns$data |>
   pull(canonicalName)
+
+## Itis get tsn
+test <- taxize::classification(sci_id = sp_dat$scientific_name, db = "itis")
+
+test[[1]] |>
+  tail(1)
 
 names <- synonyms |>
   select(canonicalName, rank) |>
@@ -43,14 +45,14 @@ attach(gbif_rdat)
 
 sf_gbif_unit |>
   mutate(taxon_id = acceptedTaxonKey) |>
-  filter(taxon_id %in% t_ids)  |> 
-  mutate(gbif_id = as.numeric(gbifID)) |> 
-  mutate(gbif_occ_url = paste("https://www.gbif.org/occurrence", gbifID, sep="/")) |>
+  filter(taxon_id %in% t_ids) |>
+  mutate(gbif_id = as.numeric(gbifID)) |>
+  mutate(gbif_occ_url = paste("https://www.gbif.org/occurrence", gbifID, sep = "/")) |>
   select(gbif_id)
 
 eligible_occ_gbif |>
-  head(40) |> 
-  select(gbif_occ_url)  
+  head(40) |>
+  select(gbif_occ_url)
 
 
 el_minimal <- el_list |>
@@ -103,9 +105,9 @@ idb_occ_synonyms <- idb_list |>
 detach()
 
 
-eligible_species<-eligible_GBIF |>
+eligible_species <- eligible_GBIF |>
   # left_join(unit_eligible, by=c("GBIF_taxonID"="taxonKey")) |>
-  mutate(gbif_occ_url = paste("https://www.gbif.org/occurrence", gbif_ID, sep="/"))
+  mutate(gbif_occ_url = paste("https://www.gbif.org/occurrence", gbif_ID, sep = "/"))
 #
 # eligible_species |>
 #   group_by(taxon_id) |>

@@ -138,3 +138,12 @@ addWorksheet(wb2, "to_rewrite_rainbow")
 writeData(wb2, "to_rewrite_rainbow", add_to_rainbow)
 
 saveWorkbook(wb2, "output/add_to_rainbow_09162024.xlsx", overwrite = T)
+
+read_excel("output/add_to_rainbow_09162024.xlsx", sheet = 1) |>
+  filter(`Is the Species Native and Known to Occur` %in% c("Yes", "?"))
+
+tar_read(output_dne_eligible_lists) |>
+  filter(!str_detect(usfws_status, "Threatened|Endangered") | is.na(usfws_status)) |>
+  filter(`Is the Species Native and Known to Occur` %in% c("Yes", "?")) |>
+  select(taxon_id, scientific_name, common_name, kingdom:genus) |>
+  write_csv("output/nnto_09172024.csv", append = FALSE)
