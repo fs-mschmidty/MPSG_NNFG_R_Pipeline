@@ -1,0 +1,148 @@
+---
+params: 
+  id: "2684709"
+format:
+  docx:
+    reference-doc: 'template_styles/template_mpsg_styles.docx'
+    df-print: kable
+    knitr:
+      opts_chunk:
+        dev: 'ragg_png'
+        dpi: 300
+        out.width: '100%'
+execute:
+  echo: false
+  message: false
+  warning: false
+  class-output: 'r'
+  fig-width: 8
+---
+
+```{r}
+library(tidyverse)
+library(sf)
+library(targets)
+library(glue)
+
+t_id <- params$id
+species_data <- tar_read(output_dne_eligible_lists) |>
+  filter(taxon_id == t_id) |>
+  mutate(
+    min_overall_year = min(c_across(contains("minYear")), na.rm = T)
+  )
+```
+:::{custom-style="Body Text"}
+# `r glue("{species_data$common_name} (*{species_data$scientific_name}*)")`
+
+## Species observation records and conservation categories
+
+### What, if any, are the scientific name synonyms for the species
+
+```{r}
+synonyms <- tar_read(eligible_synonyms) |>
+  filter(taxon_id == t_id) |>
+  pull(canonicalName)
+
+citation <- "{GBIF Secretariat 2023}"
+
+if (length(synonyms) > 0) {
+  synonyms <- synonyms |>
+    paste(collapse = ", ")
+
+  synonyms <- glue("Current and historic synonyms for {species_data$scientific_name} are: {synonyms} {citation}.")
+} else {
+  synonyms <- glue("There are no known synonyms for this species {citation}.")
+}
+```
+
+`r synonyms`
+**[SPECIALISTS REVIEW USDA PLANTS AND OTHER LITERATURE FOR THESE CATEGORIES.]**
+
+### NatureServe Conservation Status (Global/State):
+
+`r glue("{species_data$rounded_gRank}/{species_data$NE_sRank}(NE), {species_data$SD_sRank}(SD)")`
+
+### Additional Qualifying Conservation Categories (including Local Concern)
+
+```{r}
+# I need to make sure this works if there are no other rankings.
+other_ranking_narrative <- species_data |>
+  mutate(
+    other_rankings = glue(
+      ifelse(!is.na(r2_ss_list), "Region 2 Sensitive Species, ", ""),
+      ifelse(!is.na(nebraska_swap), "Nebraska SWAP {nebraska_swap}, ", ""),
+      ifelse(!is.na(sd_te), "South Dakota {sd_te}", ""),
+      ifelse(!is.na(usfws_status), "FWS {usfws_status}, ", "")
+    ),
+    other_rankings = str_replace(other_rankings, ".{2}$", ".")
+  ) |>
+  pull(other_rankings)
+```
+
+`r other_ranking_narrative`
+
+### Number of Occurrence records by Data Source
+
+```{r}
+number_of_occ <- species_data |>
+  mutate(
+    occ_by_source = glue(
+      "Observations: ",
+      ifelse(!is.na(GBIF_nObs) & GBIF_nObs != 0, "GFIB - {GBIF_nObs}, ", ""),
+      ifelse(!is.na(iDB_nObs) & iDB_nObs != 0, "iDigBio - {iDB_nObs}, ", ""),
+      ifelse(!is.na(SEI_nObs) & SEI_nObs != 0, "Seinet - {SEI_nObs}, ", ""),
+      ifelse(!is.na(IMBCR_nObs) & IMBCR_nObs != 0, "Bird Conservancy of the Rockies - {IMBCR_nObs}, ", ""),
+      ifelse(!is.na(NENHP_nObs) & NENHP_nObs != 0, "Nebraska Natural Heritage - {NENHP_nObs}, ", ""),
+      ifelse(!is.na(SDNHP_nObs) & SDNHP_nObs != 0, "South Dakota Natural Heritage - {SDNHP_nObs}, ", "")
+    )
+  ) |>
+  pull(occ_by_source) |>
+  str_replace(".{2}$", ".")
+```
+`r number_of_occ`
+
+#### Year of first observation for the combined data: 
+
+`r species_data$min_overall_year`
+
+#### Year of last observation for the combined data: 
+
+`r species_data$max_overall_year`
+
+### Is the species currently federally designated as threatened, endangered, proposed, or candidate speecies under the Endangered Species Act?
+
+```{r}
+if (is.na(species_data$usfws_status)) {
+  fed_status_string <- "No"
+} else if (species_data$usfws_status == "Under Review") {
+  fed_status_string <- glue("No. Current USFWS status: {species_Data$usfws_status}.")
+} else {
+  fed_status_string <- glue("Yes. Current USFWS status: {species_data$usfws_status}.")
+}
+```
+
+`r fed_status_string`
+
+### Species' Native Range (Global/State):
+
+### Is the species native and known to occur?
+
+```{r}
+nn_base <- species_data |>
+  pull(`Is the Species Native and Known to Occur`)
+nn_basi <- species_data |>
+  pull(`What is the rationale and supporting BASI for recommending that an observation does not meet the requirements of native to, and known to occur in the plan area?`)
+```
+
+
+
+`r nn_base`
+
+#### Justification for ‘no’:
+
+`r ifelse(is.na(nn_basi), "", nn_basi)`
+
+:::
+
+
+

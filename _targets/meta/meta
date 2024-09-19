@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|6852453db19cc2ba|||||||||||||||
+.Random.seed|object|daa0391f5e22e386|||||||||||||||
 all_iucn_map|stem|246c811fcb5550b4|675def6a005e5d24|e78037c681c85590|1368258276||t19982.7260381463s|a7d29f76924c3acb|28618650|rds|local|vector|||2066.625||
 all_iucn_map_list|stem|79b0b708eb4a6760|c9403e219c2fe55f|ce776f4db73c7ff9|-794574756||t19972.7157647158s|9b013deaf0cf28f2|944|rds|local|vector|||0||
 all_state_lists|stem||858ee2f9deff6c72|be74eb4967bca7b4|-145830661||t19961.9382802771s||0|rds|local|vector|||0.031||could not find function build_all_state_lists
@@ -18,6 +18,7 @@ build_imbcr_taxonomy|function|b54fb4eca9ad5520|||||||||||||||
 build_imbcr_trend|function|9a0cb0bcfcd7ae21|||||||||||||||
 build_imbcr_trend_narratives|function|9a0cb0bcfcd7ae21|||||||||||||||
 build_iucn_available_maps|function|74d062cb9197f540|||||||||||||||
+build_map_source|function|01b323e53f1750a2|||||||||||||||
 build_native_known_need_check|function|9fee7e407771b172|||||||||||||||
 build_ne_state_list|function|d28608f75cd1e425|||||||||||||||
 build_nhp_data|function|9ac49a89a71769cd|||||||||||||||
@@ -33,6 +34,7 @@ build_seinet_spatial_data|function|806d0a95796bdef9|||||||||||||||
 build_spatial_eligible_and_unit|function|eb1c31b3fdcc2117|||||||||||||||
 build_summary_sheet|function|7cc01454a07f3415|||||||||||||||
 build_t_drive_lists|function|9a3b57186e7c9d5a|||||||||||||||
+build_taxonomy_itis_verify|function|c97b1413db9469a2|||||||||||||||
 build_team_inputs_nn_and_tax|function|af3738f410867312|||||||||||||||
 build_transient_birds|function|fc5b604dbd009392|||||||||||||||
 crayfish_iucn_map_list|stem|342724b3fb6114b2|5f6e4bcc09342655|ed4291f21f8e9de5|1953029403||t19979.9890443715s|73e589b388d3f2b1|172|rds|local|vector|||120.5|attribute variables are assumed to be spatially constant throughout all geometries|
@@ -58,6 +60,7 @@ input_round1_file|stem|5b0655a2747c2130|d3ef8f63d9e4fcc3|3dfcdd8c486cf496|728571
 load_bien_plant_maps|function|edd64f43b4c47900|||||||||||||||
 load_bird_maps|function|1699b23685d73101|||||||||||||||
 mammal_iucn_map_list|stem|42069e76985c14b4|f4a89a5fb7c101c1|ed4291f21f8e9de5|-1853575530||t19980.0295621894s|82cad4e3f465fcdc|756|rds|local|vector|||3500.687|attribute variables are assumed to be spatially constant throughout all geometries|
+map_source|stem|0a014d61cfad8e00|d9dcf98b819d3659|fd0161cf7fe143be|-1146980226||t19985.8922816637s|2dc6bf5b63228033|9414|rds|local|vector|||0.031||
 molluscs_iucn_map_list|stem|342724b3fb6114b2|8c4f940998daa99d|ed4291f21f8e9de5|-1053531476||t19980.0435758513s|73e589b388d3f2b1|172|rds|local|vector|||1210.734|attribute variables are assumed to be spatially constant throughout all geometries|
 native_known_need_check|stem|9d9647b70b1e5709|9c3110c2d358ed55|b10b4e671587ae61|75719044||t19978.7515968975s|38a00b1af22a57d5|6145|rds|local|vector|||0.781||
 native_known_results|stem|380f1a8589365de8|3415f7f0410cfbea|3dfcdd8c486cf496|-1081760043||t19982.6865973097s|d1fa40565f388a69|11999|rds|local|vector|||3.719|package taxize was built under R version 4.3.3. package tidyverse was built under R version 4.3.2. package ggplot2 was built under R version 4.3.3. package dplyr was built under R version 4.3.2. package stringr was built under R version 4.3.2. package lubridate was built under R version 4.3.2. package quarto was built under R version 4.3.1. package httr2 was built under R version 4.3.3. package natserv was built under R version 4.3.3. package openxlsx was built under R version 4.3.3|
@@ -100,6 +103,7 @@ summary_sheet_file|stem|08f1720835d71204|70051b3e945b776c|2c530c1562a7fbd1|88797
 t_drive_lists|stem|df1b4e809d122d09|43f60e3e89b93ea2|af94303801235e78|1818606316||t19978.751582665s|afbf9ef67febed0b|109593|rds|local|vector|||180.547|package taxize was built under R version 4.3.3. package tidyverse was built under R version 4.3.2. package ggplot2 was built under R version 4.3.3. package dplyr was built under R version 4.3.2. package stringr was built under R version 4.3.2. package lubridate was built under R version 4.3.2. package quarto was built under R version 4.3.1. package httr2 was built under R version 4.3.3. package natserv was built under R version 4.3.3. package openxlsx was built under R version 4.3.3|
 t_path_sp_list|object|19939b3506348ff6|||||||||||||||
 t_path_sp_list_rp|object|f17de3df92722886|||||||||||||||
+taxonomy_itis_verify|stem|28c63c8f275eb46c|f3218196e1c08834|22571b1379040bcb|-1706218701||t19985.6650629089s|c66f160d317fb88d|5358|rds|local|vector|||370.875|1 result no direct match found.  1 result no direct match found|
 team_inputs_round1|stem|4a20d5caccdb68f0|554ca0882bf21812|fcdec179b3a77cb3|-1442454542||t19982.9340025369s|552eea86ef039996|17220|rds|local|vector|||0.485||
-test|stem|7af4c0d937382ea5|12f1af4ba72de94b|9e7ed148c7a63659|1839796588|qmd/species_evaluation.docx*qmd/species_evaluation.qmd|t19984.9162929504s||23411|file|local|vector|||0.016||could not check target test. file not found or no read permission at qmdspecies_evaluation.docx
+test|stem|deea4fabd3df001b|6ec8ef7bf3032743|47666b0b7b03298f|1839796588|qmd/species_evaluation.docx*qmd/species_evaluation.qmd|t19985.9486187606s|4543460685df61a4|343313|file|local|vector|||11.437||
 transient_birds|stem|18a41af790b752c7|52429ce4d1779136|68f9c9a90da4a92c|2119939687||t19978.7523365737s|3cd3db806bf70b80|1891|rds|local|vector|||63.859|attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed|

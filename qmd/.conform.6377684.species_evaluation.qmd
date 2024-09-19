@@ -10,7 +10,6 @@ format:
         dev: 'ragg_png'
         dpi: 300
         fig-width: 6.5
-        fig-height: 6
 execute:
   echo: false
   message: false
@@ -131,10 +130,9 @@ if (is.na(species_data$usfws_status)) {
 ### Species' Native Range 
 
 ```{r}
-# states <- ne_states(country = c("United States of America", "Canada", "Mexico")) |>
-states <- ne_states(country = c("United States of America")) |>
+states <- ne_states(country = c("United States of America", "Canada", "Mexico")) |>
   st_as_sf() |>
-  filter(name != "Hawaii", name != "Alaska") |>
+  filter(name != "Hawaii") |>
   st_transform(crs = 5070)
 
 m_source <- tar_read(map_source) |>
@@ -144,8 +142,7 @@ m_source <- tar_read(map_source) |>
 if (m_source == "BIEN") {
   g_map_data <- tar_read(bien_plant_maps) |>
     filter(taxon_id == t_id) |>
-    st_transform(st_crs(states)) |>
-    st_intersection(st_union(states))
+    st_transform(st_crs(states))
 }
 
 title <- glue("North American Range of {sp_names}")
@@ -157,15 +154,13 @@ ggplot() +
   # geom_sf(data = admin_body, fill = "transparent", color = "black") +
   scale_fill_manual(values = c("#1e8449")) +
   labs(
-    title = sp_names,
-    subtitle = "North American Range",
+    title = title,
     fill = "**Legend**",
     caption = "**Source**:Botanical Information and Ecology Network."
   ) +
   theme(
-    plot.background = element_rect(color = "black", size = 1),
     plot.title = element_markdown(face = "bold", hjust = 0, margin = margin(0, 0, 5, 0, "pt")),
-    plot.margin = margin(t = 10, r = 10, b = 10, l = 10, "pt"),
+    plot.margin = margin(t = 20, r = 20, b = 20, l = 20, "pt"),
     plot.caption = element_markdown(),
     legend.title = element_markdown(),
     legend.position = "inside",

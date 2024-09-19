@@ -61,6 +61,7 @@ list(
   # tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output", transient_birds, native_known_need_check)),
   tar_target(output_dne_eligible_lists, build_output_dne_eligible_lists(eligible_lists, "output", t_path_sp_list, species_list_sp, team_inputs_round1)),
   tar_target(eligible_synonyms, build_eligible_synonyms(output_dne_eligible_lists)),
+  tar_target(taxonomy_itis_verify, build_taxonomy_itis_verify(output_dne_eligible_lists)),
 
   # Spatial data
   ## Occurrence Lists
@@ -105,6 +106,7 @@ list(
   )),
   tar_target(bien_plant_maps, load_bien_plant_maps("output/bien_test/1", eligible_lists$current_eligible_list)),
   tar_target(bird_maps, load_bird_maps(eligible_lists$current_eligible_list)),
+  tar_target(map_source, build_map_source(output_dne_eligible_lists, all_iucn_map, bien_plant_maps, bird_maps)),
 
   ## Habitat Association Work
   tar_target(ns_habitats, get_ns_habitat(natureserve_state_data$unit_nature_serve_list, output_dne_eligible_lists)),
