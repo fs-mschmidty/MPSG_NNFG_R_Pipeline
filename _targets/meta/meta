@@ -1,5 +1,8 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|2d90a554cb755f4d|||||||||||||||
+.Random.seed|object|4e83dc12cc89a281|||||||||||||||
+all_eligible_spatial_data|stem|bf5578f5da657977|bceeb00c6e33580a|aac25f9695f85863|1278968953||t19986.8707891073s|53d925f37b9c543b|731618|rds|local|vector|||1.187||
+all_eligible_spatial_data_point|stem|d9f12e04afd3414e|dd854f2bb15fdcbd|4835e87738e1e9db|218175650||t19986.872671233s|a0176d82980014c7|93505|rds|local|vector|||0.156||
+all_eligible_spatial_data_poly|stem|36f19e8da7b3e2df|26e0c8748a29ae50|5eac51f13777292e|-1474084323||t19986.8726550435s|512f45a668e77214|631170|rds|local|vector|||0.109||
 all_iucn_map|stem|246c811fcb5550b4|675def6a005e5d24|e78037c681c85590|1368258276||t19982.7260381463s|a7d29f76924c3acb|28618650|rds|local|vector|||2066.625||
 all_iucn_map_list|stem|79b0b708eb4a6760|c9403e219c2fe55f|ce776f4db73c7ff9|-794574756||t19972.7157647158s|9b013deaf0cf28f2|944|rds|local|vector|||0||
 all_state_lists|stem||858ee2f9deff6c72|be74eb4967bca7b4|-145830661||t19961.9382802771s||0|rds|local|vector|||0.031||could not find function build_all_state_lists
@@ -9,6 +12,7 @@ bien_plant_maps|stem|10c45e5b3a236d3d|0b019df31f2780d9|010a5038604202ca|-2104729
 bird_maps|stem|109e7a866dd0eda7|eb3f08a92459f55d|d049bf9be29b2faa|-1153647983||t19983.693925697s|be0fcb9bd94c148b|33822481|rds|local|vector|||2.594||
 build_all_iucn_map|function|0d4e7327d07a7ce3|||||||||||||||
 build_all_iucn_map_list|function|fcb089041cb9b96d|||||||||||||||
+build_all_occ_data|function|aa36ccea2281ef66|||||||||||||||
 build_eligible_list|function|c609d5791bdacdc7|||||||||||||||
 build_eligible_synonyms|function|11af10bb802d0bc6|||||||||||||||
 build_gbif_spatial_data|function|1f653d051893556d|||||||||||||||
@@ -27,6 +31,7 @@ build_output_dne_eligible_lists|function|058f9ab51f3d272c|||||||||||||||
 build_output_eligible_lists|function|46bd09a1448d7ff4|||||||||||||||
 build_output_natureserve_state_data|function|ed6d1f38ac584055|||||||||||||||
 build_output_natureserve_state_metadata|function|ed6d1f38ac584055|||||||||||||||
+build_quarto_params|function|8485352046e9dd6f|||||||||||||||
 build_r2_ss_list|function|b9f9c7f3b8172884|||||||||||||||
 build_sd_nhp_data|function|9ac49a89a71769cd|||||||||||||||
 build_sd_state_list|function|c2e37a126569634b|||||||||||||||
@@ -90,6 +95,9 @@ output_eligible_seinet_spatial_data|stem|3d29af4bba29abd3|55fe926d8259bf46|439d3
 output_eligible_spatial_data|function|53fa2cd85fdf2da6|||||||||||||||
 output_natureserve_state_data|stem|0e0f63411b14d9a2|fc8d9bc5cf1060d2|fe9ed1c982bbc3ee|581222546||t19957.8389467593s|abfed6147cb58a5b|79|rds|local|vector|||34.313||
 output_natureserve_state_metadata|stem|18b7204178b92c32|ad5d69fc8eaf70d5|407ddf87b7258e29|1052840880||t19956.653163372s|988429bb6428792b|83|rds|local|vector|||23.062||
+param_reports_5b667e86066adf34|branch||cf9e6a78d4239ae5|63c5aa86250ed182|497282200||t19986.9193304695s||0|file|local|vector|param_reports||8.343||System command quarto.exe failed
+param_reports_params|stem|6690320c086a0ea0|2cc347ced17c7168|9434b925ecbe790f|-925663493||t19986.9192253981s|5d3d61fe3c59c032|1041|rds|local|group||param_reports_params_6bb7b390fdef5696*param_reports_params_132fb3332c40e87d*param_reports_params_3aee91538e3b5c5a*param_reports_params_85c8845bdbf66c12*param_reports_params_0fbd77c82dfa1cfe*param_reports_params_b6b1c800c21a086b*param_reports_params_5cacf3b33b9bb81b*param_reports_params_577895a8fefd4978*param_reports_params_e8c1fcac9219632a*param_reports_params_a73e03f0d922e640*param_reports_params_895fd2da1561d469*param_reports_params_54968c18a109092d*param_reports_params_51e8e36d36358069*param_reports_params_f8e3f01960137b5b*param_reports_params_a3d6d68e2087e20b*param_reports_params_10086c61a7fe64e4*param_reports_params_c61901c289191271*param_reports_params_50942c71ec7d4bf0*param_reports_params_8be575f3f76cdeda*param_reports_params_d15783e621365806|0||
+qmd_params|stem|3f72d6edea0a6abc|9c9a7f7f0cdb7df3|a7708662d4ee25b4|-1523306659||t19986.9192244074s|3bd6b56fcf065cd5|6515|rds|local|vector|||0.39||
 r2_ss_list|stem|20493fae85c1a8b0|9ba2a1e9426b9fbe|09696b3cc06e2cc7|-2075424114||t19962.6383393697s|e2d629c362f9c5b5|9388|rds|local|vector|||67.703|package taxize was built under R version 4.3.3. package tidyverse was built under R version 4.3.2. package ggplot2 was built under R version 4.3.3. package dplyr was built under R version 4.3.2. package stringr was built under R version 4.3.2. package lubridate was built under R version 4.3.2. package quarto was built under R version 4.3.1. package httr2 was built under R version 4.3.3. package natserv was built under R version 4.3.3|
 reports|stem||12f1af4ba72de94b|9e7ed148c7a63659|536393307||t19983.7772616693s||0|file|local|vector|||3.859||System command quarto.exe failed
 reptiles1_iucn_map_list|stem|688d3efb3ac48f4f|24b9ac4b09315514|ed4291f21f8e9de5|1386152127||t19980.0703950655s|ff44d5a1f08d1b9b|332|rds|local|vector|||2317.14|attribute variables are assumed to be spatially constant throughout all geometries|
@@ -108,5 +116,5 @@ t_path_sp_list|object|19939b3506348ff6|||||||||||||||
 t_path_sp_list_rp|object|f17de3df92722886|||||||||||||||
 taxonomy_itis_verify|stem|28c63c8f275eb46c|f3218196e1c08834|22571b1379040bcb|-1706218701||t19985.6650629089s|c66f160d317fb88d|5358|rds|local|vector|||370.875|1 result no direct match found.  1 result no direct match found|
 team_inputs_round1|stem|4a20d5caccdb68f0|554ca0882bf21812|fcdec179b3a77cb3|-1442454542||t19982.9340025369s|552eea86ef039996|17220|rds|local|vector|||0.485||
-test|stem|ced4984c96ee1a9b|0c576fd66e7c0e52|7d7bfad3917c6efa|1839796588|qmd/species_evaluation.docx*qmd/species_evaluation.qmd|t19986.7574701676s|5074e3cc4c2efd2d|148206|file|local|vector|||11.844||
+test|stem|02e80b2af1926f05|236c81253cb4c251|63c5aa86250ed182|1839796588|qmd/species_evaluation.docx*qmd/species_evaluation.qmd|t19986.9214550694s|71fd7a1be35f5370|195555|file|local|vector|||16.735||
 transient_birds|stem|18a41af790b752c7|52429ce4d1779136|68f9c9a90da4a92c|2119939687||t19978.7523365737s|3cd3db806bf70b80|1891|rds|local|vector|||63.859|attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed to be spatially constant throughout all geometries. attribute variables are assumed|

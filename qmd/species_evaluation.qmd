@@ -1,7 +1,7 @@
 ---
 params: 
   # id: "2684709"
-  id: "2491123"
+  taxon_id: "2491123"
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -30,7 +30,7 @@ library(ggspatial)
 # library(extrafont)
 # loadfonts(quiet = T)
 
-t_id <- params$id
+t_id <- params$taxon_id
 species_data <- tar_read(output_dne_eligible_lists) |>
   filter(taxon_id == t_id) |>
   mutate(
@@ -144,13 +144,7 @@ if (is.na(species_data$usfws_status)) {
 ### Species' Native Range 
 
 ```{r}
-#| fig-height: 6
-
-m_source <- tar_read(map_source) |>
-  filter(taxon_id == t_id) |>
-  pull(source)
-
-
+## Base plot style.
 p_base <- ggplot() +
   theme_minimal() +
   ggspatial::annotation_north_arrow(
@@ -171,6 +165,22 @@ p_base <- ggplot() +
     legend.box.background = element_rect(color = "black", linewidth = 0.5, fill = "white"),
     legend.box.margin = margin(5, 5, 5, 5, unit = "pt")
   )
+```
+:::
+
+:::{custom-style="Caption"}
+
+```{r}    
+#| label: fig-cont-range
+#| fig-cap: "Range within the Continental United States"
+#| fig-alt: "Range within the Continental United States"
+#| fig-height: 6
+
+
+m_source <- tar_read(map_source) |>
+  filter(taxon_id == t_id) |>
+  pull(source)
+
 
 if (m_source == "BIEN" | m_source == "IUCN") {
   base_area <- tar_read(evaluation_base_map_data)$l_48
@@ -236,6 +246,36 @@ if (m_source == "EBIRD") {
     )
 }
 ```
+:::
+:::{custom-style="Caption"}
+```{r}
+#| label: occurrence-records
+#| fig-cap: "North American Seasonal Ranges"
+#| fig-alt: "North American Seasonal Ranges"
+#| fig-height: 6
+
+sp_points <- tar_read(all_eligible_spatial_data_point) |>
+  filter(taxon_id == t_id)
+
+sp_polys <- tar_read(all_eligible_spatial_data_poly) |>
+  filter(taxon_id == t_id)
+
+unit_sp <- tar_read(nnfg_bd)
+
+p_base +
+  geom_sf(data = unit_sp, fill = "grey20", color = "transparent") +
+  geom_sf(data = sp_polys, fill = "#1e8449") +
+  geom_sf(data = sp_points, size = 1.5, aes(color = "Observation")) +
+  scale_color_manual(values = c("#1e8449")) +
+  labs(
+    title = sp_names,
+    subtitle = "Distribution within the Nebraska National Grasslands and Forests",
+    color = "**Legend**"
+  )
+```
+:::
+:::{custom-style="Body Text"}
+
 
 ### Is the species native and known to occur?
 
@@ -245,8 +285,6 @@ nn_base <- species_data |>
 nn_basi <- species_data |>
   pull(`What is the rationale and supporting BASI for recommending that an observation does not meet the requirements of native to, and known to occur in the plan area?`)
 ```
-
-
 
 `r nn_base`
 

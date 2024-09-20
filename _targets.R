@@ -81,6 +81,10 @@ list(
   tar_target(output_eligible_seinet_spatial_data, output_eligible_spatial_data(seinet_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "seinet")),
   tar_target(output_eligible_gbif_spatial_data, output_eligible_spatial_data(gbif_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "gbif")),
   tar_target(output_eligible_imbcr_spatial_data, output_eligible_spatial_data(imbcr_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "imbcr")),
+  tar_target(all_eligible_spatial_data_poly, build_all_occ_data(
+    list(sd_nhp_spatial_eligible, ne_nhp_spatial_eligible)
+  )),
+  tar_target(all_eligible_spatial_data_point, build_all_occ_data(list(idb_spatial_eligible, seinet_spatial_eligible, gbif_spatial_eligible, imbcr_spatial_eligible))),
 
   ### IUCN available spatial data analysis and make internal shapes
   tar_target(mammal_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "MAMMALS.shp"), eligible_lists, nnfg_bd)),
@@ -121,6 +125,8 @@ list(
   # tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend, imbcr_trend_bcr18)),
   # tar_target(imbcr_trend_narratives_w_taxonomy, build_imbcr_taxonomy(imbcr_trend_narratives)),
   #
-  # tar_quarto(test, "qmd/species_evaluation.qmd", debug=T, quiet=F)
-  tar_quarto(test, "qmd/species_evaluation.qmd")
+  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists)),
+  tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
+  # tar_quarto(test, "qmd/species_evaluation.qmd")
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", execute_params=qmd_params%>%head(20))
 )
