@@ -22,7 +22,8 @@ tar_option_set(
     "openxlsx",
     "glue",
     "ebirdst",
-    "fs"
+    "fs",
+    "rnaturalearth"
   )
 )
 
@@ -108,6 +109,9 @@ list(
   tar_target(bird_maps, load_bird_maps(eligible_lists$current_eligible_list)),
   tar_target(map_source, build_map_source(output_dne_eligible_lists, all_iucn_map, bien_plant_maps, bird_maps)),
 
+  ## Get map background data for species evaluations
+  tar_target(evaluation_base_map_data, get_evaluation_base_map_data()),
+
   ## Habitat Association Work
   tar_target(ns_habitats, get_ns_habitat(natureserve_state_data$unit_nature_serve_list, output_dne_eligible_lists)),
 
@@ -117,5 +121,6 @@ list(
   # tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend, imbcr_trend_bcr18)),
   # tar_target(imbcr_trend_narratives_w_taxonomy, build_imbcr_taxonomy(imbcr_trend_narratives)),
   #
+  # tar_quarto(test, "qmd/species_evaluation.qmd", debug=T, quiet=F)
   tar_quarto(test, "qmd/species_evaluation.qmd")
 )

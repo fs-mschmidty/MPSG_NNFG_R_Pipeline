@@ -1,6 +1,7 @@
 ---
 params: 
-  id: "2684709"
+  # id: "2684709"
+  id: "2491123"
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -10,6 +11,7 @@ format:
         dev: 'ragg_png'
         dpi: 300
         fig-width: 6.5
+        fig-height: 6
 execute:
   echo: false
   message: false
@@ -25,6 +27,9 @@ library(targets)
 library(glue)
 library(rnaturalearth)
 library(ggtext)
+library(ggspatial)
+# library(extrafont)
+# loadfonts(quiet = T)
 
 t_id <- params$id
 species_data <- tar_read(output_dne_eligible_lists) |>
@@ -70,17 +75,27 @@ if (length(synonyms) > 0) {
 
 ```{r}
 # I need to make sure this works if there are no other rankings.
-other_ranking_narrative <- species_data |>
-  mutate(
-    other_rankings = glue(
-      ifelse(!is.na(r2_ss_list), "Region 2 Sensitive Species, ", ""),
-      ifelse(!is.na(nebraska_swap), "Nebraska SWAP {nebraska_swap}, ", ""),
-      ifelse(!is.na(sd_te), "South Dakota {sd_te}", ""),
-      ifelse(!is.na(usfws_status), "FWS {usfws_status}, ", "")
-    ),
-    other_rankings = str_replace(other_rankings, ".{2}$", ".")
-  ) |>
-  pull(other_rankings)
+
+other_ranking_narrative <- if (
+  !is.na(species_data$r2_ss_list) |
+    !is.na(species_data$nebraska_swap) |
+    !is.na(species_data$sd_te) |
+    !is.na(species_data$usfws_status)
+) {
+  species_data |>
+    mutate(
+      other_rankings = glue(
+        ifelse(!is.na(r2_ss_list), "Region 2 Sensitive Species, ", ""),
+        ifelse(!is.na(nebraska_swap), "Nebraska SWAP {nebraska_swap}, ", ""),
+        ifelse(!is.na(sd_te), "South Dakota {sd_te}", ""),
+        ifelse(!is.na(usfws_status), "FWS {usfws_status}, ", "")
+      ),
+      other_rankings = str_replace(other_rankings, ".{2}$", ".")
+    ) |>
+    pull(other_rankings)
+} else {
+  "No other qualifying conservation cateries apply to this species."
+}
 ```
 
 `r other_ranking_narrative`
@@ -130,42 +145,88 @@ if (is.na(species_data$usfws_status)) {
 ### Species' Native Range 
 
 ```{r}
-states <- ne_states(country = c("United States of America", "Canada", "Mexico")) |>
-  st_as_sf() |>
-  filter(name != "Hawaii") |>
-  st_transform(crs = 5070)
-
 m_source <- tar_read(map_source) |>
   filter(taxon_id == t_id) |>
   pull(source)
 
-if (m_source == "BIEN") {
-  g_map_data <- tar_read(bien_plant_maps) |>
-    filter(taxon_id == t_id) |>
-    st_transform(st_crs(states))
-}
 
-title <- glue("North American Range of {sp_names}")
-
-ggplot() +
-  # theme_void(base_family = "Roboto Condensed") +
-  geom_sf(data = states, fill = "grey30", color = "white") +
-  geom_sf(data = g_map_data, aes(fill = "Overall Range"), color = "transparent", alpha = 0.8) +
-  # geom_sf(data = admin_body, fill = "transparent", color = "black") +
-  scale_fill_manual(values = c("#1e8449")) +
-  labs(
-    title = title,
-    fill = "**Legend**",
-    caption = "**Source**:Botanical Information and Ecology Network."
+p_base <- ggplot() +
+  theme_minimal() +
+  ggspatial::annotation_north_arrow(
+    location = "br",
+    which_north = "true",
+    height = unit(0.33, "in"),
+    width = unit(0.33, "in"),
+    style = north_arrow_fancy_orienteering()
   ) +
   theme(
+    plot.background = element_rect(color = "black", linewidth = 1),
     plot.title = element_markdown(face = "bold", hjust = 0, margin = margin(0, 0, 5, 0, "pt")),
-    plot.margin = margin(t = 20, r = 20, b = 20, l = 20, "pt"),
+    plot.margin = margin(t = 10, r = 10, b = 10, l = 10, "pt"),
     plot.caption = element_markdown(),
     legend.title = element_markdown(),
     legend.position = "inside",
-    legend.position.inside = c(0.15, 0.1)
+    legend.position.inside = c(0.15, 0.1),
+    legend.box.background = element_rect(color = "black", linewidth = 0.5, fill = "white"),
+    legend.box.margin = margin(5, 5, 5, 5, unit = "pt")
   )
+
+if (m_source == "BIEN" | m_source == "IUCN") {
+  base_area <- tar_read(evaluation_base_map_data)$l_48
+
+  aoa <- tar_read(nnfg_aoa) |>
+    st_transform(st_crs(base_area))
+
+  if (m_source == "BIEN") {
+    g_map_data <- tar_read(bien_plant_maps)
+    source_statement <- "**Source**:Botanical Information and Ecology Network."
+  }
+  if (m_source == "IUCN") {
+    g_map_data <- tar_read(all_iucn_map)
+    source_statement <- "**Source: IUCN Spatila Data**"
+  }
+
+  g_map_data <- g_map_data |>
+    filter(taxon_id == t_id) |>
+    st_transform(st_crs(base_area)) |>
+    st_intersection(st_union(base_area))
+
+  p_base +
+    geom_sf(data = base_area, fill = "grey30", color = "white") +
+    geom_sf(data = g_map_data, aes(fill = "Overall Range"), color = "transparent", alpha = 0.8) +
+    geom_sf(data = aoa, fill = "yellow", color = "transparent") +
+    scale_fill_manual(values = c("#1e8449")) +
+    labs(
+      title = sp_names,
+      subtitle = "Continental United States Range",
+      fill = "**Legend**",
+      caption = source_statment
+    )
+} else if (m_source == "EBIRD") {
+  #| fig-height: 7
+  base_area <- tar_read(evaluation_base_map_data)$north_america
+
+  aoa <- tar_read(nnfg_aoa) |>
+    st_transform(st_crs(base_area))
+
+  g_map_data <- tar_read(bird_maps) |>
+    filter(taxon_id == t_id) |>
+    st_transform(st_crs(base_area)) |>
+    st_intersection(base_area |> st_union())
+
+  p_base +
+    geom_sf(data = base_area, fill = "grey30", color = "white") +
+    geom_sf(data = g_map_data, aes(fill = season), color = "transparent") +
+    geom_sf(data = base_area, fill = "transparent", color = "white") +
+    geom_sf(data = aoa, fill = "yellow", color = "transparent") +
+    scale_fill_brewer(palette = "Dark2") +
+    labs(
+      title = sp_names,
+      subtitle = "North American Range",
+      fill = "**Season**",
+      caption = "**Source:** eBird Status and Trends"
+    )
+}
 ```
 
 

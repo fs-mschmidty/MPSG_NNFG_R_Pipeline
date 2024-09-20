@@ -10,7 +10,7 @@ format:
       opts_chunk:
         dev: 'ragg_png'
         fig-width: 6.5
-        # fig-height: 6
+        fig-height: 6
 execute:
   echo: false
   message: false
@@ -144,8 +144,6 @@ if (is.na(species_data$usfws_status)) {
 ### Species' Native Range 
 
 ```{r}
-#| fig-height: 6
-
 m_source <- tar_read(map_source) |>
   filter(taxon_id == t_id) |>
   pull(source)
@@ -203,15 +201,8 @@ if (m_source == "BIEN" | m_source == "IUCN") {
       fill = "**Legend**",
       caption = source_statment
     )
-}
-```
-
-```{r}
-#| label: fig-breeding-range
-#| fig-cap: "North American Seasonal Ranges"
-#| fig-alt: "North American Seasonal Ranges"
-#| fig-height: 6.5
-if (m_source == "EBIRD") {
+} else if (m_source == "EBIRD") {
+  #| fig-height:8
   base_area <- tar_read(evaluation_base_map_data)$north_america
 
   aoa <- tar_read(nnfg_aoa) |>
@@ -236,6 +227,8 @@ if (m_source == "EBIRD") {
     )
 }
 ```
+
+
 
 ### Is the species native and known to occur?
 
