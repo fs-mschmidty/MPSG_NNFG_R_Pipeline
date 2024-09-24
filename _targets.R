@@ -23,7 +23,10 @@ tar_option_set(
     "glue",
     "ebirdst",
     "fs",
-    "rnaturalearth"
+    "rnaturalearth",
+    "rgbif",
+    "osmdata",
+    "arcgislayers"
   )
 )
 
@@ -109,12 +112,14 @@ list(
     odonata_iucn_map_list,
     crayfish_iucn_map_list
   )),
+  ### Bien maps were retrieved with a non_target process!!
   tar_target(bien_plant_maps, load_bien_plant_maps("output/bien_test/1", eligible_lists$current_eligible_list)),
   tar_target(bird_maps, load_bird_maps(eligible_lists$current_eligible_list)),
   tar_target(map_source, build_map_source(output_dne_eligible_lists, all_iucn_map, bien_plant_maps, bird_maps)),
+  tar_target(gbif_occ_data, get_gbif_occ_data(output_dne_eligible_lists, map_source)),
 
   ## Get map background data for species evaluations
-  tar_target(evaluation_base_map_data, get_evaluation_base_map_data()),
+  tar_target(evaluation_base_map_data, get_evaluation_base_map_data(nnfg_aoa)),
 
   ## Habitat Association Work
   tar_target(ns_habitats, get_ns_habitat(natureserve_state_data$unit_nature_serve_list, output_dne_eligible_lists)),
@@ -126,7 +131,7 @@ list(
   # tar_target(imbcr_trend_narratives_w_taxonomy, build_imbcr_taxonomy(imbcr_trend_narratives)),
   #
   tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists)),
-  tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
+  # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
-  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", execute_params=qmd_params%>%head(20))
+  tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", execute_params = qmd_params %>% head(20), debug = T, quiet = F)
 )

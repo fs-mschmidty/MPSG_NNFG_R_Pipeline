@@ -26,7 +26,7 @@ execute:
 
 
 :::{custom-style="Body Text"}
-# Grasshopper Sparrow (*Ammodramus savannarum*)
+# Merlin<br>(*Falco columbarius*)
 
 ## Species observation records and conservation categories
 
@@ -41,11 +41,10 @@ execute:
 
 
 There are no known synonyms for this species {GBIF Secretariat 2023}.
-**[SPECIALISTS REVIEW USDA PLANTS AND OTHER LITERATURE FOR MORE SPECIES.]**
 
 ### NatureServe Conservation Status (Global/State):
 
-G5/S4(NE), S4B(SD)
+G5/S1(NE), S2B,SNRN(SD)
 
 ### Additional Qualifying Conservation Categories (including Local Concern)
 
@@ -57,7 +56,7 @@ G5/S4(NE), S4B(SD)
 
 
 
-Region 2 Sensitive Species.
+Nebraska SWAP Tier 2.
 
 ### Number of Occurrence records by Data Source
 
@@ -68,15 +67,11 @@ Region 2 Sensitive Species.
 :::
 
 
-Observations: GFIB - 413, iDigBio - 1, Bird Conservancy of the Rockies - 6299.
+Observations: GFIB - 22, Nebraska Natural Heritage - 4.
 
-#### Year of first observation for the combined data: 
+#### Year of first and last observation for all occurrence data: 
 
-1987
-
-#### Year of last observation for the combined data: 
-
-NA
+[1980, NA]
 
 ### Is the species currently federally designated as threatened, endangered, proposed, or candidate speecies under the Endangered Species Act?
 
@@ -111,9 +106,11 @@ No
 
 ::: {.cell}
 ::: {.cell-output-display}
-![North American Seasonal Ranges](species_evaluation_files/figure-docx/fig-breeding-range-1.png){#fig-breeding-range fig-alt='North American Seasonal Ranges'}
+![North American Seasonal Ranges](species_evaluation_files/figure-docx/breeding-range-1.png){fig-alt='North American Seasonal Ranges'}
 :::
 :::
+
+
 
 
 :::

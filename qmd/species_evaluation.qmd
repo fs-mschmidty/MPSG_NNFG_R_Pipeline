@@ -40,7 +40,7 @@ species_data <- tar_read(output_dne_eligible_lists) |>
 sp_names <- glue("{species_data$common_name} (*{species_data$scientific_name}*)")
 ```
 :::{custom-style="Body Text"}
-# `r sp_names`
+# `r species_data$common_name`<br>(*`r species_data$scientific_name`*)
 
 ## Species observation records and conservation categories
 
@@ -64,7 +64,6 @@ if (length(synonyms) > 0) {
 ```
 
 `r synonyms`
-**[SPECIALISTS REVIEW USDA PLANTS AND OTHER LITERATURE FOR MORE SPECIES.]**
 
 ### NatureServe Conservation Status (Global/State):
 
@@ -93,7 +92,7 @@ other_ranking_narrative <- if (
     ) |>
     pull(other_rankings)
 } else {
-  "No other qualifying conservation cateries apply to this species."
+  "No other qualifying conservation categories apply to this species."
 }
 ```
 
@@ -119,13 +118,9 @@ number_of_occ <- species_data |>
 ```
 `r number_of_occ`
 
-#### Year of first observation for the combined data: 
+#### Year of first and last observation for all occurrence data: 
 
-`r species_data$min_overall_year`
-
-#### Year of last observation for the combined data: 
-
-`r species_data$max_overall_year`
+[`r species_data$min_overall_year`, `r species_data$max_overall_year`]
 
 ### Is the species currently federally designated as threatened, endangered, proposed, or candidate speecies under the Endangered Species Act?
 
@@ -165,13 +160,15 @@ p_base <- ggplot() +
     legend.box.background = element_rect(color = "black", linewidth = 0.5, fill = "white"),
     legend.box.margin = margin(5, 5, 5, 5, unit = "pt")
   )
+
+base_map_data <- tar_read(evaluation_base_map_data)
 ```
 :::
 
 :::{custom-style="Caption"}
 
 ```{r}    
-#| label: fig-cont-range
+#| label: cont-range
 #| fig-cap: "Range within the Continental United States"
 #| fig-alt: "Range within the Continental United States"
 #| fig-height: 6
@@ -183,7 +180,7 @@ m_source <- tar_read(map_source) |>
 
 
 if (m_source == "BIEN" | m_source == "IUCN") {
-  base_area <- tar_read(evaluation_base_map_data)$l_48
+  base_area <- base_map_data$l_48
 
   aoa <- tar_read(nnfg_aoa) |>
     st_transform(st_crs(base_area))
@@ -211,48 +208,71 @@ if (m_source == "BIEN" | m_source == "IUCN") {
       title = sp_names,
       subtitle = "Continental United States Range",
       fill = "**Legend**",
-      caption = source_statment
+      caption = source_statement,
     )
 }
 ```
 
 ```{r}
-#| label: fig-breeding-range
+#| label: breeding-range
 #| fig-cap: "North American Seasonal Ranges"
 #| fig-alt: "North American Seasonal Ranges"
 #| fig-height: 6.5
-if (m_source == "EBIRD") {
-  base_area <- tar_read(evaluation_base_map_data)$north_america
+if (m_source == "EBIRD" | is.na(m_source)) {
+  base_area <- base_map_data$north_america
 
   aoa <- tar_read(nnfg_aoa) |>
     st_transform(st_crs(base_area))
+  if (is.na(m_source)) {
+    g_map_data <- tar_read(gbif_occ_data) |>
+      filter(taxon_id == t_id) |>
+      st_transform(st_crs(base_area)) |>
+      st_intersection(base_area |> st_union())
 
-  g_map_data <- tar_read(bird_maps) |>
-    filter(taxon_id == t_id) |>
-    st_transform(st_crs(base_area)) |>
-    st_intersection(base_area |> st_union())
+    p_base_a <- p_base +
+      geom_sf(data = base_area, fill = "grey30", color = "white") +
+      geom_sf(data = g_map_data, aes(color = "Occurrence Record"), size = 2) +
+      scale_color_manual(values = c("#1e8449")) +
+      labs(
+        title = sp_names,
+        subtitle = "North American Range",
+        color = "**Legend**",
+        caption = "**Source:** GBIF occurrence records. "
+      )
+  } else if (m_source == "EBIRD") {
+    g_map_data <- tar_read(bird_maps) |>
+      filter(taxon_id == t_id) |>
+      st_transform(st_crs(base_area)) |>
+      st_intersection(base_area |> st_union())
 
-  p_base +
-    geom_sf(data = base_area, fill = "grey30", color = "white") +
-    geom_sf(data = g_map_data, aes(fill = season), color = "transparent") +
-    geom_sf(data = base_area, fill = "transparent", color = "white") +
-    geom_sf(data = aoa, fill = "yellow", color = "transparent") +
-    scale_fill_brewer(palette = "Dark2") +
-    labs(
-      title = sp_names,
-      subtitle = "North American Range",
-      fill = "**Season**",
-      caption = "**Source:** eBird Status and Trends"
-    )
+    p_base_a <- p_base +
+      geom_sf(data = base_area, fill = "grey30", color = "white") +
+      geom_sf(data = g_map_data, aes(fill = season), color = "transparent") +
+      scale_fill_brewer(palette = "Dark2") +
+      labs(
+        title = sp_names,
+        subtitle = "North American Range",
+        fill = "**Season**",
+        caption = "**Source:** eBird Status and Trends"
+      )
+  }
+
+  if (nrow(g_map_data) > 0) {
+    p_base_a +
+      geom_sf(data = base_area, fill = "transparent", color = "white") +
+      geom_sf(data = aoa, fill = "yellow", color = "transparent")
+  }
 }
 ```
+
+
 :::
 :::{custom-style="Caption"}
 ```{r}
 #| label: occurrence-records
 #| fig-cap: "North American Seasonal Ranges"
 #| fig-alt: "North American Seasonal Ranges"
-#| fig-height: 6
+#| fig-height: 6.25
 
 sp_points <- tar_read(all_eligible_spatial_data_point) |>
   filter(taxon_id == t_id)
@@ -261,16 +281,96 @@ sp_polys <- tar_read(all_eligible_spatial_data_poly) |>
   filter(taxon_id == t_id)
 
 unit_sp <- tar_read(nnfg_bd)
+own <- tar_read(nnfg_fs_ownership)
+
+labels <- base_map_data$nnfg_dist %>%
+  bind_cols(st_coordinates(st_centroid(.))) |>
+  mutate(
+    name_sub = str_replace(DISTRICTNAME, " Ranger District", ""),
+    label_n = glue("{name_sub} RD"),
+    X = case_when(
+      OBJECTID == 429949 ~ 850000,
+      OBJECTID == 429950 ~ 630000,
+      OBJECTID == 429951 ~ 620000,
+      TRUE ~ X
+    ),
+    Y = case_when(
+      OBJECTID == 429949 ~ 4700000,
+      OBJECTID == 429952 ~ 4880000,
+      name_sub == "Pine Ridge" ~ 4700000,
+      name_sub == "Ft. Pierre" ~ 4870000,
+      TRUE ~ Y
+    )
+  )
+
+roads <- base_map_data$nnfg_roads |>
+  select(highway, `tiger:name_base`:`tiger:name_base_4`) |>
+  st_crop(unit_sp)
+
+motorways <- roads |>
+  filter(highway == "motorway") |>
+  mutate(name = case_when(
+    `tiger:name_base` == "I-190" ~ "I-90",
+    TRUE ~ `tiger:name_base`
+  )) |>
+  count(name)
+
+trunk <- roads |>
+  filter(highway == "trunk")
+
+other_rd <- roads |>
+  filter(highway %in% c("primary"))
+
+states <- base_map_data$l_48 |>
+  st_transform(st_crs(unit_sp)) |>
+  filter(name %in% c("Nebraska", "South Dakota", "Wyoming"))
+
+state_labels <- tibble(
+  label = c("South Dakota", "Nebraska"),
+  x = c(885000, 885000),
+  y = c(4777000, 4767000)
+)
+wyoming_label <- tibble(
+  label = c("Wyoming"),
+  x = c(576517.7),
+  y = c(4634402.1)
+)
 
 p_base +
-  geom_sf(data = unit_sp, fill = "grey20", color = "transparent") +
+  geom_sf(data = unit_sp, fill = "grey70", color = "transparent") +
+  geom_sf(data = own, fill = "darkgreen", color = "transparent", alpha = 0.5) +
+  geom_sf(data = motorways, color = "grey30", linewidth = 1) +
+  geom_sf_label(
+    data = motorways,
+    aes(label = name),
+    fill = "black",
+    color = "white",
+    nudge_x = -33300,
+    nudge_y = 18000,
+    label.r = unit(0.8, "lines"),
+    label.padding = unit(0.35, "lines")
+  ) +
+  geom_sf(data = trunk, color = "grey80", linewidth = 0.5) +
+  geom_sf(data = states, color = "black", linewidth = 1, fill = "transparent", linetype = "dotdash") +
+  geom_sf(data = labels, fill = "transparent", color = "grey30") +
+  geom_label(data = labels, aes(X, Y, label = label_n), show.legend = FALSE) +
+  geom_text(data = state_labels, aes(x, y, label = label), size = 3, color = "#999999") +
+  geom_text(data = wyoming_label, aes(x, y, label = label), size = 3, color = "#999999", angle = 90, nudge_x = -1000) +
   geom_sf(data = sp_polys, fill = "#1e8449") +
-  geom_sf(data = sp_points, size = 1.5, aes(color = "Observation")) +
-  scale_color_manual(values = c("#1e8449")) +
+  geom_sf(data = sp_points, size = 2.5, aes(color = "Observation")) +
+  scale_color_manual(values = c("#7d3c98")) +
   labs(
     title = sp_names,
     subtitle = "Distribution within the Nebraska National Grasslands and Forests",
-    color = "**Legend**"
+    color = "**Legend**",
+    x = "",
+    y = ""
+  ) +
+  scale_x_continuous(limits = c(575517.7, 899630)) +
+  scale_y_continuous(limits = c(4634402.1, 4914917)) +
+  theme(
+    axis.text = element_blank(),
+    panel.grid = element_blank()
   )
 ```
 :::
@@ -282,6 +382,7 @@ p_base +
 ```{r}
 nn_base <- species_data |>
   pull(`Is the Species Native and Known to Occur`)
+
 nn_basi <- species_data |>
   pull(`What is the rationale and supporting BASI for recommending that an observation does not meet the requirements of native to, and known to occur in the plan area?`)
 ```

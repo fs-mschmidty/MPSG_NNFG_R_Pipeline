@@ -15,23 +15,25 @@ req <- request(base_url) |>
 
 response <- req |>
   req_perform()
-
-response |>
-  resp_body_json() 
-
-plants_api_base<-"https://plantsservices.sc.egov.usda.gov/api/PlantProfile?symbol="
-current_plant_symbol<-"ARTR2"
-api_artr2<-paste0(plants_api_base, current_plant_symbol)
-
-req<-request(api_artr2)
-
-t<-req |>
-  req_perform() |>
+json <- response |>
   resp_body_json()
 
-dist_url<-"https://plantsservice.sc.egov.usda.gov/api/PlantProfile/getDownloadDistributionDocumentation"
+json$PlantResults[[1]]$ScientificName
 
-r3<-request(dist_url) |>
+plants_api_base <- "https://plantsservices.sc.egov.usda.gov/api/PlantProfile?symbol="
+current_plant_symbol <- json$PlantResults[[1]]$Symbol
+api_artr2 <- paste0(plants_api_base, current_plant_symbol)
+
+req2 <- request(api_artr2)
+
+t <- req2 |>
+  req_perform() |>
+  resp_body_json()
+t$Synonyms
+
+dist_url <- "https://plantsservice.sc.egov.usda.gov/api/PlantProfile/getDownloadDistributionDocumentation"
+
+r3 <- request(dist_url) |>
   req_body_form(
     Text = "Artr2",
     Field = "Symbol",
@@ -40,4 +42,4 @@ r3<-request(dist_url) |>
     Offset = "-1"
   )
 
-res3<-req_perform(r3)
+res3 <- req_perform(r3)
