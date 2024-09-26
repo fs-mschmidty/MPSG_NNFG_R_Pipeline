@@ -3,6 +3,7 @@ build_quarto_params <- function(x) {
     group_by(taxon_id) |>
     mutate(n = n()) |>
     filter(n == 1) |>
+    ungroup() |>
     filter(`Is the Species Native and Known to Occur` %in% c("Yes", "?")) |>
     mutate(
       sn_base = str_replace_all(scientific_name, "var\\. |ssp\\.", ""),

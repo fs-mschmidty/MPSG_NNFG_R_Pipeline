@@ -26,7 +26,9 @@ tar_option_set(
     "rnaturalearth",
     "rgbif",
     "osmdata",
-    "arcgislayers"
+    "arcgislayers",
+    "sjnftools",
+    "scales"
   )
 )
 
@@ -65,7 +67,7 @@ list(
   # tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output", transient_birds, native_known_need_check)),
   tar_target(output_dne_eligible_lists, build_output_dne_eligible_lists(eligible_lists, "output", t_path_sp_list, species_list_sp, team_inputs_round1)),
   tar_target(eligible_synonyms, build_eligible_synonyms(output_dne_eligible_lists)),
-  tar_target(taxonomy_itis_verify, build_taxonomy_itis_verify(output_dne_eligible_lists)),
+  ## tar_target(taxonomy_itis_verify, build_taxonomy_itis_verify(output_dne_eligible_lists)),
 
   # Spatial data
   ## Occurrence Lists
@@ -125,13 +127,14 @@ list(
   tar_target(ns_habitats, get_ns_habitat(natureserve_state_data$unit_nature_serve_list, output_dne_eligible_lists)),
 
   # ## Imbcr data cleaning and build narratives
-  # tar_target(imbcr_trend, read_excel("T:\\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData\\2023_IMBCR_USFSdata\\Reg 2 grasslands estimates_8-8-24.xlsx", sheet = "trend") |> clean_names()),
-  # tar_target(imbcr_trend_bcr18, read_excel("T:\\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData\\2023_IMBCR_USFSdata\\IMBCR BCR18 trends.xlsx") |> clean_names()),
-  # tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend, imbcr_trend_bcr18)),
+  tar_target(imbcr_trend, read_excel("data/imbcr/Reg_2_grasslands_estimates_9-17-24.xlsx", sheet = "trend") |> clean_names()),
+  tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend)),
   # tar_target(imbcr_trend_narratives_w_taxonomy, build_imbcr_taxonomy(imbcr_trend_narratives)),
-  #
-  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists)),
+  tar_target(bbs_trend_narratives, build_bbs_trend_narratives()),
+
+  ## Quarto Paramaterized reporting.
+  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists))
   # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
-  tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", execute_params = qmd_params %>% head(20), debug = T, quiet = F)
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 20), debug = T, quiet = F)
 )

@@ -1,7 +1,7 @@
 ---
 params: 
-  # id: "2684709"
-  taxon_id: "2491123"
+  # taxon_id: "2491123"
+  taxon_id: "2474941"
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -27,8 +27,8 @@ library(glue)
 library(rnaturalearth)
 library(ggtext)
 library(ggspatial)
-# library(extrafont)
-# loadfonts(quiet = T)
+library(extrafont)
+loadfonts(quiet = T)
 
 t_id <- params$taxon_id
 species_data <- tar_read(output_dne_eligible_lists) |>
@@ -40,7 +40,8 @@ species_data <- tar_read(output_dne_eligible_lists) |>
 sp_names <- glue("{species_data$common_name} (*{species_data$scientific_name}*)")
 ```
 :::{custom-style="Body Text"}
-# `r species_data$common_name`<br>(*`r species_data$scientific_name`*)
+# `r species_data$common_name`
+(*`r species_data$scientific_name`*)
 
 ## Species observation records and conservation categories
 
@@ -57,7 +58,7 @@ if (length(synonyms) > 0) {
   synonyms <- synonyms |>
     paste(collapse = ", ")
 
-  synonyms <- glue("Current and historic synonyms for {species_data$scientific_name} are: {synonyms} {citation}.")
+  synonyms <- glue("Current and historic synonyms for {species_data$scientific_name} are: *{synonyms}* {citation}.")
 } else {
   synonyms <- glue("There are no known synonyms for this species {citation}.")
 }
@@ -120,15 +121,15 @@ number_of_occ <- species_data |>
 
 #### Year of first and last observation for all occurrence data: 
 
-[`r species_data$min_overall_year`, `r species_data$max_overall_year`]
+First: `r species_data$min_overall_year`, Last: `r species_data$max_overall_year`
 
-### Is the species currently federally designated as threatened, endangered, proposed, or candidate speecies under the Endangered Species Act?
+### Is the species currently federally designated as threatened, endangered, proposed, or candidate species under the Endangered Species Act?
 
 ```{r}
 if (is.na(species_data$usfws_status)) {
   fed_status_string <- "No"
 } else if (species_data$usfws_status == "Under Review") {
-  fed_status_string <- glue("No. Current USFWS status: {species_Data$usfws_status}.")
+  fed_status_string <- glue("No. Current USFWS status: {species_data$usfws_status}.")
 } else {
   fed_status_string <- glue("Yes. Current USFWS status: {species_data$usfws_status}.")
 }
@@ -141,7 +142,7 @@ if (is.na(species_data$usfws_status)) {
 ```{r}
 ## Base plot style.
 p_base <- ggplot() +
-  theme_minimal() +
+  theme_minimal(base_family = "Roboto Condensed") +
   ggspatial::annotation_north_arrow(
     location = "br",
     which_north = "true",
@@ -158,7 +159,7 @@ p_base <- ggplot() +
     legend.position = "inside",
     legend.position.inside = c(0.15, 0.1),
     legend.box.background = element_rect(color = "black", linewidth = 0.5, fill = "white"),
-    legend.box.margin = margin(5, 5, 5, 5, unit = "pt")
+    legend.box.margin = margin(0, 3, 0, 3, unit = "pt")
   )
 
 base_map_data <- tar_read(evaluation_base_map_data)
@@ -177,7 +178,9 @@ base_map_data <- tar_read(evaluation_base_map_data)
 m_source <- tar_read(map_source) |>
   filter(taxon_id == t_id) |>
   pull(source)
-
+if (is.na(m_source)) {
+  m_source <- "No Map Available"
+}
 
 if (m_source == "BIEN" | m_source == "IUCN") {
   base_area <- base_map_data$l_48
@@ -270,9 +273,9 @@ if (m_source == "EBIRD" | is.na(m_source)) {
 :::{custom-style="Caption"}
 ```{r}
 #| label: occurrence-records
-#| fig-cap: "North American Seasonal Ranges"
+#| fig-cap: "Occurrence records within Nebraska National Forests and Grasslands."
 #| fig-alt: "North American Seasonal Ranges"
-#| fig-height: 6.25
+#| fig-height: 6.35
 
 sp_points <- tar_read(all_eligible_spatial_data_point) |>
   filter(taxon_id == t_id)
@@ -296,17 +299,16 @@ labels <- base_map_data$nnfg_dist %>%
     ),
     Y = case_when(
       OBJECTID == 429949 ~ 4700000,
-      OBJECTID == 429952 ~ 4880000,
+      name_sub == "Wall" ~ 4885000,
       name_sub == "Pine Ridge" ~ 4700000,
       name_sub == "Ft. Pierre" ~ 4870000,
+      name_sub == "Fall River" ~ 4805000,
       TRUE ~ Y
     )
   )
 
 roads <- base_map_data$nnfg_roads |>
-  select(highway, `tiger:name_base`:`tiger:name_base_4`) |>
-  st_crop(unit_sp)
-
+  select(highway, `tiger:name_base`:`tiger:name_base_4`)
 motorways <- roads |>
   filter(highway == "motorway") |>
   mutate(name = case_when(
@@ -333,12 +335,14 @@ state_labels <- tibble(
 wyoming_label <- tibble(
   label = c("Wyoming"),
   x = c(576517.7),
-  y = c(4634402.1)
+  y = c(4900000)
 )
 
 p_base +
   geom_sf(data = unit_sp, fill = "grey70", color = "transparent") +
   geom_sf(data = own, fill = "darkgreen", color = "transparent", alpha = 0.5) +
+  geom_sf(data = trunk, color = "grey80", linewidth = 1) +
+  geom_sf(data = other_rd, color = "grey80", linewidth = 0.5) +
   geom_sf(data = motorways, color = "grey30", linewidth = 1) +
   geom_sf_label(
     data = motorways,
@@ -350,24 +354,23 @@ p_base +
     label.r = unit(0.8, "lines"),
     label.padding = unit(0.35, "lines")
   ) +
-  geom_sf(data = trunk, color = "grey80", linewidth = 0.5) +
   geom_sf(data = states, color = "black", linewidth = 1, fill = "transparent", linetype = "dotdash") +
   geom_sf(data = labels, fill = "transparent", color = "grey30") +
-  geom_label(data = labels, aes(X, Y, label = label_n), show.legend = FALSE) +
+  geom_label(data = labels, aes(X, Y, label = label_n), show.legend = FALSE, size = 3) +
   geom_text(data = state_labels, aes(x, y, label = label), size = 3, color = "#999999") +
-  geom_text(data = wyoming_label, aes(x, y, label = label), size = 3, color = "#999999", angle = 90, nudge_x = -1000) +
+  geom_text(data = wyoming_label, aes(x, y, label = label), size = 3, color = "#999999", angle = 90, nudge_x = -7500) +
   geom_sf(data = sp_polys, fill = "#1e8449") +
-  geom_sf(data = sp_points, size = 2.5, aes(color = "Observation")) +
+  geom_sf(data = sp_points, size = 2.5, aes(color = "Observation"), alpha = 0.7) +
   scale_color_manual(values = c("#7d3c98")) +
   labs(
     title = sp_names,
-    subtitle = "Distribution within the Nebraska National Grasslands and Forests",
+    subtitle = "Occurrence records within the Nebraska National Forests and Grasslands",
     color = "**Legend**",
     x = "",
     y = ""
   ) +
-  scale_x_continuous(limits = c(575517.7, 899630)) +
-  scale_y_continuous(limits = c(4634402.1, 4914917)) +
+  scale_x_continuous(limits = c(567517.7, 899630)) +
+  scale_y_continuous(limits = c(4624402.1, 4914917)) +
   theme(
     axis.text = element_blank(),
     panel.grid = element_blank()
@@ -405,17 +408,32 @@ nn_basi <- species_data |>
 
 [Yes, No, Unknown]
 
-#### Based on the species’ ecology and the environmental conditions present, does the plan area overlap the edge of the species range?
-
-[Yes, No, Unknown]
+#### What is the distance between the plan area and the closest edge of the species range? 
+[unknown (i.e., no known range for the species), 0 miles (i.e. species range transects the plan area), 1-50 miles, 51-150 miles, 151-500 miles, 500 or more miles.]   
 
 ### Species’ Landscape-scale Habitat
 
-#### What are the landscape-scale habitat types or ecosystems the species occupies based on Best Available Scientific Information (BASI), inside and out of the plan area. 
+#### What are the landscape-scale habitat types or ecosystems the species occupies based on Best Available Scientific Information (BASI), including literature from outside of the plan area?
+
+```{r}
+ns_habs<-tar_read(ns_habitats) |>
+  filter(taxon_id==t_id)
+
+comments<-ns_habs |>
+  filter(hab_cat=="comments")
+
+if(nrow(comments)=1){
+  comment_narrative<-comments |>
+    pull(ns_hap)
+} else {
+  comment_narrative<-"NO COMMENT NARRATIVE WAS GENERATED FROM NATURESERVE"
+}
+```
+`r comment_narrative`
 
 [Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually]
 
-#### Based on BASI , what are the landscape-scale habitat types or ecosystems in the plan area are likely to support the species?
+#### Based on BASI about the landscape-scale habitat types or ecosystems the species occupies, what landscape-scale habitat types or ecosystems in the plan area are likely to support the species?
 
 [Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category)]
 
@@ -425,9 +443,95 @@ nn_basi <- species_data |>
 
 #### Species Response to Macrohabitat Threats and Trends
 
-[Intent of this section is to tier to the Appendix, but bring in any species-specific info about how the species responds to general habitat trends/threats. The appendix explains the macrohabitat availability, distribution, and threats, but this is where you would connect it to the species- e.g., if fire is a threat, but species actually needs fire for its seeds to germinate, or it actually uses roadside habitat so road development is not as much of a threat].
+[Default: All threats and trends shown in the Appendix for this species’ macrohabitat are assumed to translate directly to this species.
+
+`r str_to_upper("Manually review and bring in any species-specific info about how the species responds to general habitat trends/threats. The appendix explains the macrohabitat availability, distribution, and threats, but this is where you would connect it to the species- e.g., if fire is a threat, but species actually needs fire for its seeds to germinate, or it actually uses roadside habitat so road development is not as much of a threat")`].
+
+### Species Fine-scale Habitat
+
+#### What are the fine-scale habitat types or ecosystems the species occupies based on BASI, including literature from outside of the plan area?
+
+[`r str_to_upper("Narrative description from literature. To help focus the evaluation on issues that are likely to affect a species long-term persistence the inclusion of fine-scale habitat conditions or features here, should be limited to consideration of conditions or features that: 1) BASI indicates are limited in abundance or distribution, 2) BASI suggest are declining in abundance or distribution, or 3) BASI indicates have a disproportionate value to the population dynamics and distribution of the species because of the species specialized association with the feature or life history dependence (e.g., rare nesting substrate, rare soil type, cold water refugia).")`]
+
+#### Fine-scale Habitat Availability and Distribution
+
+[`r str_to_upper("For many species this will be unknown, but this is where you could put info on if certain microhabitat components are limited in the plan area, such as snags or coldwater refugia, etc.")`]
+
+#### Fine-scale Habitat Threats and Trends 
+
+[`r str_to_upper("but provide narrative discussing species-specific information")`]
+
+### Population 
+
+#### Abundance and distribution
+
+```{r}
+imbcr_narrative <- tar_read(imbcr_trend_narratives) |>
+  filter(species == species_data$common_name)
+
+if (nrow(imbcr_narrative) == 1) {
+  imbcr_narrative <- imbcr_narrative |>
+    pull(narrative)
+} else {
+  imbcr_narrative <- "No narrative"
+}
+
+bbs_narrative <- tar_read(bbs_trend_narratives) |>
+  filter(species_name == species_data$common_name)
+
+if (nrow(bbs_narrative) == 1) {
+  bbs_narrative <- bbs_narrative |>
+    pull(final_narrative)
+} else {
+  bbs_narrative <- "No narrative"
+}
+```
+
+`r ifelse(imbcr_narrative!="No narrative", imbcr_narrative, "")`
+
+`r ifelse(bbs_narrative!="No narrative", bbs_narrative, "")`
 
 
+
+[Default: There are no known population estimates for the species in the plan area. `r str_to_upper("Bird trends? Pull in information from species records, literature, reports, species distribution models, etc.")`]
+
+#### Threats and trends 
+
+[Default: There are no known specific population trends for the species in the plan area. Beyond threats documented across the species range {CITATIONS}, there are no known unique threats to the species within the plan area.]
+
+### Natural and Life History Characteristics that Inform Species Persistence 
+
+#### Dispersal ability
+
+[`r str_to_upper("Brief, ~ one sentence description of species’ movement scale and its overall dispersal capacity")`]
+
+#### Life History Strategy
+
+[`r str_to_upper("Brief, ~ one sentence description of species’ life history, recognizing species generally fit one of these categories (equivalent is annual/perennial for plants): Slow: large body size, long generation, high survival, low reproductive investment; Fast: small body size, short generation, low survival, high reproductive investment")`] 
+
+#### Ecological specialization 
+
+[`r str_to_upper('Habitat or Substrate Specialist, Dietary Specialist, Symbiotic (mutualistic, parasitic, or commensal)')`]
+
+#### Other Factors
+
+[Default: Unknown but review literature for things like: Inbreeding/Drift/Outbreeding/Hybridization/Density Dependence/Allee Effects]
+
+## Specialist Recommendation:
+
+### Sufficiency of BASI  
+
+[`r str_to_upper('Low information/medium information/high information')`] 
+
+### MPSG Specialist Recommendation   
+
+[`r str_to_upper('Likely to be of concern/not likely to be of concern')`] 
+
+### Rationale 
+
+[`r str_to_upper('Short narrative – see: Determination Rational Support.xlsx')`]
+
+## References
 :::
 
 

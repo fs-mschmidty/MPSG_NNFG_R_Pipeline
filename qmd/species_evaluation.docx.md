@@ -1,7 +1,7 @@
 ---
 params: 
-  # id: "2684709"
-  taxon_id: "2491123"
+  # taxon_id: "2491123"
+  taxon_id: "2474941"
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -26,7 +26,8 @@ execute:
 
 
 :::{custom-style="Body Text"}
-# Merlin<br>(*Falco columbarius*)
+# Umbellate Hawkweed
+(*Hieracium umbellatum*)
 
 ## Species observation records and conservation categories
 
@@ -40,11 +41,11 @@ execute:
 
 
 
-There are no known synonyms for this species {GBIF Secretariat 2023}.
+Current and historic synonyms for Hieracium umbellatum are: *Hieracium acranthophorum acranthophorum, Hieracium brevifoloides, Hieracium canadense canadense, Hieracium dunale, Hieracium ilicetorum, Hieracium jacobaeifolium, Hieracium kalmii kalmii, Hieracium largum largum, Hieracium mauriannense, Hieracium pseudosciadum, Hieracium rigorosum, Hieracium rigorosum rigorosum, Hieracium rigorosum unanakense, Hieracium scabriusculum scabriusculum, Hieracium scabriusculum scabriusculum, Hieracium umbellatum scabrum, Hieracium umbellatum umbellatum, Hieracium umbellatum ajanense, Hieracium umbellatum hollandiae, Hieracium umbellatum mongolicum, Hieracium umbellatum romani, Hieracium umbellatum sublittorale, Hieracium umbellatum ajanense, Hieracium umbellatum coronopifolium, Hieracium umbellatum coronopifolium, Hieracium umbellatum coronopifolium, Hieracium umbellatum mongolicum, Hieracium umbellatum mongolicum, Hieracium unbellatum, Hieracium verbenaceum* {GBIF Secretariat 2023}.
 
 ### NatureServe Conservation Status (Global/State):
 
-G5/S1(NE), S2B,SNRN(SD)
+G5/S1(NE), SNR(SD)
 
 ### Additional Qualifying Conservation Categories (including Local Concern)
 
@@ -67,13 +68,13 @@ Nebraska SWAP Tier 2.
 :::
 
 
-Observations: GFIB - 22, Nebraska Natural Heritage - 4.
+Observations: iDigBio - 2, Seinet - 7, Nebraska Natural Heritage - 1.
 
 #### Year of first and last observation for all occurrence data: 
 
-[1980, NA]
+First: 2008, Last: NA
 
-### Is the species currently federally designated as threatened, endangered, proposed, or candidate speecies under the Endangered Species Act?
+### Is the species currently federally designated as threatened, endangered, proposed, or candidate species under the Endangered Species Act?
 
 
 
@@ -101,13 +102,13 @@ No
 
 
 ::: {.cell}
-
+::: {.cell-output-display}
+![Range within the Continental United States](species_evaluation_files/figure-docx/cont-range-1.png){fig-alt='Range within the Continental United States'}
+:::
 :::
 
 ::: {.cell}
-::: {.cell-output-display}
-![North American Seasonal Ranges](species_evaluation_files/figure-docx/breeding-range-1.png){fig-alt='North American Seasonal Ranges'}
-:::
+
 :::
 
 
@@ -119,7 +120,7 @@ No
 
 ::: {.cell}
 ::: {.cell-output-display}
-![North American Seasonal Ranges](species_evaluation_files/figure-docx/occurrence-records-1.png){fig-alt='North American Seasonal Ranges'}
+![Occurrence records within Nebraska National Forests and Grasslands.](species_evaluation_files/figure-docx/occurrence-records-1.png){fig-alt='North American Seasonal Ranges'}
 :::
 :::
 
@@ -156,17 +157,16 @@ Yes
 
 [Yes, No, Unknown]
 
-#### Based on the species’ ecology and the environmental conditions present, does the plan area overlap the edge of the species range?
-
-[Yes, No, Unknown]
+#### What is the distance between the plan area and the closest edge of the species range? 
+[unknown (i.e., no known range for the species), 0 miles (i.e. species range transects the plan area), 1-50 miles, 51-150 miles, 151-500 miles, 500 or more miles.]   
 
 ### Species’ Landscape-scale Habitat
 
-#### What are the landscape-scale habitat types or ecosystems the species occupies based on Best Available Scientific Information (BASI), inside and out of the plan area. 
+#### What are the landscape-scale habitat types or ecosystems the species occupies based on Best Available Scientific Information (BASI), including literature from outside of the plan area?
 
 [Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually]
 
-#### Based on BASI , what are the landscape-scale habitat types or ecosystems in the plan area are likely to support the species?
+#### Based on BASI about the landscape-scale habitat types or ecosystems the species occupies, what landscape-scale habitat types or ecosystems in the plan area are likely to support the species?
 
 [Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category)]
 
@@ -176,9 +176,81 @@ Yes
 
 #### Species Response to Macrohabitat Threats and Trends
 
-[Intent of this section is to tier to the Appendix, but bring in any species-specific info about how the species responds to general habitat trends/threats. The appendix explains the macrohabitat availability, distribution, and threats, but this is where you would connect it to the species- e.g., if fire is a threat, but species actually needs fire for its seeds to germinate, or it actually uses roadside habitat so road development is not as much of a threat].
+[Default: All threats and trends shown in the Appendix for this species’ macrohabitat are assumed to translate directly to this species.
+
+MANUALLY REVIEW AND BRING IN ANY SPECIES-SPECIFIC INFO ABOUT HOW THE SPECIES RESPONDS TO GENERAL HABITAT TRENDS/THREATS. THE APPENDIX EXPLAINS THE MACROHABITAT AVAILABILITY, DISTRIBUTION, AND THREATS, BUT THIS IS WHERE YOU WOULD CONNECT IT TO THE SPECIES- E.G., IF FIRE IS A THREAT, BUT SPECIES ACTUALLY NEEDS FIRE FOR ITS SEEDS TO GERMINATE, OR IT ACTUALLY USES ROADSIDE HABITAT SO ROAD DEVELOPMENT IS NOT AS MUCH OF A THREAT].
+
+### Species Fine-scale Habitat
+
+#### What are the fine-scale habitat types or ecosystems the species occupies based on BASI, including literature from outside of the plan area?
+
+[NARRATIVE DESCRIPTION FROM LITERATURE. TO HELP FOCUS THE EVALUATION ON ISSUES THAT ARE LIKELY TO AFFECT A SPECIES LONG-TERM PERSISTENCE THE INCLUSION OF FINE-SCALE HABITAT CONDITIONS OR FEATURES HERE, SHOULD BE LIMITED TO CONSIDERATION OF CONDITIONS OR FEATURES THAT: 1) BASI INDICATES ARE LIMITED IN ABUNDANCE OR DISTRIBUTION, 2) BASI SUGGEST ARE DECLINING IN ABUNDANCE OR DISTRIBUTION, OR 3) BASI INDICATES HAVE A DISPROPORTIONATE VALUE TO THE POPULATION DYNAMICS AND DISTRIBUTION OF THE SPECIES BECAUSE OF THE SPECIES SPECIALIZED ASSOCIATION WITH THE FEATURE OR LIFE HISTORY DEPENDENCE (E.G., RARE NESTING SUBSTRATE, RARE SOIL TYPE, COLD WATER REFUGIA).]
+
+#### Fine-scale Habitat Availability and Distribution
+
+[FOR MANY SPECIES THIS WILL BE UNKNOWN, BUT THIS IS WHERE YOU COULD PUT INFO ON IF CERTAIN MICROHABITAT COMPONENTS ARE LIMITED IN THE PLAN AREA, SUCH AS SNAGS OR COLDWATER REFUGIA, ETC.]
+
+#### Fine-scale Habitat Threats and Trends 
+
+[BUT PROVIDE NARRATIVE DISCUSSING SPECIES-SPECIFIC INFORMATION]
+
+### Population 
+
+#### Abundance and distribution
 
 
+
+::: {.cell}
+
+:::
+
+
+
+
+
+
+
+
+
+[Default: There are no known population estimates for the species in the plan area. BIRD TRENDS? PULL IN INFORMATION FROM SPECIES RECORDS, LITERATURE, REPORTS, SPECIES DISTRIBUTION MODELS, ETC.]
+
+#### Threats and trends 
+
+[Default: There are no known specific population trends for the species in the plan area. Beyond threats documented across the species range {CITATIONS}, there are no known unique threats to the species within the plan area.]
+
+### Natural and Life History Characteristics that Inform Species Persistence 
+
+#### Dispersal ability
+
+[BRIEF, ~ ONE SENTENCE DESCRIPTION OF SPECIES’ MOVEMENT SCALE AND ITS OVERALL DISPERSAL CAPACITY]
+
+#### Life History Strategy
+
+[BRIEF, ~ ONE SENTENCE DESCRIPTION OF SPECIES’ LIFE HISTORY, RECOGNIZING SPECIES GENERALLY FIT ONE OF THESE CATEGORIES (EQUIVALENT IS ANNUAL/PERENNIAL FOR PLANTS): SLOW: LARGE BODY SIZE, LONG GENERATION, HIGH SURVIVAL, LOW REPRODUCTIVE INVESTMENT; FAST: SMALL BODY SIZE, SHORT GENERATION, LOW SURVIVAL, HIGH REPRODUCTIVE INVESTMENT] 
+
+#### Ecological specialization 
+
+[HABITAT OR SUBSTRATE SPECIALIST, DIETARY SPECIALIST, SYMBIOTIC (MUTUALISTIC, PARASITIC, OR COMMENSAL)]
+
+#### Other Factors
+
+[Default: Unknown but review literature for things like: Inbreeding/Drift/Outbreeding/Hybridization/Density Dependence/Allee Effects]
+
+## Specialist Recommendation:
+
+### Sufficiency of BASI  
+
+[LOW INFORMATION/MEDIUM INFORMATION/HIGH INFORMATION] 
+
+### MPSG Specialist Recommendation   
+
+[LIKELY TO BE OF CONCERN/NOT LIKELY TO BE OF CONCERN] 
+
+### Rationale 
+
+[SHORT NARRATIVE – SEE: DETERMINATION RATIONAL SUPPORT.XLSX]
+
+## References
 :::
 
 

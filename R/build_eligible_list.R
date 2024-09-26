@@ -1,3 +1,11 @@
+#' This builds a potential eligible list.
+#' @param state_lists is a lists of natureserver retrieved lists that aquire all species from both SD and NE with a ranking. The important list from that group of lists is `unit_nature_serve_list`
+#' @param occ_lists this is all of the data from all of the occupancy datasets (GBIF, iDigBio, IMBCR, etc.) in a list.
+#' @param ne_state_list is a cleaned list of Nebraska state rankings.
+#' @param sd_state_list is a cleaned list of South Dakota state rankings.
+#' @param r2_ss_list is a cleaned regional foresters sensitive species list.
+#' @param native_and_known is not used.
+
 build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_list, r2_ss_list, native_and_known) {
   ne_swap_eligible <- ne_state_list |>
     mutate(

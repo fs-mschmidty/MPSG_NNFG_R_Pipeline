@@ -1,3 +1,5 @@
+#' This function takes in all of the iucn maps lists that include all of the species from the eligible list that occur in individual dataset. It then takes all of the lists, combines them and then makes an SQL query to pull all of the layers from each respective shapefile.  How this works probably needs to be rethought. For example we could input a list of objects instead of all of them individually....
+
 build_all_iucn_map <- function(
     mammals,
     amphibians1,

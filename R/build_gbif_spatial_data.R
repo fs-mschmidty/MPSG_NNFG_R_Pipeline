@@ -1,3 +1,7 @@
+#' This function takes in a gbif area download and outputs only those species that are found in the eligible list by taxon_ids.
+#' @param fb source of R data file path (this is currently how downloaded data are stored)
+#' @param x name of data source.
+#' @param eligible_list list of species with taxon_id field that will subest the GBIF dataset.
 build_gbif_spatial_data <- function(fb, x, eligible_list) {
   attach(file.path(fb, x))
 

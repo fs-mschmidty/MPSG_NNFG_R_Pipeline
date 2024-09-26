@@ -22,7 +22,7 @@ get_evaluation_base_map_data <- function(nnfg_aoa) {
     st_transform(crs = 5070)
 
   nnfg_a <- nnfg_aoa |>
-    st_buffer(100000) |>
+    st_buffer(1000000) |>
     st_bbox()
 
 
