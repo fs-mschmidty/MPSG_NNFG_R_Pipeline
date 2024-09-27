@@ -43,9 +43,9 @@ sp_names <- glue("{species_data$common_name} (*{species_data$scientific_name}*)"
 # `r species_data$common_name`
 (*`r species_data$scientific_name`*)
 
-## Species observation records and conservation categories
+## Species occrrence records and conservation categories
 
-### What, if any, are the scientific name synonyms for the species
+### What, if any, are the scientific name synonyms for the species?
 
 ```{r}
 synonyms <- tar_read(eligible_synonyms) |>
@@ -58,7 +58,7 @@ if (length(synonyms) > 0) {
   synonyms <- synonyms |>
     paste(collapse = ", ")
 
-  synonyms <- glue("Current and historic synonyms for {species_data$scientific_name} are: *{synonyms}* {citation}.")
+  synonyms <- glue("Current and historic synonyms for *{species_data$scientific_name}* are: *{synonyms}* {citation}.")
 } else {
   synonyms <- glue("There are no known synonyms for this species {citation}.")
 }
@@ -99,16 +99,16 @@ other_ranking_narrative <- if (
 
 `r other_ranking_narrative`
 
-### Number of Occurrence records by Data Source
+### Number of Occurrence Records by Data Source
 
 ```{r}
 number_of_occ <- species_data |>
   mutate(
     occ_by_source = glue(
-      "Observations: ",
+      "Occurrence: ",
       ifelse(!is.na(GBIF_nObs) & GBIF_nObs != 0, "GBIF - {GBIF_nObs}, ", ""),
       ifelse(!is.na(iDB_nObs) & iDB_nObs != 0, "iDigBio - {iDB_nObs}, ", ""),
-      ifelse(!is.na(SEI_nObs) & SEI_nObs != 0, "Seinet - {SEI_nObs}, ", ""),
+      ifelse(!is.na(SEI_nObs) & SEI_nObs != 0, "SEINet - {SEI_nObs}, ", ""),
       ifelse(!is.na(IMBCR_nObs) & IMBCR_nObs != 0, "Bird Conservancy of the Rockies - {IMBCR_nObs}, ", ""),
       ifelse(!is.na(NENHP_nObs) & NENHP_nObs != 0, "Nebraska Natural Heritage - {NENHP_nObs}, ", ""),
       ifelse(!is.na(SDNHP_nObs) & SDNHP_nObs != 0, "South Dakota Natural Heritage - {SDNHP_nObs}, ", "")
@@ -170,8 +170,8 @@ base_map_data <- tar_read(evaluation_base_map_data)
 
 ```{r}    
 #| label: cont-range
-#| fig-cap: "Range within the Continental United States"
-#| fig-alt: "Range within the Continental United States"
+#| fig-cap: "Species range within the continental United States"
+#| fig-alt: "Species range within the continental United States"
 #| fig-height: 6
 
 
@@ -194,7 +194,7 @@ if (m_source == "BIEN" | m_source == "IUCN") {
   }
   if (m_source == "IUCN") {
     g_map_data <- tar_read(all_iucn_map)
-    source_statement <- "**Source: IUCN Spatila Data**"
+    source_statement <- "**Source: IUCN Spatial Data**"
   }
 
   g_map_data <- g_map_data |>
@@ -204,7 +204,7 @@ if (m_source == "BIEN" | m_source == "IUCN") {
 
   p_base +
     geom_sf(data = base_area, fill = "grey30", color = "white") +
-    geom_sf(data = g_map_data, aes(fill = "Overall Range"), color = "transparent", alpha = 0.8) +
+    geom_sf(data = g_map_data, aes(fill = "Species Range"), color = "transparent", alpha = 0.8) +
     geom_sf(data = aoa, fill = "yellow", color = "transparent") +
     scale_fill_manual(values = c("#1e8449")) +
     labs(
@@ -360,7 +360,7 @@ p_base +
   geom_text(data = state_labels, aes(x, y, label = label), size = 3, color = "#999999") +
   geom_text(data = wyoming_label, aes(x, y, label = label), size = 3, color = "#999999", angle = 90, nudge_x = -7500) +
   geom_sf(data = sp_polys, fill = "#7d3c98") +
-  geom_sf(data = sp_points, size = 2.5, aes(color = "Observation"), alpha = 0.7) +
+  geom_sf(data = sp_points, size = 2.5, aes(color = "Occurrence"), alpha = 0.7) +
   scale_color_manual(values = c("#7d3c98")) +
   labs(
     title = sp_names,
@@ -392,7 +392,7 @@ nn_basi <- species_data |>
 
 `r nn_base`
 
-#### Justification for ‘no’:
+[Add Heading if a justificaiton for no is neccessary: Justification for ‘no’:]
 
 `r ifelse(is.na(nn_basi), "", nn_basi)`
 
@@ -431,17 +431,17 @@ if (nrow(comments) == 1) {
 ```
 `r comment_narrative`
 
-[Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually]
+[`r str_to_upper("Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually")`]
 
 #### Based on BASI about the landscape-scale habitat types or ecosystems the species occupies, what landscape-scale habitat types or ecosystems in the plan area are likely to support the species?
 
-[Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category)]
+[`r str_to_upper("Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category)")`]
 
-#### Macrohabitat Availability and Distribution
+#### Macrohabitat availability and distribution
 
 [See Appendix.]
 
-#### Species Response to Macrohabitat Threats and Trends
+#### Species response to macrohabitat threats and trends
 
 [Default: All threats and trends shown in the Appendix for this species’ macrohabitat are assumed to translate directly to this species.
 
@@ -453,11 +453,11 @@ if (nrow(comments) == 1) {
 
 [`r str_to_upper("Narrative description from literature. To help focus the evaluation on issues that are likely to affect a species long-term persistence the inclusion of fine-scale habitat conditions or features here, should be limited to consideration of conditions or features that: 1) BASI indicates are limited in abundance or distribution, 2) BASI suggest are declining in abundance or distribution, or 3) BASI indicates have a disproportionate value to the population dynamics and distribution of the species because of the species specialized association with the feature or life history dependence (e.g., rare nesting substrate, rare soil type, cold water refugia).")`]
 
-#### Fine-scale Habitat Availability and Distribution
+#### Fine-scale habitat availability and distribution
 
 [`r str_to_upper("For many species this will be unknown, but this is where you could put info on if certain microhabitat components are limited in the plan area, such as snags or coldwater refugia, etc.")`]
 
-#### Fine-scale Habitat Threats and Trends 
+#### Fine-scale habitat threats and trends 
 
 [`r str_to_upper("but provide narrative discussing species-specific information")`]
 
@@ -505,7 +505,7 @@ if (nrow(bbs_narrative) == 1) {
 
 [`r str_to_upper("Brief, ~ one sentence description of species’ movement scale and its overall dispersal capacity")`]
 
-#### Life History Strategy
+#### Life history strategy
 
 [`r str_to_upper("Brief, ~ one sentence description of species’ life history, recognizing species generally fit one of these categories (equivalent is annual/perennial for plants): Slow: large body size, long generation, high survival, low reproductive investment; Fast: small body size, short generation, low survival, high reproductive investment")`] 
 
@@ -513,7 +513,7 @@ if (nrow(bbs_narrative) == 1) {
 
 [`r str_to_upper('Habitat or Substrate Specialist, Dietary Specialist, Symbiotic (mutualistic, parasitic, or commensal)')`]
 
-#### Other Factors
+#### Other factors
 
 [Default: Unknown but review literature for things like: Inbreeding/Drift/Outbreeding/Hybridization/Density Dependence/Allee Effects]
 
