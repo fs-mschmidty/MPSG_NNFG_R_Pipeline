@@ -106,7 +106,7 @@ number_of_occ <- species_data |>
   mutate(
     occ_by_source = glue(
       "Observations: ",
-      ifelse(!is.na(GBIF_nObs) & GBIF_nObs != 0, "GFIB - {GBIF_nObs}, ", ""),
+      ifelse(!is.na(GBIF_nObs) & GBIF_nObs != 0, "GBIF - {GBIF_nObs}, ", ""),
       ifelse(!is.na(iDB_nObs) & iDB_nObs != 0, "iDigBio - {iDB_nObs}, ", ""),
       ifelse(!is.na(SEI_nObs) & SEI_nObs != 0, "Seinet - {SEI_nObs}, ", ""),
       ifelse(!is.na(IMBCR_nObs) & IMBCR_nObs != 0, "Bird Conservancy of the Rockies - {IMBCR_nObs}, ", ""),
@@ -359,7 +359,7 @@ p_base +
   geom_label(data = labels, aes(X, Y, label = label_n), show.legend = FALSE, size = 3) +
   geom_text(data = state_labels, aes(x, y, label = label), size = 3, color = "#999999") +
   geom_text(data = wyoming_label, aes(x, y, label = label), size = 3, color = "#999999", angle = 90, nudge_x = -7500) +
-  geom_sf(data = sp_polys, fill = "#1e8449") +
+  geom_sf(data = sp_polys, fill = "#7d3c98") +
   geom_sf(data = sp_points, size = 2.5, aes(color = "Observation"), alpha = 0.7) +
   scale_color_manual(values = c("#7d3c98")) +
   labs(
@@ -416,17 +416,17 @@ nn_basi <- species_data |>
 #### What are the landscape-scale habitat types or ecosystems the species occupies based on Best Available Scientific Information (BASI), including literature from outside of the plan area?
 
 ```{r}
-ns_habs<-tar_read(ns_habitats) |>
-  filter(taxon_id==t_id)
+ns_habs <- tar_read(ns_habitats) |>
+  filter(taxon_id == t_id)
 
-comments<-ns_habs |>
-  filter(hab_cat=="comments")
+comments <- ns_habs |>
+  filter(hab_cat == "comments")
 
-if(nrow(comments)=1){
-  comment_narrative<-comments |>
-    pull(ns_hap)
+if (nrow(comments) == 1) {
+  comment_narrative <- comments |>
+    pull(ns_hab)
 } else {
-  comment_narrative<-"NO COMMENT NARRATIVE WAS GENERATED FROM NATURESERVE"
+  comment_narrative <- "[NO COMMENT NARRATIVE WAS GENERATED FROM NATURESERVE]"
 }
 ```
 `r comment_narrative`

@@ -26,8 +26,8 @@ execute:
 
 
 :::{custom-style="Body Text"}
-# Umbellate Hawkweed
-(*Hieracium umbellatum*)
+# Ball-head Standing-cypress
+(*Ipomopsis congesta ssp. pseudotypica*)
 
 ## Species observation records and conservation categories
 
@@ -41,11 +41,11 @@ execute:
 
 
 
-Current and historic synonyms for Hieracium umbellatum are: *Hieracium acranthophorum acranthophorum, Hieracium brevifoloides, Hieracium canadense canadense, Hieracium dunale, Hieracium ilicetorum, Hieracium jacobaeifolium, Hieracium kalmii kalmii, Hieracium largum largum, Hieracium mauriannense, Hieracium pseudosciadum, Hieracium rigorosum, Hieracium rigorosum rigorosum, Hieracium rigorosum unanakense, Hieracium scabriusculum scabriusculum, Hieracium scabriusculum scabriusculum, Hieracium umbellatum scabrum, Hieracium umbellatum umbellatum, Hieracium umbellatum ajanense, Hieracium umbellatum hollandiae, Hieracium umbellatum mongolicum, Hieracium umbellatum romani, Hieracium umbellatum sublittorale, Hieracium umbellatum ajanense, Hieracium umbellatum coronopifolium, Hieracium umbellatum coronopifolium, Hieracium umbellatum coronopifolium, Hieracium umbellatum mongolicum, Hieracium umbellatum mongolicum, Hieracium unbellatum, Hieracium verbenaceum* {GBIF Secretariat 2023}.
+Current and historic synonyms for Ipomopsis congesta ssp. pseudotypica are: *Gilia congesta pseudotypica, Ipomopsis congesta pseduotypica, Ipomopsis congesta pseudotypica, Ipomopsis congesta pseudotypica* {GBIF Secretariat 2023}.
 
 ### NatureServe Conservation Status (Global/State):
 
-G5/S1(NE), SNR(SD)
+T3/NA(NE), S3(SD)
 
 ### Additional Qualifying Conservation Categories (including Local Concern)
 
@@ -57,7 +57,7 @@ G5/S1(NE), SNR(SD)
 
 
 
-Nebraska SWAP Tier 2.
+No other qualifying conservation categories apply to this species.
 
 ### Number of Occurrence records by Data Source
 
@@ -68,11 +68,11 @@ Nebraska SWAP Tier 2.
 :::
 
 
-Observations: iDigBio - 2, Seinet - 7, Nebraska Natural Heritage - 1.
+Observations: GBIF - 2, iDigBio - 5, Seinet - 5.
 
 #### Year of first and last observation for all occurrence data: 
 
-First: 2008, Last: NA
+First: 1973, Last: NA
 
 ### Is the species currently federally designated as threatened, endangered, proposed, or candidate species under the Endangered Species Act?
 
@@ -102,9 +102,7 @@ No
 
 
 ::: {.cell}
-::: {.cell-output-display}
-![Range within the Continental United States](species_evaluation_files/figure-docx/cont-range-1.png){fig-alt='Range within the Continental United States'}
-:::
+
 :::
 
 ::: {.cell}
@@ -163,6 +161,15 @@ Yes
 ### Species’ Landscape-scale Habitat
 
 #### What are the landscape-scale habitat types or ecosystems the species occupies based on Best Available Scientific Information (BASI), including literature from outside of the plan area?
+
+
+
+::: {.cell}
+
+:::
+
+
+NA
 
 [Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually]
 
