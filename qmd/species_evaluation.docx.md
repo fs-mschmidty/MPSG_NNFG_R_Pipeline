@@ -1,7 +1,8 @@
 ---
 params: 
-  # taxon_id: "2491123"
-  taxon_id: "2474941"
+  # taxon_id: "2491123" # sagbrush sparrow
+  # taxon_id: "2474941" # can't remember
+  taxon_id: "2439561" # Olive-backed Pocketmouse
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -26,12 +27,11 @@ execute:
 
 
 :::{custom-style="Body Text"}
-# Ball-head Standing-cypress
-(*Ipomopsis congesta ssp. pseudotypica*)
+# Least Chipmunk \n (*Neotamias minimus*)
 
-## Species observation records and conservation categories
+## Species occurrence records and conservation categories
 
-### What, if any, are the scientific name synonyms for the species
+### What, if any, are the scientific name synonyms for the species?
 
 
 
@@ -41,11 +41,11 @@ execute:
 
 
 
-Current and historic synonyms for Ipomopsis congesta ssp. pseudotypica are: *Gilia congesta pseudotypica, Ipomopsis congesta pseduotypica, Ipomopsis congesta pseudotypica, Ipomopsis congesta pseudotypica* {GBIF Secretariat 2023}.
+Current and historic synonyms for *Neotamias minimus* are: *Eutamias consobrinus, Eutamias minimus, Neotamias minimus* {GBIF Secretariat 2023}.
 
 ### NatureServe Conservation Status (Global/State):
 
-T3/NA(NE), S3(SD)
+G5/S1(NE), S5(SD)
 
 ### Additional Qualifying Conservation Categories (including Local Concern)
 
@@ -57,9 +57,9 @@ T3/NA(NE), S3(SD)
 
 
 
-No other qualifying conservation categories apply to this species.
+Nebraska SWAP Tier 2.
 
-### Number of Occurrence records by Data Source
+### Number of Occurrence Records by Data Source
 
 
 
@@ -68,11 +68,11 @@ No other qualifying conservation categories apply to this species.
 :::
 
 
-Observations: GBIF - 2, iDigBio - 5, Seinet - 5.
+Occurrence: GBIF - 13, iDigBio - 1, Nebraska Natural Heritage - 9.
 
 #### Year of first and last observation for all occurrence data: 
 
-First: 1973, Last: NA
+First: 1934, Last: NA
 
 ### Is the species currently federally designated as threatened, endangered, proposed, or candidate species under the Endangered Species Act?
 
@@ -102,7 +102,9 @@ No
 
 
 ::: {.cell}
-
+::: {.cell-output-display}
+![Species range within the continental United States](species_evaluation_files/figure-docx/cont-range-1.png){fig-alt='Species range within the continental United States'}
+:::
 :::
 
 ::: {.cell}
@@ -139,7 +141,7 @@ No
 
 Yes
 
-#### Justification for ‘no’:
+[Add Heading if a justification for no is Necessary: Justification for ‘no’:]
 
 
 
@@ -169,19 +171,29 @@ Yes
 :::
 
 
-NA
+[HABITAT NARRAITVE FROM NATURESERVE]:Found in various habitats. Common in coniferous forests but also uses clearcuts, deciduous woods, sagebrush, riparian zones, and in western regions may even occur in alpine tundra. Winter nest up to 1 m below ground surface. Summer dens typically are in hollow logs or stumps, in rock piles, or under debris, evacuated burrows. Also nests in tree cavities above ground.
 
-[Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually]
+[NARRATIVE DESCRIPTION PULLED IN FROM NATURESERVE– WILL NEED MANUAL REVIEW TO ENSURE FINE-SCALE HABITAT FEATURES ARE NOT MIXED IN WITH LANDSCAPE, AND ADDITIONAL BASI AS APPROPRIATE; NATURESERVE ALSO DOESN’T CAPTURE MANY PLANTS, SO THIS MAY ALSO NEED TO BE WRITTEN MANUALLY]
 
 #### Based on BASI about the landscape-scale habitat types or ecosystems the species occupies, what landscape-scale habitat types or ecosystems in the plan area are likely to support the species?
 
-[Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category)]
 
-#### Macrohabitat Availability and Distribution
+
+::: {.cell}
+
+:::
+
+
+
+Draws and Ravines, Sandhills Prairie, Ponderosa Pine Woodland and Savanna, Plantation, Wetlands, Ponds, Springs, GDEs, Rivers, Streams, Riparian
+
+[CHECKLIST OF CATEGORIES FROM ECOLOGY GROUP PULLED IN FROM SPREADSHEET – THIS WILL GET PULLED IN AUTOMATICALLY FROM MIKE’S NATURESERVE PULL + CROSSWALK, BUT WILL STILL REQUIRE MANUAL REVIEW FOR ACCURACY (ESPECIALLY FOR THE PLANTATION CATEGORY)]
+
+#### Macrohabitat availability and distribution
 
 [See Appendix.]
 
-#### Species Response to Macrohabitat Threats and Trends
+#### Species response to macrohabitat threats and trends
 
 [Default: All threats and trends shown in the Appendix for this species’ macrohabitat are assumed to translate directly to this species.
 
@@ -193,11 +205,11 @@ MANUALLY REVIEW AND BRING IN ANY SPECIES-SPECIFIC INFO ABOUT HOW THE SPECIES RES
 
 [NARRATIVE DESCRIPTION FROM LITERATURE. TO HELP FOCUS THE EVALUATION ON ISSUES THAT ARE LIKELY TO AFFECT A SPECIES LONG-TERM PERSISTENCE THE INCLUSION OF FINE-SCALE HABITAT CONDITIONS OR FEATURES HERE, SHOULD BE LIMITED TO CONSIDERATION OF CONDITIONS OR FEATURES THAT: 1) BASI INDICATES ARE LIMITED IN ABUNDANCE OR DISTRIBUTION, 2) BASI SUGGEST ARE DECLINING IN ABUNDANCE OR DISTRIBUTION, OR 3) BASI INDICATES HAVE A DISPROPORTIONATE VALUE TO THE POPULATION DYNAMICS AND DISTRIBUTION OF THE SPECIES BECAUSE OF THE SPECIES SPECIALIZED ASSOCIATION WITH THE FEATURE OR LIFE HISTORY DEPENDENCE (E.G., RARE NESTING SUBSTRATE, RARE SOIL TYPE, COLD WATER REFUGIA).]
 
-#### Fine-scale Habitat Availability and Distribution
+#### Fine-scale habitat availability and distribution
 
 [FOR MANY SPECIES THIS WILL BE UNKNOWN, BUT THIS IS WHERE YOU COULD PUT INFO ON IF CERTAIN MICROHABITAT COMPONENTS ARE LIMITED IN THE PLAN AREA, SUCH AS SNAGS OR COLDWATER REFUGIA, ETC.]
 
-#### Fine-scale Habitat Threats and Trends 
+#### Fine-scale habitat threats and trends 
 
 [BUT PROVIDE NARRATIVE DISCUSSING SPECIES-SPECIFIC INFORMATION]
 
@@ -217,8 +229,6 @@ MANUALLY REVIEW AND BRING IN ANY SPECIES-SPECIFIC INFO ABOUT HOW THE SPECIES RES
 
 
 
-
-
 [Default: There are no known population estimates for the species in the plan area. BIRD TRENDS? PULL IN INFORMATION FROM SPECIES RECORDS, LITERATURE, REPORTS, SPECIES DISTRIBUTION MODELS, ETC.]
 
 #### Threats and trends 
@@ -231,7 +241,7 @@ MANUALLY REVIEW AND BRING IN ANY SPECIES-SPECIFIC INFO ABOUT HOW THE SPECIES RES
 
 [BRIEF, ~ ONE SENTENCE DESCRIPTION OF SPECIES’ MOVEMENT SCALE AND ITS OVERALL DISPERSAL CAPACITY]
 
-#### Life History Strategy
+#### Life history strategy
 
 [BRIEF, ~ ONE SENTENCE DESCRIPTION OF SPECIES’ LIFE HISTORY, RECOGNIZING SPECIES GENERALLY FIT ONE OF THESE CATEGORIES (EQUIVALENT IS ANNUAL/PERENNIAL FOR PLANTS): SLOW: LARGE BODY SIZE, LONG GENERATION, HIGH SURVIVAL, LOW REPRODUCTIVE INVESTMENT; FAST: SMALL BODY SIZE, SHORT GENERATION, LOW SURVIVAL, HIGH REPRODUCTIVE INVESTMENT] 
 
@@ -239,7 +249,7 @@ MANUALLY REVIEW AND BRING IN ANY SPECIES-SPECIFIC INFO ABOUT HOW THE SPECIES RES
 
 [HABITAT OR SUBSTRATE SPECIALIST, DIETARY SPECIALIST, SYMBIOTIC (MUTUALISTIC, PARASITIC, OR COMMENSAL)]
 
-#### Other Factors
+#### Other factors
 
 [Default: Unknown but review literature for things like: Inbreeding/Drift/Outbreeding/Hybridization/Density Dependence/Allee Effects]
 

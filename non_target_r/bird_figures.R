@@ -62,7 +62,7 @@ breed_orig <- g_map_data |>
 nonbreed <- g_map_data |>
   filter(season == "Nonbreeding")
 
-breed_non_breed_overlap <- breed_orig |>
+year_round <- breed_orig |>
   st_intersection(nonbreed) |>
   st_intersection(mig_orig) |>
   mutate(

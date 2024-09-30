@@ -1,4 +1,4 @@
-# rfCreated by use_targets().
+# Created by use_targets().
 # Follow the comments below to fill in this target script.
 # Then follow the manual to check and run the pipeline:
 #   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
@@ -86,9 +86,7 @@ list(
   tar_target(output_eligible_seinet_spatial_data, output_eligible_spatial_data(seinet_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "seinet")),
   tar_target(output_eligible_gbif_spatial_data, output_eligible_spatial_data(gbif_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "gbif")),
   tar_target(output_eligible_imbcr_spatial_data, output_eligible_spatial_data(imbcr_spatial_eligible, file.path(t_path_sp_list, "shapefiles"), "imbcr")),
-  tar_target(all_eligible_spatial_data_poly, build_all_occ_data(
-    list(sd_nhp_spatial_eligible, ne_nhp_spatial_eligible)
-  )),
+  tar_target(all_eligible_spatial_data_poly, build_all_occ_data(list(sd_nhp_spatial_eligible, ne_nhp_spatial_eligible)) |> buffer_small_polygons()),
   tar_target(all_eligible_spatial_data_point, build_all_occ_data(list(idb_spatial_eligible, seinet_spatial_eligible, gbif_spatial_eligible, imbcr_spatial_eligible))),
 
   ### IUCN available spatial data analysis and make internal shapes
@@ -118,23 +116,24 @@ list(
   tar_target(bien_plant_maps, load_bien_plant_maps("output/bien_test/1", eligible_lists$current_eligible_list)),
   tar_target(bird_maps, load_bird_maps(eligible_lists$current_eligible_list)),
   tar_target(map_source, build_map_source(output_dne_eligible_lists, all_iucn_map, bien_plant_maps, bird_maps)),
-  tar_target(gbif_occ_data, get_gbif_occ_data(output_dne_eligible_lists, map_source)),
+  # tar_target(gbif_occ_data, get_gbif_occ_data(output_dne_eligible_lists, map_source)), ## This takes a long long time so if anything upstream changes this will run and take forever.
 
   ## Get map background data for species evaluations
   tar_target(evaluation_base_map_data, get_evaluation_base_map_data(nnfg_aoa)),
 
   ## Habitat Association Work
   tar_target(ns_habitats, get_ns_habitat(natureserve_state_data$unit_nature_serve_list, output_dne_eligible_lists)),
+  tar_target(crosswalk_habitats_to_species, build_species_habitats(ns_habitats, "data/habitat_binning_mpsg_bins.xlsx")),
 
   # ## Imbcr data cleaning and build narratives
-  tar_target(imbcr_trend, read_excel("data/imbcr/Reg_2_grasslands_estimates_9-17-24.xlsx", sheet = "trend") |> clean_names()),
+  tar_target(imbcr_trend, readxl::read_excel("data/imbcr/Reg_2_grasslands_estimates_9-17-24.xlsx", sheet = "trend") |> clean_names()),
   tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend)),
   # tar_target(imbcr_trend_narratives_w_taxonomy, build_imbcr_taxonomy(imbcr_trend_narratives)),
   tar_target(bbs_trend_narratives, build_bbs_trend_narratives()),
 
   ## Quarto Paramaterized reporting.
-  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations"))
+  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations")),
   # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
-  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 10), debug = T, quiet = F)
+  tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 15), debug = T, quiet = F)
 )

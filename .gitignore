@@ -2,4 +2,7 @@
 .Renviron
 /output/bien_test/
 .conform*.R
+**/.conform*
 *.docx
+**/*.docx
+

@@ -1,7 +1,9 @@
 ---
 params: 
-  # taxon_id: "2491123"
-  taxon_id: "2474941"
+  taxon_id: "2491123" # sagbrush sparrow
+  # taxon_id: "2474941" # can't remember
+  # taxon_id: "5229498" Pinyon Jay
+  # taxon_id: "2439561" # Olive-backed Pocketmouse
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -40,10 +42,9 @@ species_data <- tar_read(output_dne_eligible_lists) |>
 sp_names <- glue("{species_data$common_name} (*{species_data$scientific_name}*)")
 ```
 :::{custom-style="Body Text"}
-# `r species_data$common_name`
-(*`r species_data$scientific_name`*)
+# `r species_data$common_name` \n (*`r species_data$scientific_name`*)
 
-## Species occrrence records and conservation categories
+## Species occurrence records and conservation categories
 
 ### What, if any, are the scientific name synonyms for the species?
 
@@ -172,7 +173,7 @@ base_map_data <- tar_read(evaluation_base_map_data)
 #| label: cont-range
 #| fig-cap: "Species range within the continental United States"
 #| fig-alt: "Species range within the continental United States"
-#| fig-height: 6
+#| fig-height: 4.85
 
 
 m_source <- tar_read(map_source) |>
@@ -186,7 +187,9 @@ if (m_source == "BIEN" | m_source == "IUCN") {
   base_area <- base_map_data$l_48
 
   aoa <- tar_read(nnfg_aoa) |>
-    st_transform(st_crs(base_area))
+    st_transform(st_crs(base_area)) |>
+    st_union() |>
+    st_as_sf()
 
   if (m_source == "BIEN") {
     g_map_data <- tar_read(bien_plant_maps)
@@ -206,12 +209,15 @@ if (m_source == "BIEN" | m_source == "IUCN") {
     geom_sf(data = base_area, fill = "grey30", color = "white") +
     geom_sf(data = g_map_data, aes(fill = "Species Range"), color = "transparent", alpha = 0.8) +
     geom_sf(data = aoa, fill = "yellow", color = "transparent") +
+    geom_sf_label(data = aoa, label = "Nebraska National\nForest and Grasslands", size = 3, nudge_x = 200000, nudge_y = 200000) +
     scale_fill_manual(values = c("#1e8449")) +
     labs(
       title = sp_names,
       subtitle = "Continental United States Range",
       fill = "**Legend**",
       caption = source_statement,
+      x = "",
+      y = ""
     )
 }
 ```
@@ -220,12 +226,13 @@ if (m_source == "BIEN" | m_source == "IUCN") {
 #| label: breeding-range
 #| fig-cap: "North American Seasonal Ranges"
 #| fig-alt: "North American Seasonal Ranges"
-#| fig-height: 6.5
+#| fig-height: 7
 if (m_source == "EBIRD" | is.na(m_source)) {
   base_area <- base_map_data$north_america
 
   aoa <- tar_read(nnfg_aoa) |>
-    st_transform(st_crs(base_area))
+    st_transform(st_crs(base_area)) |>
+    st_union()
   if (is.na(m_source)) {
     g_map_data <- tar_read(gbif_occ_data) |>
       filter(taxon_id == t_id) |>
@@ -235,6 +242,8 @@ if (m_source == "EBIRD" | is.na(m_source)) {
     p_base_a <- p_base +
       geom_sf(data = base_area, fill = "grey30", color = "white") +
       geom_sf(data = g_map_data, aes(color = "Occurrence Record"), size = 2) +
+      geom_sf(data = aoa, fill = "yellow", color = "transparent") +
+      geom_sf_label(data = aoa, label = "Nebraska National\nForest and Grasslands", size = 2.5, nudge_x = 200000, nudge_y = 200000) +
       scale_color_manual(values = c("#1e8449")) +
       labs(
         title = sp_names,
@@ -247,6 +256,38 @@ if (m_source == "EBIRD" | is.na(m_source)) {
       filter(taxon_id == t_id) |>
       st_transform(st_crs(base_area)) |>
       st_intersection(base_area |> st_union())
+
+    count_season <- g_map_data |>
+      as_tibble() |>
+      count(season) |>
+      pull(season) |>
+      length()
+
+    if (count_season > 1) {
+      mig_orig <- g_map_data |>
+        filter(season == "Migration")
+
+      breed_orig <- g_map_data |>
+        filter(season == "Breeding")
+
+      nonbreed <- g_map_data |>
+        filter(season == "Nonbreeding")
+
+      year_round <- breed_orig |>
+        st_intersection(nonbreed) |>
+        st_intersection(mig_orig) |>
+        mutate(
+          season = "Year Round"
+        ) |>
+        select(season)
+
+      g_map_data <- g_map_data |>
+        select(season) |>
+        bind_rows(year_round)
+    } else {
+      g_map_data <- g_map_data |>
+        mutate(season = "Year Round")
+    }
 
     p_base_a <- p_base +
       geom_sf(data = base_area, fill = "grey30", color = "white") +
@@ -261,9 +302,18 @@ if (m_source == "EBIRD" | is.na(m_source)) {
   }
 
   if (nrow(g_map_data) > 0) {
-    p_base_a +
-      geom_sf(data = base_area, fill = "transparent", color = "white") +
-      geom_sf(data = aoa, fill = "yellow", color = "transparent")
+    p_base_b <- p_base_a +
+      geom_sf(data = base_area, fill = "transparent", color = "white")
+
+    if (count_season > 1) {
+      p_base_b +
+        facet_wrap(~season) +
+        theme(
+          legend.position = "none"
+        )
+    } else {
+      p_base_b
+    }
   }
 }
 ```
@@ -340,7 +390,7 @@ wyoming_label <- tibble(
 
 p_base +
   geom_sf(data = unit_sp, fill = "grey70", color = "transparent") +
-  geom_sf(data = own, fill = "darkgreen", color = "transparent", alpha = 0.5) +
+  geom_sf(data = own, aes(fill = "FS Ownership"), color = "transparent", alpha = 0.5) +
   geom_sf(data = trunk, color = "grey80", linewidth = 1) +
   geom_sf(data = other_rd, color = "grey80", linewidth = 0.5) +
   geom_sf(data = motorways, color = "grey30", linewidth = 1) +
@@ -362,10 +412,12 @@ p_base +
   geom_sf(data = sp_polys, fill = "#7d3c98") +
   geom_sf(data = sp_points, size = 2.5, aes(color = "Occurrence"), alpha = 0.7) +
   scale_color_manual(values = c("#7d3c98")) +
+  scale_fill_manual(values = c("darkgreen")) +
   labs(
     title = sp_names,
     subtitle = "Occurrence records within the Nebraska National Forests and Grasslands",
-    color = "**Legend**",
+    color = "**Database Occurrences**",
+    fill = "**Ownership**",
     x = "",
     y = ""
   ) +
@@ -373,7 +425,10 @@ p_base +
   scale_y_continuous(limits = c(4624402.1, 4914917)) +
   theme(
     axis.text = element_blank(),
-    panel.grid = element_blank()
+    panel.grid = element_blank(),
+    legend.key.spacing = unit(0, "pt"),
+    legend.margin = margin(0, 0, 0, 0, "pt"),
+    legend.box.margin = margin(3, 3, 3, 3, "pt")
   )
 ```
 :::
@@ -392,7 +447,7 @@ nn_basi <- species_data |>
 
 `r nn_base`
 
-[Add Heading if a justificaiton for no is neccessary: Justification for ‘no’:]
+[Add the following heading if a justification for no is necessary: Justification for ‘no’:]
 
 `r ifelse(is.na(nn_basi), "", nn_basi)`
 
@@ -426,14 +481,32 @@ if (nrow(comments) == 1) {
   comment_narrative <- comments |>
     pull(ns_hab)
 } else {
-  comment_narrative <- "[NO COMMENT NARRATIVE WAS GENERATED FROM NATURESERVE]"
+  comment_narrative <- "[NO HABITAT NARRATIVE WAS GENERATED FROM NATURESERVE]"
 }
 ```
-`r comment_narrative`
+
+HABITAT NARRAITVE FROM NATURESERVE: `r comment_narrative`
 
 [`r str_to_upper("Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually")`]
 
 #### Based on BASI about the landscape-scale habitat types or ecosystems the species occupies, what landscape-scale habitat types or ecosystems in the plan area are likely to support the species?
+
+```{r}
+get_hab_types <- tar_read(crosswalk_habitats_to_species) |>
+  filter(taxon_id == t_id) |>
+  filter(!is.na(mpsg_habitat_bin))
+
+if (nrow(get_hab_types) > 0) {
+  hab_type_narrative <- get_hab_types |>
+    distinct(mpsg_habitat_bin) |>
+    pull(mpsg_habitat_bin) |>
+    paste(collapse = ", ")
+} else {
+  hab_type_narrative <- str_to_upper("There are no habitat types available for this species from Naturserve that crosswalk to defined ecosystems. ")
+}
+```
+
+`r hab_type_narrative`
 
 [`r str_to_upper("Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category)")`]
 
@@ -490,8 +563,6 @@ if (nrow(bbs_narrative) == 1) {
 `r ifelse(imbcr_narrative!="No narrative", imbcr_narrative, "")`
 
 `r ifelse(bbs_narrative!="No narrative", bbs_narrative, "")`
-
-
 
 [Default: There are no known population estimates for the species in the plan area. `r str_to_upper("Bird trends? Pull in information from species records, literature, reports, species distribution models, etc.")`]
 
