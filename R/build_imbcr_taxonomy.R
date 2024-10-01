@@ -1,3 +1,4 @@
+#' This function was deemed to be unnecesarry and is therefore deprocated, tests were conducted to prove that common_names were sufficient to join data from bird dbs to eligible lists and overviews.
 build_imbcr_taxonomy <- function(x) {
   common_names <- x |>
     rename(common_name = species) |>

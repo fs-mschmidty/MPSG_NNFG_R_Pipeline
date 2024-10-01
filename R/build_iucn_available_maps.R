@@ -1,3 +1,7 @@
+#' This function checks a IUCN shapefile to determine which species overlap the NNFG body and then runs taxonomies on those that do and then returns a list of those species that are on the eligible species.
+#' @param path_to_shp path to a IUCN range map shapefile.
+#' @param eligible_lists a list of eligible lists with current_eligible_list in it. NOTE:see refactor comment below.
+#' @param nnfg_bd the NNFG body. NOTE: I may add in a buffer to this that is quite liberal in the future.
 build_iucn_available_maps <- function(path_to_shp, eligible_lists, nnfg_bd) {
   sf_use_s2(FALSE)
 
@@ -19,6 +23,7 @@ build_iucn_available_maps <- function(path_to_shp, eligible_lists, nnfg_bd) {
   iucn_taxon_id <- unit_sp_w_taxonomies |>
     select(sci_name, taxon_id)
 
+  # I would change this so that you don't  need to subset a list $ and just add an input for a list.
   el_taxon_ids <- eligible_lists$current_eligible_list |>
     select(taxon_id, scientific_name, common_name)
 

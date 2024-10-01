@@ -40,7 +40,7 @@ build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_
     mutate(taxon_id = as.character(taxon_id)) |>
     distinct(taxon_id, scientific_name, rounded_gRank, NE_sRank, SD_sRank, .keep_all = T)
 
-  ## These are the species that are problematic from the state NatureServe Lists.
+  ## This essentially finds all species that have taxanomic issues, meaning that one taxon_id is assinged to multiple natureserve names. taxon_id's with an n>1 are assigned to the taxon_problems list. In future iterations there should just be a field that states that the species has an uncertain taxonomy instead of moving these to a new list.
   find_problems <- ns_state_eligible_cl |>
     group_by(taxon_id) |>
     mutate(n = n()) |>
@@ -83,6 +83,3 @@ build_eligible_list <- function(state_lists, occ_lists, ne_state_list, sd_state_
 
   eligible_lists
 }
-
-
-# eligible_lists

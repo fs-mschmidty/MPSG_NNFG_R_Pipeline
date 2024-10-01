@@ -1,3 +1,5 @@
+#' This builds the breeding bird survey narratives for bird species.  It relies on a personal package with all breeding bird survey data included in Mike Schmidt's github becuase the USGS breeding bird survey data has been down for some time now found here:https://sciencebase.gov/catalog/item/5eab196d82cefae35a2254e0
+
 build_bbs_trend_narratives <- function() {
   regions <- c("S18", "NEB", "SD", "US1", "S17")
   regions_long_names <- c("the Shortgrass Prairie Bird Conservation Region (S18)", "Nebraska", "South Dakota", "the United States", "the Badlands and Prairies Bird Conservation Region (S17)")

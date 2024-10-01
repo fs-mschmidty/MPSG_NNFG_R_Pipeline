@@ -1,3 +1,4 @@
+#' DEPROCATED FUNCTION.
 build_nhp_data <- function(gdb, act_lyr, lyr_crs, unit) {
   st_read(gdb, act_lyr) |>
     st_transform(crs = lyr_crs) |>

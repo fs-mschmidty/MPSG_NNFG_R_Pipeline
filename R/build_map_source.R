@@ -1,3 +1,8 @@
+#' This function takes in the maps that were retrieved by rbien, ebirdst and manually from IUCN and returns the eligible list with a source list of the maps.
+#' @param el_list eligible list.
+#' @param iucn_maps simple feature of IUCN maps.
+#' @param bien_maps simple featuer of BIEN maps.
+#' @param bird_maps simple feature of ebirdst maps.
 build_map_source <- function(el_list, iucn_maps, bien_maps, bird_maps) {
   iucn_maps_cl <- iucn_maps |>
     as_tibble() |>

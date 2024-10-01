@@ -1,3 +1,6 @@
+#' This function takes in a file path to an R data file created by Matthew Van Scoyoc and returns only those species that are eligible. It also creates a URL to the occurrence record. This function uses the get_taxonomies() function from the mpsgSO package to get a taxon_id for all occurrences.
+#' @param fp a file path to a .Rdata file including a raw download of idigbio data.
+#' @param x the name of the .Rdata file to parse.
 build_idb_spatial_data <- function(fp, x) {
   attach(file.path(fp, x))
 

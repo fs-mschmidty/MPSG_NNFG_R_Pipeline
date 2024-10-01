@@ -1,4 +1,4 @@
-#' This function takes in a gbif area download and outputs only those species that are found in the eligible list by taxon_ids.
+#' This function takes in a gbif area download and outputs only those species that are found in the eligible list by taxon_ids. It also makes a url to the occurrence on gbif.org under gbif_occ_url using the gbif_id. Another important note about this function is that it assumes that the taxon_id as created by taxize::classfication() is the same as acceptedTaxonKey.
 #' @param fb source of R data file path (this is currently how downloaded data are stored)
 #' @param x name of data source.
 #' @param eligible_list list of species with taxon_id field that will subest the GBIF dataset.
