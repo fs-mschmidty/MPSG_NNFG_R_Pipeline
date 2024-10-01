@@ -2,7 +2,9 @@
 params: 
   # taxon_id: "2491123" # sagbrush sparrow
   # taxon_id: "2474941" # can't remember
-  taxon_id: "2439561" # Olive-backed Pocketmouse
+  # taxon_id: "5229498" Pinyon Jay
+  # taxon_id: "2439561" # Olive-backed Pocketmouse
+  taxon_id: "1034935"
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -11,7 +13,6 @@ format:
       opts_chunk:
         dev: 'ragg_png'
         fig-width: 6.5
-        # fig-height: 6
 execute:
   echo: false
   message: false
@@ -27,7 +28,7 @@ execute:
 
 
 :::{custom-style="Body Text"}
-# Least Chipmunk \n (*Neotamias minimus*)
+# Prairie Long-lipped Tiger Beetle (*Cicindela nebraskana*)
 
 ## Species occurrence records and conservation categories
 
@@ -41,11 +42,11 @@ execute:
 
 
 
-Current and historic synonyms for *Neotamias minimus* are: *Eutamias consobrinus, Eutamias minimus, Neotamias minimus* {GBIF Secretariat 2023}.
+Current and historic synonyms for *Cicindela nebraskana* are: *Cicindela calgaryana, Cicindela canadensis, Cicindela chamberlaini, Cicindela nebraskana nebraskana, Cicindela spissitarsis, Cicindela uteana* {GBIF Secretariat 2023}.
 
 ### NatureServe Conservation Status (Global/State):
 
-G5/S1(NE), S5(SD)
+G5/S1(NE), S4(SD)
 
 ### Additional Qualifying Conservation Categories (including Local Concern)
 
@@ -68,11 +69,11 @@ Nebraska SWAP Tier 2.
 :::
 
 
-Occurrence: GBIF - 13, iDigBio - 1, Nebraska Natural Heritage - 9.
+Occurrence: GBIF - 1.
 
 #### Year of first and last observation for all occurrence data: 
 
-First: 1934, Last: NA
+First: \infty{}, Last: 2016
 
 ### Is the species currently federally designated as threatened, endangered, proposed, or candidate species under the Endangered Species Act?
 
@@ -102,8 +103,16 @@ No
 
 
 ::: {.cell}
+
+:::
+
+::: {.cell}
+
+:::
+
+::: {.cell}
 ::: {.cell-output-display}
-![Species range within the continental United States](species_evaluation_files/figure-docx/cont-range-1.png){fig-alt='Species range within the continental United States'}
+![North American Seasonal Ranges](species_evaluation_files/figure-docx/breeding-range-year-round-gbif-1.png){fig-alt='North American Seasonal Ranges'}
 :::
 :::
 
@@ -111,10 +120,13 @@ No
 
 :::
 
+::: {.cell}
 
+:::
 
 
 :::
+<!--Remove Caption-->
 :::{custom-style="Caption"}
 
 
@@ -141,7 +153,7 @@ No
 
 Yes
 
-[Add Heading if a justification for no is Necessary: Justification for ‘no’:]
+[Add the following heading if a justification for no is necessary: Justification for ‘no’:]
 
 
 
@@ -171,7 +183,8 @@ Yes
 :::
 
 
-[HABITAT NARRAITVE FROM NATURESERVE]:Found in various habitats. Common in coniferous forests but also uses clearcuts, deciduous woods, sagebrush, riparian zones, and in western regions may even occur in alpine tundra. Winter nest up to 1 m below ground surface. Summer dens typically are in hollow logs or stumps, in rock piles, or under debris, evacuated burrows. Also nests in tree cavities above ground.
+
+C. NEBRASKANA is a monobasic species which lives on Chernozemic soils of prairie grasslands and grassland-forest transition zones of Western North America (Spanton, 1988). In Colorado, open ground trails in woodland areas (Kippenhan, 1994). In the West, C. NEBRASKANA approximately follows the distribution of the Ponderosa Pine-bunchgrass association. The range to the south is limited by arid lands of the Great Basin (Spanton, 1988).
 
 [NARRATIVE DESCRIPTION PULLED IN FROM NATURESERVE– WILL NEED MANUAL REVIEW TO ENSURE FINE-SCALE HABITAT FEATURES ARE NOT MIXED IN WITH LANDSCAPE, AND ADDITIONAL BASI AS APPROPRIATE; NATURESERVE ALSO DOESN’T CAPTURE MANY PLANTS, SO THIS MAY ALSO NEED TO BE WRITTEN MANUALLY]
 
@@ -185,7 +198,7 @@ Yes
 
 
 
-Draws and Ravines, Sandhills Prairie, Ponderosa Pine Woodland and Savanna, Plantation, Wetlands, Ponds, Springs, GDEs, Rivers, Streams, Riparian
+Ponderosa Pine Woodland and Savanna, Plantation, Northwestern Mixedgrass Prairie, Sandhills Prairie
 
 [CHECKLIST OF CATEGORIES FROM ECOLOGY GROUP PULLED IN FROM SPREADSHEET – THIS WILL GET PULLED IN AUTOMATICALLY FROM MIKE’S NATURESERVE PULL + CROSSWALK, BUT WILL STILL REQUIRE MANUAL REVIEW FOR ACCURACY (ESPECIALLY FOR THE PLANTATION CATEGORY)]
 
@@ -268,6 +281,7 @@ MANUALLY REVIEW AND BRING IN ANY SPECIES-SPECIFIC INFO ABOUT HOW THE SPECIES RES
 [SHORT NARRATIVE – SEE: DETERMINATION RATIONAL SUPPORT.XLSX]
 
 ## References
+
 :::
 
 

@@ -1,9 +1,10 @@
 ---
 params: 
-  taxon_id: "2491123" # sagbrush sparrow
+  # taxon_id: "2491123" # sagbrush sparrow
   # taxon_id: "2474941" # can't remember
   # taxon_id: "5229498" Pinyon Jay
   # taxon_id: "2439561" # Olive-backed Pocketmouse
+  taxon_id: "1034935"
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -12,7 +13,6 @@ format:
       opts_chunk:
         dev: 'ragg_png'
         fig-width: 6.5
-        # fig-height: 6
 execute:
   echo: false
   message: false
@@ -26,11 +26,18 @@ library(tidyverse)
 library(sf)
 library(targets)
 library(glue)
-library(rnaturalearth)
+# library(rnaturalearth)
 library(ggtext)
 library(ggspatial)
 library(extrafont)
 loadfonts(quiet = T)
+
+# t_id<- "2491123" # sagbrush sparrow
+# t_id<- "2474941" # whooping crane
+# t_id<- "5229498" Pinyon Jay
+# t_id<- "2439561" # Olive-backed Pocketmouse
+# t_id<- "2703686" # Bromus maginatus
+# t_id<-"1034935"  # Prairie Long-lipped Tiger Beeter (GBIF Map data)
 
 t_id <- params$taxon_id
 species_data <- tar_read(output_dne_eligible_lists) |>
@@ -42,7 +49,7 @@ species_data <- tar_read(output_dne_eligible_lists) |>
 sp_names <- glue("{species_data$common_name} (*{species_data$scientific_name}*)")
 ```
 :::{custom-style="Body Text"}
-# `r species_data$common_name` \n (*`r species_data$scientific_name`*)
+# `r species_data$common_name` (*`r species_data$scientific_name`*)
 
 ## Species occurrence records and conservation categories
 
@@ -74,8 +81,6 @@ if (length(synonyms) > 0) {
 ### Additional Qualifying Conservation Categories (including Local Concern)
 
 ```{r}
-# I need to make sure this works if there are no other rankings.
-
 other_ranking_narrative <- if (
   !is.na(species_data$r2_ss_list) |
     !is.na(species_data$nebraska_swap) |
@@ -179,8 +184,10 @@ base_map_data <- tar_read(evaluation_base_map_data)
 m_source <- tar_read(map_source) |>
   filter(taxon_id == t_id) |>
   pull(source)
+
+### Need to fix so that GBIF occ data gets pulled. Now there is no NA in map source.
 if (is.na(m_source)) {
-  m_source <- "No Map Available"
+  m_source <- "check_gbif"
 }
 
 if (m_source == "BIEN" | m_source == "IUCN") {
@@ -209,7 +216,23 @@ if (m_source == "BIEN" | m_source == "IUCN") {
     geom_sf(data = base_area, fill = "grey30", color = "white") +
     geom_sf(data = g_map_data, aes(fill = "Species Range"), color = "transparent", alpha = 0.8) +
     geom_sf(data = aoa, fill = "yellow", color = "transparent") +
-    geom_sf_label(data = aoa, label = "Nebraska National\nForest and Grasslands", size = 3, nudge_x = 200000, nudge_y = 200000) +
+    annotate(
+      geom = "curve",
+      x = aoa_center$X + 950000,
+      y = aoa_center$Y - 950000,
+      xend = aoa_center$X,
+      yend = aoa_center$Y,
+      color = "#d35400",
+      linewidth = 1.1,
+      arrow = arrow(length = unit(2, "mm"))
+    ) +
+    geom_sf_label(
+      data = aoa,
+      label = "Nebraska National\nForests and Grasslands",
+      size = 2.5,
+      nudge_x = 950000, nudge_y = -950000,
+      fill = "#edbb99"
+    ) +
     scale_fill_manual(values = c("#1e8449")) +
     labs(
       title = sp_names,
@@ -223,34 +246,57 @@ if (m_source == "BIEN" | m_source == "IUCN") {
 ```
 
 ```{r}
-#| label: breeding-range
-#| fig-cap: "North American Seasonal Ranges"
-#| fig-alt: "North American Seasonal Ranges"
-#| fig-height: 7
-if (m_source == "EBIRD" | is.na(m_source)) {
+if (m_source == "EBIRD" | m_source == "check_gbif") {
   base_area <- base_map_data$north_america
 
   aoa <- tar_read(nnfg_aoa) |>
     st_transform(st_crs(base_area)) |>
     st_union()
-  if (is.na(m_source)) {
+
+  aoa_center <- aoa |>
+    st_centroid() |>
+    st_coordinates() |>
+    as_tibble()
+
+  if (m_source == "check_gbif") {
     g_map_data <- tar_read(gbif_occ_data) |>
       filter(taxon_id == t_id) |>
       st_transform(st_crs(base_area)) |>
       st_intersection(base_area |> st_union())
-
-    p_base_a <- p_base +
-      geom_sf(data = base_area, fill = "grey30", color = "white") +
-      geom_sf(data = g_map_data, aes(color = "Occurrence Record"), size = 2) +
-      geom_sf(data = aoa, fill = "yellow", color = "transparent") +
-      geom_sf_label(data = aoa, label = "Nebraska National\nForest and Grasslands", size = 2.5, nudge_x = 200000, nudge_y = 200000) +
-      scale_color_manual(values = c("#1e8449")) +
-      labs(
-        title = sp_names,
-        subtitle = "North American Range",
-        color = "**Legend**",
-        caption = "**Source:** GBIF occurrence records. "
-      )
+    if (nrow(g_map_data) != 0) {
+      p_base_a <- p_base +
+        geom_sf(data = base_area, fill = "grey30", color = "white") +
+        geom_sf(data = g_map_data, aes(color = "Occurrence Record"), size = 2) +
+        geom_sf(data = aoa, fill = "yellow", color = "transparent") +
+        annotate(
+          geom = "curve",
+          x = aoa_center$X + 950000,
+          y = aoa_center$Y - 950000,
+          xend = aoa_center$X,
+          yend = aoa_center$Y,
+          color = "#d35400",
+          linewidth = 1.1,
+          arrow = arrow(length = unit(2, "mm"))
+        ) +
+        geom_sf_label(
+          data = aoa,
+          label = "Nebraska National\nForests and Grasslands",
+          size = 2.5,
+          nudge_x = 950000, nudge_y = -950000,
+          fill = "#edbb99"
+        ) +
+        scale_color_manual(values = c("#1e8449")) +
+        labs(
+          title = sp_names,
+          subtitle = "North American Range",
+          color = "**Legend**",
+          caption = "**Source:** GBIF occurrence records.",
+          x = "",
+          y = ""
+        )
+    } else {
+      m_source <- "no_maps"
+    }
   } else if (m_source == "EBIRD") {
     g_map_data <- tar_read(bird_maps) |>
       filter(taxon_id == t_id) |>
@@ -293,6 +339,7 @@ if (m_source == "EBIRD" | is.na(m_source)) {
       geom_sf(data = base_area, fill = "grey30", color = "white") +
       geom_sf(data = g_map_data, aes(fill = season), color = "transparent") +
       scale_fill_brewer(palette = "Dark2") +
+      geom_sf(data = base_area, fill = "transparent", color = "white") +
       labs(
         title = sp_names,
         subtitle = "North American Range",
@@ -300,26 +347,66 @@ if (m_source == "EBIRD" | is.na(m_source)) {
         caption = "**Source:** eBird Status and Trends"
       )
   }
+}
+```
+```{r}
+#| label: breeding-range-year-round-gbif
+#| fig-cap: "North American Seasonal Ranges"
+#| fig-alt: "North American Seasonal Ranges"
+#| fig-height: 6.5
 
-  if (nrow(g_map_data) > 0) {
-    p_base_b <- p_base_a +
-      geom_sf(data = base_area, fill = "transparent", color = "white")
-
-    if (count_season > 1) {
-      p_base_b +
-        facet_wrap(~season) +
-        theme(
-          legend.position = "none"
-        )
-    } else {
-      p_base_b
-    }
-  }
+if (m_source == "check_gbif") {
+  p_base_a
 }
 ```
 
 
+```{r}
+#| label: breeding-range-seasonal
+#| fig-cap: "North American Seasonal Ranges"
+#| fig-alt: "North American Seasonal Ranges"
+#| fig-height: 7
+if (m_source == "EBIRD") {
+  if (count_season > 1 & nrow(g_map_data) > 0) {
+    p_base_a +
+      facet_wrap(~season) +
+      theme(
+        legend.position = "none"
+      )
+  }
+}
+```
+
+```{r}
+#| label: year-round-range
+#| fig-cap: "North American Year Round Ranges"
+#| fig-alt: "North American Year Round Ranges"
+#| fig-height: 6.5
+if (m_source == "EBIRD") {
+  if (count_season == 1 & nrow(g_map_data) > 0) {
+    p_base_a +
+      annotate(
+        geom = "curve",
+        x = aoa_center$X + 950000,
+        y = aoa_center$Y - 950000,
+        xend = aoa_center$X,
+        yend = aoa_center$Y,
+        color = "#d35400",
+        linewidth = 1.1,
+        arrow = arrow(length = unit(2, "mm"))
+      ) +
+      geom_sf_label(
+        data = aoa,
+        label = "Nebraska National\nForests and Grasslands",
+        size = 2.5,
+        nudge_x = 950000, nudge_y = -950000,
+        fill = "#edbb99"
+      )
+  }
+}
+```
 :::
+<!--Remove Caption-->
 :::{custom-style="Caption"}
 ```{r}
 #| label: occurrence-records
@@ -428,7 +515,7 @@ p_base +
     panel.grid = element_blank(),
     legend.key.spacing = unit(0, "pt"),
     legend.margin = margin(0, 0, 0, 0, "pt"),
-    legend.box.margin = margin(3, 3, 3, 3, "pt")
+    legend.box.margin = margin(5, 5, 5, 5, "pt")
   )
 ```
 :::
@@ -485,7 +572,7 @@ if (nrow(comments) == 1) {
 }
 ```
 
-HABITAT NARRAITVE FROM NATURESERVE: `r comment_narrative`
+`r comment_narrative`
 
 [`r str_to_upper("Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually")`]
 
@@ -603,6 +690,7 @@ if (nrow(bbs_narrative) == 1) {
 [`r str_to_upper('Short narrative – see: Determination Rational Support.xlsx')`]
 
 ## References
+
 :::
 
 

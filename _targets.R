@@ -5,7 +5,7 @@
 
 # Load packages required to define the pipeline:
 library(targets)
-library(tarchetypes) # Load other packages as needed.
+library(tarchetypes) # This package is where tar_quarto is found.
 
 # Set target options:
 tar_option_set(
@@ -27,7 +27,7 @@ tar_option_set(
     "rgbif",
     "osmdata",
     "arcgislayers",
-    "sjnftools",
+    "sjnftools", ## In mschmidty github repo
     "scales"
   )
 )
@@ -42,6 +42,7 @@ species_list_sp <- file.path(Sys.getenv("USERPROFILE"), "USDA", "Mountain Planni
 
 # Replace the target list below with your own:
 list(
+  ## Unit Spatial Data
   tar_target(sp_fp, "C:\\Users\\MichaelSchmidt2\\USDA\\Mountain Planning Service Group - SCC Library\\03_Nebraska NFG"),
   tar_target(natureserve_state_data, get_natureserve_state_data()),
   tar_target(external_data_folder, "T:\\FS\\NFS\\PSO\\MPSG\\Data\\ExternalData"),
@@ -59,6 +60,7 @@ list(
   tar_target(ne_state_list, build_ne_state_list("T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG\\data\\state_lists\\nebraska\\Tier 1 and Tier 2 Species by Taxa plus Ranks_recieved_08262024.xlsx")),
   tar_target(sd_state_list, build_sd_state_list("T:\\FS\\NFS\\PSO\\MPSG\\2024_NebraskaNFG\\1_PreAssessment\\Projects\\SpeciesList_NNFG\\data\\state_lists\\south_dakota\\draft_SGCN_list_for_comment_July_2024.xlsx")),
   tar_target(r2_ss_list, build_r2_ss_list("data/fs/2023_R2_RegionalForestersSensitiveSppList.xlsx")),
+  ### Build Eligible list
   tar_target(eligible_lists, build_eligible_list(natureserve_state_data, t_drive_lists, ne_state_list, sd_state_list, r2_ss_list)),
   tar_target(transient_birds, build_transient_birds(eligible_lists, nnfg_aoa)),
   tar_target(native_known_need_check, build_native_known_need_check(eligible_lists)),
@@ -89,7 +91,7 @@ list(
   tar_target(all_eligible_spatial_data_poly, build_all_occ_data(list(sd_nhp_spatial_eligible, ne_nhp_spatial_eligible)) |> buffer_small_polygons()),
   tar_target(all_eligible_spatial_data_point, build_all_occ_data(list(idb_spatial_eligible, seinet_spatial_eligible, gbif_spatial_eligible, imbcr_spatial_eligible))),
 
-  ### IUCN available spatial data analysis and make internal shapes
+  ### IUCN available spatial data analysis and make internal shapes (THIS SUCKS)
   tar_target(mammal_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "MAMMALS.shp"), eligible_lists, nnfg_bd)),
   tar_target(amphibian1_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "AMPHIBIANS_PART1.shp"), eligible_lists, nnfg_bd)),
   tar_target(amphibian2_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "AMPHIBIANS_PART2.shp"), eligible_lists, nnfg_bd)),
@@ -133,7 +135,8 @@ list(
 
   ## Quarto Paramaterized reporting.
   tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations")),
-  # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
+  tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
-  tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 15), debug = T, quiet = F)
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params)
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 15), debug = T, quiet = F)
 )
