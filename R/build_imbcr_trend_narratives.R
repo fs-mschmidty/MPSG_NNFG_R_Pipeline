@@ -29,24 +29,24 @@ build_imbcr_trend_narratives <- function(imbcr_grass) {
       lcl95_d = round(as.numeric(lcl95_d), 2),
       ucl95_d = round(as.numeric(ucl95_d), 2),
       d_n_p = case_when(
-        d_t > 0 & as.numeric(f_density_trend) > 0.9 ~ "estimated a increasing",
-        d_t < 0 & as.numeric(f_density_trend) > 0.9 ~ "estimated a decreasing",
+        d_t > 0 & as.numeric(f_density_trend) >= 0.9 ~ "estimated a increasing",
+        d_t < 0 & as.numeric(f_density_trend) >= 0.9 ~ "estimated a decreasing",
         TRUE ~ "estimated an uncertain"
       ),
       o_t = round(as.numeric(percent_change_yr_occupancy), 2),
       lcl95_occ = round(as.numeric(lcl95_occ), 2),
       ucl95_occ = round(as.numeric(ucl95_occ), 2),
       o_t_p = case_when(
-        o_t > 0 & as.numeric(f_occupancy_trend) > 0.9 ~ "estimated a increasing",
-        o_t < 0 & as.numeric(f_occupancy_trend) > 0.9 ~ "estimated a decreasing",
+        o_t > 0 & as.numeric(f_occupancy_trend) >= 0.9 ~ "estimated a increasing",
+        o_t < 0 & as.numeric(f_occupancy_trend) >= 0.9 ~ "estimated a decreasing",
         TRUE ~ "estimated an uncertain"
       ),
-      narrative_single = glue("{stratum_name} ({stratum_short_code}) {d_n_p} median density population trend of {d_t}% [95% CL {lcl95_d}%, {ucl95_d}%, (n={label_comma()(no_of_detections)})] per year and {o_t_p} median occupancy trend of {o_t}% [95% CL {lcl95_occ}%, {ucl95_occ}%, (n={label_comma()(no_of_points)})] per year from {str_replace(years,'-', ' to ')}")
+      narrative_single = glue("{stratum_name} ({stratum_short_code}) {d_n_p} median density population trend of {d_t}% [95% CL {lcl95_d}%, {ucl95_d}%, (n={label_comma()(no_of_detections)}, f={round(as.numeric(f_density_trend), 3)})] per year and {o_t_p} median occupancy trend of {o_t}% [95% CL {lcl95_occ}%, {ucl95_occ}%, (n={label_comma()(no_of_points)}, f={round(round(f_occupancy_trend), 3)})] per year from {str_replace(years,'-', ' to ')}")
     ) |>
     arrange(order, stratum_name) |>
     group_by(species) |>
     summarize(narrative = paste(narrative_single, collapse = "; "), n = n()) |>
     ungroup() |>
-    mutate(narrative = glue("Surveys conducted by the Bird Conservations of the Rockies on the Nebraska National Forests and Grasslands estimated the following trends by strata: {narrative}."))
+    mutate(narrative = glue("Surveys were conducted by the Bird Conservations of the Rockies on the Nebraska National Forests and Grasslands. Trend estimates are considered robust if the f-statistic is greater than or equal to 0.9 and uncertain if they are less than 0.9. Surveys reported the following trends by strata: {narrative}."))
   trend_narratives
 }
