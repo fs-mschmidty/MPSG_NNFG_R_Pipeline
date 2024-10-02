@@ -1,11 +1,17 @@
-get_natureserve_state_data <- function() {
+#' This function gets an export of all species that have natureserve state rankings in South Dakota and Nebraska. It returns several tibbles:
+#'  * The registered IDs for the the downloads of both States as `export_id_south_dakota` and `export_id_nebraska`. These identify the export of the data and I believe are  registered with natureserve.
+#'  * The full reponse for both states with all species `response_south_dakota` and `response_nebraska`. These include all the metadata with the responses: time, date, ID, etc.
+#'  * A list of species for both South Dakota and Nebraska respectively: `list_of_species_south_dakota` and `list_of_species_nebraska`.
+#'  * A join of both the state species list, removing duplicates.
+#' Note: the `get_state_rank()` function pulls a state code and ranking out of a long string that is returned.
 
-  get_state_rank<-function(x, state_code) {
-    regex <- paste0(state_code," \\(([^)]+)\\)")
+get_natureserve_state_data <- function() {
+  get_state_rank <- function(x, state_code) {
+    regex <- paste0(state_code, " \\(([^)]+)\\)")
 
     x |>
-      str_split_1("\\\n") |> 
-      str_subset("^United States")   |> 
+      str_split_1("\\\n") |>
+      str_subset("^United States") |>
       str_extract(regex) |>
       str_extract("\\(([^)]+)\\)") |>
       str_replace_all("\\(|\\)", "")
@@ -17,7 +23,7 @@ get_natureserve_state_data <- function() {
   ne_res <- ns_export_status(ne_export)
   sd_res <- ns_export_status(sd_export)
 
-  while(sd_res$state!="Finished" | ne_res$state!="Finished"){
+  while (sd_res$state != "Finished" | ne_res$state != "Finished") {
     ne_res <- ns_export_status(ne_export)
     sd_res <- ns_export_status(sd_export)
   }
@@ -37,15 +43,15 @@ get_natureserve_state_data <- function() {
     janitor::clean_names() |>
     filter(!is.na(nature_serve_global_rank))
 
-  combined<-sd_sss |>
+  combined <- sd_sss |>
     bind_rows(ne_sss) |>
     distinct(scientific_name, .keep_all = TRUE) |>
-    rowwise() |> 
+    rowwise() |>
     mutate(
       NE_sRank = get_state_rank(distribution, state_code = "NE"),
       SD_sRank = get_state_rank(distribution, state_code = "SD")
     ) |>
-    ungroup() |> 
+    ungroup() |>
     get_taxonomies()
 
   final_list <- list()
@@ -59,5 +65,3 @@ get_natureserve_state_data <- function() {
   final_list[["unit_nature_serve_list"]] <- combined
   final_list
 }
-
-
