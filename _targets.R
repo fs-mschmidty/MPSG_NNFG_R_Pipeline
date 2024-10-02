@@ -131,12 +131,11 @@ list(
   # ## Imbcr data cleaning and build narratives
   tar_target(imbcr_trend, readxl::read_excel("data/imbcr/Reg_2_grasslands_estimates_9-17-24.xlsx", sheet = "trend") |> clean_names()),
   tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend)),
-  # tar_target(imbcr_trend_narratives_w_taxonomy, build_imbcr_taxonomy(imbcr_trend_narratives)),
   tar_target(bbs_trend_narratives, build_bbs_trend_narratives()),
 
   ## Quarto Paramaterized reporting.
-  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations")),
-  tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
+  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations"))
+  # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
   # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params)
   # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 15), debug = T, quiet = F)

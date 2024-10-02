@@ -47,6 +47,6 @@ build_imbcr_trend_narratives <- function(imbcr_grass) {
     group_by(species) |>
     summarize(narrative = paste(narrative_single, collapse = "; "), n = n()) |>
     ungroup() |>
-    mutate(narrative = glue("Surveys were conducted by the Bird Conservations of the Rockies on the Nebraska National Forests and Grasslands. Trend estimates are considered robust if the f-statistic is greater than or equal to 0.9 and uncertain if they are less than 0.9. Surveys reported the following trends by strata: {narrative}."))
+    mutate(narrative = glue("Surveys were conducted by the Bird Conservancy of the Rockies on the Nebraska National Forests and Grasslands. Analysis of survey results produces a trend estimate that represents the per year percent change in population for a given stratum. Estimates are considered robust if the F-statistic is greater than or equal to 0.9 and uncertain if the F-statistic is less than 0.9. Surveys reported the following trends by strata for {species}: {narrative}."))
   trend_narratives
 }

@@ -1,3 +1,4 @@
+#' This function outputs spatial data to a shapefile.  It renames the taxon_id as mpsgID becuase stup ESRI trunkates taxon_id.
 output_eligible_spatial_data <- function(x, fp, data_name) {
   eligible <- x$eligible |>
     rename(mpsgID = taxon_id)

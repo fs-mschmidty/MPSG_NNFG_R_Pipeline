@@ -1,3 +1,7 @@
+#' This function builds the parameters for parameterized reporting.  It returns just two fields, taxon_id which is used to select everything and output_file, which designates where the report is to be output.
+#' @param x eligible species list.
+#' @param output_path the base directory of where you want all of this output.
+
 build_quarto_params <- function(x, output_path) {
   x |>
     group_by(taxon_id) |>
@@ -20,7 +24,7 @@ build_quarto_params <- function(x, output_path) {
       sn_base = str_replace_all(scientific_name, "'", ""),
       sn_base = str_replace_all(sn_base, " ", "_"),
       cn = str_replace_all(common_name, " ", "_"),
-      output_file = glue("{output_folder}/{subfolder}/AUTO_GENERATED_DO_NOT_EDIT__{sn_base}__{cn}.docx")
+      output_file = glue("{output_folder}/{subfolder}/AUTO_GENERATED_DO_NOT_EDIT__{cn}__{sn_base}.docx")
     ) |>
     select(taxon_id, output_file)
 }
