@@ -26,7 +26,6 @@ library(tidyverse)
 library(sf)
 library(targets)
 library(glue)
-# library(rnaturalearth)
 library(ggtext)
 library(ggspatial)
 library(extrafont)
@@ -37,6 +36,7 @@ loadfonts(quiet = T)
 # t_id<- "5229498" Pinyon Jay
 # t_id<- "2439561" # Olive-backed Pocketmouse
 # t_id<- "2703686" # Bromus maginatus
+# t_id<- "2362460" # Flathead Chub (NHP Data)
 # t_id<-"1034935"  # Prairie Long-lipped Tiger Beeter (GBIF Map data)
 
 t_id <- params$taxon_id
@@ -197,6 +197,12 @@ if (m_source == "BIEN" | m_source == "IUCN") {
     st_transform(st_crs(base_area)) |>
     st_union() |>
     st_as_sf()
+
+  aoa_center <- aoa |>
+    st_centroid() |>
+    st_coordinates() |>
+    as_tibble()
+
 
   if (m_source == "BIEN") {
     g_map_data <- tar_read(bien_plant_maps)
@@ -385,6 +391,7 @@ if (m_source == "EBIRD") {
 if (m_source == "EBIRD") {
   if (count_season == 1 & nrow(g_map_data) > 0) {
     p_base_a +
+      geom_sf(data = aoa, fill = "yellow", color = "transparent") +
       annotate(
         geom = "curve",
         x = aoa_center$X + 950000,
@@ -419,6 +426,9 @@ sp_points <- tar_read(all_eligible_spatial_data_point) |>
 
 sp_polys <- tar_read(all_eligible_spatial_data_poly) |>
   filter(taxon_id == t_id)
+
+sp_polys %>%
+  mutate(area = st_area(.))
 
 unit_sp <- tar_read(nnfg_bd)
 own <- tar_read(nnfg_fs_ownership)
@@ -496,7 +506,7 @@ p_base +
   geom_label(data = labels, aes(X, Y, label = label_n), show.legend = FALSE, size = 3) +
   geom_text(data = state_labels, aes(x, y, label = label), size = 3, color = "#999999") +
   geom_text(data = wyoming_label, aes(x, y, label = label), size = 3, color = "#999999", angle = 90, nudge_x = -7500) +
-  geom_sf(data = sp_polys, fill = "#7d3c98") +
+  geom_sf(data = sp_polys, fill = "#7d3c98", color = "#7d3c98", alpha = 0.7) +
   geom_sf(data = sp_points, size = 2.5, aes(color = "Occurrence"), alpha = 0.7) +
   scale_color_manual(values = c("#7d3c98")) +
   scale_fill_manual(values = c("darkgreen")) +
@@ -597,11 +607,11 @@ if (nrow(get_hab_types) > 0) {
 
 [`r str_to_upper("Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category)")`]
 
-#### Macrohabitat availability and distribution
+#### Landscape-scale Habitat Availability and Distribution 
 
-[See Appendix.]
+[`r str_to_upper("Describe with one sentence (availability: unknown, scarce, common, abundant; distribution: unknown, isolated patch, clumped patches, dispersed patches, contiguous) and tier to appendix. Example: Riverine habitat in the plan area/ is scarce and in dispersed patches (See Appendix).")`]
 
-#### Species response to macrohabitat threats and trends
+#### Species Response to Landscape-scale Habitat Threats and Trends 
 
 [Default: All threats and trends shown in the Appendix for this species’ macrohabitat are assumed to translate directly to this species.
 
@@ -626,14 +636,24 @@ if (nrow(get_hab_types) > 0) {
 #### Abundance and distribution
 
 ```{r}
-imbcr_narrative <- tar_read(imbcr_trend_narratives) |>
+imbcr_narrative <- tar_read(imbcr_trend_narratives)$unit_narratives |>
   filter(species == species_data$common_name)
 
 if (nrow(imbcr_narrative) == 1) {
   imbcr_narrative <- imbcr_narrative |>
     pull(narrative)
 } else {
-  imbcr_narrative <- "No narrative"
+  imbcr_narrative <- "No IMBCR trend information available for this species."
+}
+
+imbcr_additional_narrative <- tar_read(imbcr_trend_narratives)$additional_narratives |>
+  filter(species == species_data$common_name)
+
+if (nrow(imbcr_additional_narrative) == 1) {
+  imbcr_additional_narrative <- imbcr_additional_narrative |>
+    pull(narrative)
+} else {
+  imbcr_additional_narrative <- ""
 }
 
 bbs_narrative <- tar_read(bbs_trend_narratives) |>
