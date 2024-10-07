@@ -3,6 +3,8 @@
 #' @param output_path the base directory of where you want all of this output.
 
 build_quarto_params <- function(x, output_path) {
+  date <- Sys.Date() |>
+    str_replace_all("-", "")
   x |>
     group_by(taxon_id) |>
     mutate(n = n()) |>
@@ -24,7 +26,7 @@ build_quarto_params <- function(x, output_path) {
       sn_base = str_replace_all(scientific_name, "'", ""),
       sn_base = str_replace_all(sn_base, " ", "_"),
       cn = str_replace_all(common_name, " ", "_"),
-      output_file = glue("{output_folder}/{subfolder}/AUTO_GENERATED_DO_NOT_EDIT__{cn}__{sn_base}.docx")
+      output_file = glue("{output_folder}/{subfolder}/{date}_AUTO_GENERATED_{cn}__{sn_base}.docx")
     ) |>
     select(taxon_id, output_file)
 }

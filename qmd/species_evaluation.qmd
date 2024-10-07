@@ -1,10 +1,11 @@
 ---
 params: 
-  # taxon_id: "2491123" # sagbrush sparrow
+  taxon_id: "2491123" # sagbrush sparrow
   # taxon_id: "2474941" # can't remember
   # taxon_id: "5229498" Pinyon Jay
   # taxon_id: "2439561" # Olive-backed Pocketmouse
-  taxon_id: "1034935"
+  # taxon_id: "9147984" 
+  # taxon_id: "1034935"
 format:
   docx:
     reference-doc: 'template_styles/template_mpsg_styles.docx'
@@ -38,6 +39,7 @@ loadfonts(quiet = T)
 # t_id<- "2703686" # Bromus maginatus
 # t_id<- "2362460" # Flathead Chub (NHP Data)
 # t_id<-"1034935"  # Prairie Long-lipped Tiger Beeter (GBIF Map data)
+# t_id<-"9147984" # Indian Creek Tiger Beetle
 
 t_id <- params$taxon_id
 species_data <- tar_read(output_dne_eligible_lists) |>
@@ -427,9 +429,6 @@ sp_points <- tar_read(all_eligible_spatial_data_point) |>
 sp_polys <- tar_read(all_eligible_spatial_data_poly) |>
   filter(taxon_id == t_id)
 
-sp_polys %>%
-  mutate(area = st_area(.))
-
 unit_sp <- tar_read(nnfg_bd)
 own <- tar_read(nnfg_fs_ownership)
 
@@ -636,40 +635,44 @@ if (nrow(get_hab_types) > 0) {
 #### Abundance and distribution
 
 ```{r}
-imbcr_narrative <- tar_read(imbcr_trend_narratives)$unit_narratives |>
-  filter(species == species_data$common_name)
+if (!is.na(species_data$class) & species_data$class == "Aves") {
+  imbcr_narrative <- tar_read(imbcr_trend_narratives)$unit_narratives |>
+    filter(species == species_data$common_name)
 
-if (nrow(imbcr_narrative) == 1) {
-  imbcr_narrative <- imbcr_narrative |>
-    pull(narrative)
-} else {
-  imbcr_narrative <- "No IMBCR trend information available for this species."
-}
+  if (nrow(imbcr_narrative) == 1) {
+    imbcr_narrative <- imbcr_narrative |>
+      pull(narrative)
+  } else {
+    imbcr_narrative <- "No IMBCR trend information available for this species."
+  }
 
-imbcr_additional_narrative <- tar_read(imbcr_trend_narratives)$additional_narratives |>
-  filter(species == species_data$common_name)
+  imbcr_additional_narrative <- tar_read(imbcr_trend_narratives)$additional_narratives |>
+    filter(species == species_data$common_name)
 
-if (nrow(imbcr_additional_narrative) == 1) {
-  imbcr_additional_narrative <- imbcr_additional_narrative |>
-    pull(narrative)
-} else {
-  imbcr_additional_narrative <- ""
-}
+  if (nrow(imbcr_additional_narrative) == 1) {
+    imbcr_additional_narrative <- imbcr_additional_narrative |>
+      pull(narrative)
+  } else {
+    imbcr_additional_narrative <- NA
+  }
 
-bbs_narrative <- tar_read(bbs_trend_narratives) |>
-  filter(species_name == species_data$common_name)
+  bbs_narrative <- tar_read(bbs_trend_narratives) |>
+    filter(species_name == species_data$common_name)
 
-if (nrow(bbs_narrative) == 1) {
-  bbs_narrative <- bbs_narrative |>
-    pull(final_narrative)
-} else {
-  bbs_narrative <- "No narrative"
+  if (nrow(bbs_narrative) == 1) {
+    bbs_narrative <- bbs_narrative |>
+      pull(final_narrative)
+  } else {
+    bbs_narrative <- "No narrative"
+  }
 }
 ```
 
-`r ifelse(imbcr_narrative!="No narrative", imbcr_narrative, "")`
+`r if(!is.na(species_data$class) &species_data$class=="Aves"){ ifelse(imbcr_narrative!="No narrative", imbcr_narrative, "")}`
 
-`r ifelse(bbs_narrative!="No narrative", bbs_narrative, "")`
+`r if(!is.na(species_data$class) &species_data$class=="Aves"){ ifelse(!is.na(imbcr_additional_narrative), glue("**Additional Narratives you can add if you want or if there are no narritives above**: {imbcr_additional_narrative}"), "")}`
+
+`r if(!is.na(species_data$class) &species_data$class=="Aves"){ ifelse(bbs_narrative!="No narrative", bbs_narrative, "")}`
 
 [Default: There are no known population estimates for the species in the plan area. `r str_to_upper("Bird trends? Pull in information from species records, literature, reports, species distribution models, etc.")`]
 

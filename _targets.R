@@ -136,9 +136,11 @@ list(
   tar_target(bbs_trend_narratives, build_bbs_trend_narratives()),
 
   ## Quarto Paramaterized reporting.
-  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations"))
+  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations")),
   # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
-  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params |> filter(str_detect(output_file, "Birds")))
-  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 15), debug = T, quiet = F)
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params)
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params, debug = T, quiet = F)
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 15), debug = T, quiet = F),
+  tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = slice(qmd_params, c(70:n())), debug = T)
 )
