@@ -174,9 +174,7 @@ p_base <- ggplot() +
 
 base_map_data <- tar_read(evaluation_base_map_data)
 ```
-:::
 
-:::{custom-style="Caption"}
 
 ```{r}    
 #| label: cont-range
@@ -416,9 +414,8 @@ if (m_source == "EBIRD") {
   }
 }
 ```
-:::
-<!--Remove Caption-->
-:::{custom-style="Caption"}
+
+
 ```{r}
 #| label: occurrence-records
 #| fig-cap: "Occurrence records within Nebraska National Forests and Grasslands."
@@ -529,8 +526,6 @@ p_base +
     legend.box.margin = margin(5, 5, 5, 5, "pt")
   )
 ```
-:::
-:::{custom-style="Body Text"}
 
 
 ### Is the species native and known to occur?
@@ -570,7 +565,9 @@ nn_basi <- species_data |>
 #### What are the landscape-scale habitat types or ecosystems the species occupies based on Best Available Scientific Information (BASI), including literature from outside of the plan area?
 
 ```{r}
-ns_habs <- tar_read(ns_habitats) |>
+ns_habs_all <- tar_read(ns_habitats)
+
+ns_habs <- ns_habs_all |>
   filter(taxon_id == t_id)
 
 comments <- ns_habs |>
@@ -584,14 +581,22 @@ if (nrow(comments) == 1) {
 }
 ```
 
-`r comment_narrative`
+**Nature Serve Habitat Information:** *"`r comment_narrative`"* {Natureserve 2024}
 
-[`r str_to_upper("Narrative description pulled in from NatureServe– will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually")`]
+[`r str_to_upper("Narrative description pulled in from NatureServe – will need manual review to ensure fine-scale habitat features are not mixed in with landscape, and additional BASI as appropriate; NatureServe also doesn’t capture many plants, so this may also need to be written manually.")`]
 
 #### Based on BASI about the landscape-scale habitat types or ecosystems the species occupies, what landscape-scale habitat types or ecosystems in the plan area are likely to support the species?
 
 ```{r}
-get_hab_types <- tar_read(crosswalk_habitats_to_species) |>
+get_hab_types_all <- tar_read(crosswalk_habitats_to_species)
+
+all_hab_types_sentence <- get_hab_types_all |>
+  distinct(mpsg_habitat_bin) |>
+  filter(!is.na(mpsg_habitat_bin)) |>
+  pull(mpsg_habitat_bin) |>
+  paste(collapse = "; ")
+
+get_hab_types <- get_hab_types_all |>
   filter(taxon_id == t_id) |>
   filter(!is.na(mpsg_habitat_bin))
 
@@ -601,13 +606,14 @@ if (nrow(get_hab_types) > 0) {
     pull(mpsg_habitat_bin) |>
     paste(collapse = ", ")
 } else {
-  hab_type_narrative <- str_to_upper("There are no habitat types available for this species from Naturserve that crosswalk to MPSG defined ecosystems. ")
+  no_data_warning <- str_to_upper("There are no habitat types available for this species from Naturserve that crosswalk to MPSG defined ecosystems.")
+  hab_type_narrative <- glue("{no_data_warning} THE FOLLOWING ARE MPSG DEFINED ECOSYSTEMS: {all_hab_types_sentence}.")
 }
 ```
 
 `r hab_type_narrative`
 
-[`r str_to_upper("Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category). See appendix for landscape-scale habitat availability and distribution in the plan area.")`]
+[`r str_to_upper("Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category). See appendix for landscape-scale habitat availability and distribution in the plan area.")` ADD CITATIONS AS NEEDED!]
 
 
 #### Does the species respond uniquely to landscape-scale habitat threats and trends, and if so, how? 
@@ -710,6 +716,9 @@ if (!is.na(species_data$class) & species_data$class == "Aves") {
 ### Rationale 
 
 [`r str_to_upper('Short narrative – see Example rationales in Lolo overviews:')` [2023 Lolo SCC animal overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC animal overviews.pdf?csf=1&web=1&e=IJFJXn), [2023 Lolo SCC plant overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC plant overviews.pdf?csf=1&web=1&e=bpa1G0), [2023 Lolo SCC plant overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC plant overviews.pdf?csf=1&web=1&e=bpa1G0), and [Determination Rational Support.xlsx](https://usdagcc.sharepoint.com/:x:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Determination Rational Support.xlsx?d=wdbc0bc6f4b9f476ab31cf3bc0729fe1f&csf=1&web=1&e=5ZlEyW).]
+
+
+## Regional Summary:
 
 ## References
 

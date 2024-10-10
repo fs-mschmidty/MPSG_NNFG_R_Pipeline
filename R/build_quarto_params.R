@@ -10,7 +10,7 @@ build_quarto_params <- function(x, output_path) {
     mutate(n = n()) |>
     filter(n == 1) |>
     ungroup() |>
-    # filter(`Is the Species Native and Known to Occur` %in% c("Yes", "?")) |>
+    filter(`Is the Species Native and Known to Occur` %in% c("Yes", "?")) |>
     mutate(
       output_folder = output_path,
       subfolder = case_when(

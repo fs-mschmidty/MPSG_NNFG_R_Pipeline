@@ -23,6 +23,7 @@ eligible_birds_wo_dist <- eligible_birds |>
 eligible_birds_sci_names <- eligible_birds_w_dist |>
   pull(scientific_name)
 
+ebirdst_data_dir()
 ## this downloads all of the bird distribution models from cornel.
 lapply(eligible_birds_sci_names, ebirdst_download_status, download_ranges = T, pattern = "range_smooth_27km|range_smooth_9km")
 
