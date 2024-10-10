@@ -76,6 +76,8 @@ if (length(synonyms) > 0) {
 
 `r synonyms`
 
+[`r str_to_upper("Pulled from GBIF and then manually reviewed – e.g., USDA Plants, scientific literature, etc")`]
+
 ### NatureServe Conservation Status (Global/State):
 
 `r glue("{species_data$rounded_gRank}/{species_data$NE_sRank}(NE), {species_data$SD_sRank}(SD)")`
@@ -543,7 +545,6 @@ nn_basi <- species_data |>
 
 `r nn_base`
 
-[Add the following heading if a justification for no is necessary: Justification for ‘no’:]
 
 `r ifelse(is.na(nn_basi), "", nn_basi)`
 
@@ -553,14 +554,16 @@ nn_basi <- species_data |>
 
 #### What is the size of the species' range?
 
-[Large, Moderate, Regional Endemic, State Endemic, Local Endemic – refer to process paper for category definitions]
+[SELECT FROM: Large (i.e., roughly the area of the continental U.S. or larger), Moderate (i.e., roughly the ½ the area of the continental U.S.), Regional Endemic (i.e., occupying roughly the area of 2-4 states), State Endemic (i.e., only known to occur in the state overlapping the plan area but occupying an area larger than the environs of the plan area), Local Endemic (i.e., a state endemic only found within the plan area and the surrounding counties)]
+
+
+#### What is the distance between the plan area and the closest edge of the species range? 
+
+[SELECT FROM: unknown (i.e., no known range for the species), 0 miles (i.e. species range transects the plan area), 1-50 miles, 51-150 miles, 151-500 miles, 500 or more miles.]   
 
 #### Is the portion of the species range that overlaps the plan area disjunct from the main range of the species (i.e., the range overlapping the plan area is smaller and not connected to the larger range of the species)?
 
-[Yes, No, Unknown]
-
-#### What is the distance between the plan area and the closest edge of the species range? 
-[unknown (i.e., no known range for the species), 0 miles (i.e. species range transects the plan area), 1-50 miles, 51-150 miles, 151-500 miles, 500 or more miles.]   
+[SELECT FROM: Yes, No, Unknown]
 
 ### Species’ Landscape-scale Habitat
 
@@ -598,41 +601,44 @@ if (nrow(get_hab_types) > 0) {
     pull(mpsg_habitat_bin) |>
     paste(collapse = ", ")
 } else {
-  hab_type_narrative <- str_to_upper("There are no habitat types available for this species from Naturserve that crosswalk to defined ecosystems. ")
+  hab_type_narrative <- str_to_upper("There are no habitat types available for this species from Naturserve that crosswalk to MPSG defined ecosystems. ")
 }
 ```
 
 `r hab_type_narrative`
 
-[`r str_to_upper("Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category)")`]
+[`r str_to_upper("Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category). See appendix for landscape-scale habitat availability and distribution in the plan area.")`]
 
-#### Landscape-scale Habitat Availability and Distribution 
 
-[`r str_to_upper("Describe with one sentence (availability: unknown, scarce, common, abundant; distribution: unknown, isolated patch, clumped patches, dispersed patches, contiguous) and tier to appendix. Example: Riverine habitat in the plan area/ is scarce and in dispersed patches (See Appendix).")`]
-
-#### Species Response to Landscape-scale Habitat Threats and Trends 
-
-[Default: All threats and trends shown in the Appendix for this species’ macrohabitat are assumed to translate directly to this species.
+#### Does the species respond uniquely to landscape-scale habitat threats and trends, and if so, how? 
 
 `r str_to_upper("Manually review and bring in any species-specific info about how the species responds to general habitat trends/threats. The appendix explains the macrohabitat availability, distribution, and threats, but this is where you would connect it to the species- e.g., if fire is a threat, but species actually needs fire for its seeds to germinate, or it actually uses roadside habitat so road development is not as much of a threat")`].
 
 ### Species Fine-scale Habitat
 
-#### What are the fine-scale habitat types or ecosystems the species occupies based on BASI, including literature from outside of the plan area?
+#### What are the fine-scale habitat features or conditions that the species relies on? 
 
 [`r str_to_upper("Narrative description from literature. To help focus the evaluation on issues that are likely to affect a species long-term persistence the inclusion of fine-scale habitat conditions or features here, should be limited to consideration of conditions or features that: 1) BASI indicates are limited in abundance or distribution, 2) BASI suggest are declining in abundance or distribution, or 3) BASI indicates have a disproportionate value to the population dynamics and distribution of the species because of the species specialized association with the feature or life history dependence (e.g., rare nesting substrate, rare soil type, cold water refugia).")`]
 
-#### Fine-scale habitat availability and distribution
+#### What are the trends, both long-term and recent, in the distribution, abundance, and quality of the fine-scale habitat features?
+
+[DEFAULT: There is limited information about the distribution, abundance and quality of this species’ microhabitat in the plan area.]
 
 [`r str_to_upper("For many species this will be unknown, but this is where you could put info on if certain microhabitat components are limited in the plan area, such as snags or coldwater refugia, etc.")`]
 
-#### Fine-scale habitat threats and trends 
+#### What are the on-going threats that may shape the future distribution, abundance, and quality of the fine-scale habitat features?  
 
-[`r str_to_upper("but provide narrative discussing species-specific information")`]
+[`r str_to_upper("Provide narrative discussing species-specific information")`]
 
 ### Population 
 
-#### Abundance and distribution
+#### Abundance and distribution of species in the plan area
+
+[DEFAULT: There are no known population estimates for the species in the plan area.]
+
+[`r str_to_upper("Pull in information from species records, literature, reports, species distribution models, etc.")`]
+
+#### Population trend of species on and off the plan area
 
 ```{r}
 if (!is.na(species_data$class) & species_data$class == "Aves") {
@@ -674,11 +680,13 @@ if (!is.na(species_data$class) & species_data$class == "Aves") {
 
 `r if(!is.na(species_data$class) &species_data$class=="Aves"){ ifelse(bbs_narrative!="No narrative", bbs_narrative, "")}`
 
-[Default: There are no known population estimates for the species in the plan area. `r str_to_upper("Bird trends? Pull in information from species records, literature, reports, species distribution models, etc.")`]
+[DEFAULT: There are no known population estimates for the species in the plan area. Beyond threats documented across the species range {CITATIONS}, there are no known unique threats to the species within the plan area.]
 
-#### Threats and trends 
+#### Non-habitat-mediated threats to populations (on or off the plan area)
 
-[Default: There are no known specific population trends for the species in the plan area. Beyond threats documented across the species range {CITATIONS}, there are no known unique threats to the species within the plan area.]
+[`r str_to_upper("Consider disease, competition, contamination, invasives")`]
+
+
 
 ### Natural and Life History Characteristics that Inform Species Persistence 
 
@@ -694,23 +702,14 @@ if (!is.na(species_data$class) & species_data$class == "Aves") {
 
 [`r str_to_upper('Habitat or Substrate Specialist, Dietary Specialist, Symbiotic (mutualistic, parasitic, or commensal)')`]
 
-#### Other factors
-
-[Default: Unknown but review literature for things like: Inbreeding/Drift/Outbreeding/Hybridization/Density Dependence/Allee Effects]
-
 ## Specialist Recommendation:
 
-### Sufficiency of BASI  
-
-[`r str_to_upper('Low information/medium information/high information')`] 
-
-### MPSG Specialist Recommendation   
-
-[`r str_to_upper('Likely to be of concern/not likely to be of concern')`] 
+### MPSG Specialist Recommendation 
+[DEFAULTS: Likely to be of concern/Not likely to be of concern/Limited information to inform recommendation] 
 
 ### Rationale 
 
-[`r str_to_upper('Short narrative – see: Determination Rational Support.xlsx')`]
+[`r str_to_upper('Short narrative – see Example rationales in Lolo overviews:')` [2023 Lolo SCC animal overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC animal overviews.pdf?csf=1&web=1&e=IJFJXn), [2023 Lolo SCC plant overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC plant overviews.pdf?csf=1&web=1&e=bpa1G0), [2023 Lolo SCC plant overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC plant overviews.pdf?csf=1&web=1&e=bpa1G0), and [Determination Rational Support.xlsx](https://usdagcc.sharepoint.com/:x:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Determination Rational Support.xlsx?d=wdbc0bc6f4b9f476ab31cf3bc0729fe1f&csf=1&web=1&e=5ZlEyW).]
 
 ## References
 

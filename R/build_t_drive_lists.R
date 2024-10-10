@@ -1,3 +1,4 @@
+#' This function manually cleans the the occurrence records
 build_t_drive_lists <- function(x) {
   nhp_rdat <- file.path(x, "state_nhp.RData")
 

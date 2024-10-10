@@ -117,11 +117,17 @@ list(
     odonata_iucn_map_list,
     crayfish_iucn_map_list
   )),
+
   ### Bien maps were retrieved with a non_target process!!
   tar_target(bien_plant_maps, load_bien_plant_maps("output/bien_test/1", eligible_lists$current_eligible_list)),
   tar_target(bird_maps, load_bird_maps(eligible_lists$current_eligible_list)),
   tar_target(map_source, build_map_source(output_dne_eligible_lists, all_iucn_map, bien_plant_maps, bird_maps)),
   # tar_target(gbif_occ_data, get_gbif_occ_data(output_dne_eligible_lists, map_source)), ## This takes a long long time so if anything upstream changes this will run and take forever.
+  tar_target(write_iucn_maps, output_spatial_data(all_iucn_map, file.path(t_path_sp_list, "shapefiles"), "nnfg_iucn_range_maps")),
+  tar_target(write_bien_maps, output_spatial_data(bien_plant_maps, file.path(t_path_sp_list, "shapefiles"), "nnfg_bien_range_maps")),
+  tar_target(write_ebird_maps, output_spatial_data(bird_maps, file.path(t_path_sp_list, "shapefiles"), "nnfg_bird_range_maps")),
+  # tar_target(write_gbif_maps, output_spatial_data(select(gbif_occ_data, scientificName, taxon_id), file.path(t_path_sp_list, "shapefiles"), "nnfg_gbif_range_maps")),
+
 
   ## Get map background data for species evaluations
   tar_target(evaluation_base_map_data, get_evaluation_base_map_data(nnfg_aoa)),
@@ -139,8 +145,8 @@ list(
   tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations")),
   # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
-  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params)
+  tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params)
   # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params, debug = T, quiet = F)
   # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 15), debug = T, quiet = F),
-  tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = slice(qmd_params, c(70:n())), debug = T)
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = slice(qmd_params, c(70:n())), debug = T)
 )
