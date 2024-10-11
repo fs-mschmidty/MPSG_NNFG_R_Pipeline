@@ -626,15 +626,10 @@ if (nrow(get_hab_types) > 0) {
 
 [`r str_to_upper("Narrative description from literature. To help focus the evaluation on issues that are likely to affect a species long-term persistence the inclusion of fine-scale habitat conditions or features here, should be limited to consideration of conditions or features that: 1) BASI indicates are limited in abundance or distribution, 2) BASI suggest are declining in abundance or distribution, or 3) BASI indicates have a disproportionate value to the population dynamics and distribution of the species because of the species specialized association with the feature or life history dependence (e.g., rare nesting substrate, rare soil type, cold water refugia).")`]
 
-#### What are the trends, both long-term and recent, in the distribution, abundance, and quality of the fine-scale habitat features?
+#### What are the threats and trends for the fine-scale habitat features this species relies on (distribution, abundance, and quality), both within and beyond the plan area?
+[DEFAULT: There are no known specific population trends for the species in the plan area. ]
 
-[DEFAULT: There is limited information about the distribution, abundance and quality of this species’ microhabitat in the plan area.]
-
-[`r str_to_upper("For many species this will be unknown, but this is where you could put info on if certain microhabitat components are limited in the plan area, such as snags or coldwater refugia, etc.")`]
-
-#### What are the on-going threats that may shape the future distribution, abundance, and quality of the fine-scale habitat features?  
-
-[`r str_to_upper("Provide narrative discussing species-specific information")`]
+[`r str_to_upper("Beyond threats documented across the species range {CITATIONS}, there are no known unique threats to the species within the plan area.")`]
 
 ### Population 
 
