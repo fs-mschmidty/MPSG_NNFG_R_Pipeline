@@ -20,7 +20,7 @@ test_plant <- plants_eligible |>
 
 test_range <- BIEN_ranges_species(test_plant, directory = "output/bien_test")
 
-t_sf<-st_read(glue("output/bien_test/{str_replace(test_plant, ' ', '_')}.shp"))
+t_sf <- st_read(glue("output/bien_test/{str_replace(test_plant, ' ', '_')}.shp"))
 
 states <- ne_states(country = c("United States of America", "Canada", "Mexico")) |>
   st_as_sf() |>
@@ -54,28 +54,28 @@ ggplot() +
     legend.position.inside = c(0.15, 0.1)
   )
 
-plants_all<-plants_eligible |>
+plants_all <- plants_eligible |>
   pull(scientific_name)
 
-plants_all_check<-BIEN_ranges_species_bulk(plants_all, directory = "output/bien_test")
+plants_all_check <- BIEN_ranges_species_bulk(plants_all, directory = "output/bien_test")
 
-maps_test_available<-list.files("output/bien_test/1", pattern=".shp") |>
+maps_test_available <- list.files("output/bien_test/1", pattern = ".shp") |>
   str_replace(".shp", "") |>
   str_replace("_", " ")
 
-has_maps_tb<-tibble(scientific_name = maps_test_available) |>
+has_maps_tb <- tibble(scientific_name = maps_test_available) |>
   mutate(has_maps = TRUE)
 
-map_results<-plants_eligible |>
-  left_join(has_maps_tb, by="scientific_name") |>
-  mutate(has_maps = ifelse(is.na(has_maps), FALSE, has_maps)) |> 
-  select(scientific_name, has_maps) 
+map_results <- plants_eligible |>
+  left_join(has_maps_tb, by = "scientific_name") |>
+  mutate(has_maps = ifelse(is.na(has_maps), FALSE, has_maps)) |>
+  select(scientific_name, has_maps)
 
-still_need_maps<-map_results |>
+still_need_maps <- map_results |>
   filter(!has_maps) |>
   pull(scientific_name) |>
   str_replace_all("ssp. |var. ", "")
 
-still_need_maps_return<-BIEN_ranges_species_bulk(still_need_maps, directory="output/bien_test", return_directory=FALSE)
+still_need_maps_return <- BIEN_ranges_species_bulk(still_need_maps, directory = "output/bien_test", return_directory = FALSE)
 
-check_rest_of_species<-lapply(still_need_maps, BIEN_ranges_species, match_names_only=T)
+check_rest_of_species <- lapply(still_need_maps, BIEN_ranges_species, match_names_only = T)
