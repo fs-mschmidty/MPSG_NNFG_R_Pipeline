@@ -75,7 +75,7 @@ list(
 
   # Spatial data
   ## Occurrence Lists
-  #UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
+  # UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
   tar_target(nhp_spatial_data, build_nhp_spatial_data(t_path_sp_list_rp, "state_nhp.RData")),
   tar_target(sd_nhp_spatial_eligible, build_spatial_eligible_and_unit(nhp_spatial_data$sdnhp, nnfg_fs_ownership, eligible_lists$current_eligible_list)),
   tar_target(ne_nhp_spatial_eligible, build_spatial_eligible_and_unit(nhp_spatial_data$nenhp, nnfg_fs_ownership, eligible_lists$current_eligible_list)),
@@ -97,7 +97,7 @@ list(
   tar_target(all_eligible_spatial_data_point, build_all_occ_data(list(idb_spatial_eligible, seinet_spatial_eligible, gbif_spatial_eligible, imbcr_spatial_eligible))),
 
   ### IUCN available spatial data analysis and make internal shapes (THIS SUCKS)
-  #UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
+  # UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
   # Move these files off TDrvie
   tar_target(mammal_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "MAMMALS.shp"), eligible_lists, nnfg_bd)),
   tar_target(amphibian1_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "AMPHIBIANS_PART1.shp"), eligible_lists, nnfg_bd)),
@@ -123,7 +123,7 @@ list(
   )),
 
   ### Bien maps were retrieved with a non_target process!!
-  #UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
+  # UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
   tar_target(bien_plant_maps, load_bien_plant_maps("output/bien_test/1", eligible_lists$current_eligible_list)),
   tar_target(bird_maps, load_bird_maps(eligible_lists$current_eligible_list)),
   tar_target(map_source, build_map_source(output_dne_eligible_lists, all_iucn_map, bien_plant_maps, bird_maps)),
