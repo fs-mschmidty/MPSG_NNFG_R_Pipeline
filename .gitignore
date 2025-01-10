@@ -6,3 +6,5 @@
 *.docx
 **/*.docx
 
+.Rproj
+.Rproj.user
