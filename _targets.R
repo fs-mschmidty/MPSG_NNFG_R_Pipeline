@@ -27,7 +27,7 @@ tar_option_set(
     "rgbif",
     "osmdata",
     "arcgislayers",
-    "sjnftools", ## In mschmidty github repo
+    "sjnftools", ## Updated to mpsgSE package but need to get it loaded first.
     "scales"
   )
 )
@@ -69,11 +69,13 @@ list(
   tar_target(team_inputs_round1, build_team_inputs_nn_and_tax(input_round1_file)),
   # tar_target(output_eligible_lists, build_output_eligible_lists(eligible_lists, "output", transient_birds, native_known_need_check)),
   tar_target(output_dne_eligible_lists, build_output_dne_eligible_lists(eligible_lists, "output", t_path_sp_list, species_list_sp, team_inputs_round1)),
+  ## ADD STEP TO IMPORT SPECIES OF LOCAL CONCERN
   tar_target(eligible_synonyms, build_eligible_synonyms(output_dne_eligible_lists)),
   ## tar_target(taxonomy_itis_verify, build_taxonomy_itis_verify(output_dne_eligible_lists)),
 
   # Spatial data
   ## Occurrence Lists
+  #UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
   tar_target(nhp_spatial_data, build_nhp_spatial_data(t_path_sp_list_rp, "state_nhp.RData")),
   tar_target(sd_nhp_spatial_eligible, build_spatial_eligible_and_unit(nhp_spatial_data$sdnhp, nnfg_fs_ownership, eligible_lists$current_eligible_list)),
   tar_target(ne_nhp_spatial_eligible, build_spatial_eligible_and_unit(nhp_spatial_data$nenhp, nnfg_fs_ownership, eligible_lists$current_eligible_list)),
@@ -95,6 +97,8 @@ list(
   tar_target(all_eligible_spatial_data_point, build_all_occ_data(list(idb_spatial_eligible, seinet_spatial_eligible, gbif_spatial_eligible, imbcr_spatial_eligible))),
 
   ### IUCN available spatial data analysis and make internal shapes (THIS SUCKS)
+  #UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
+  # Move these files off TDrvie
   tar_target(mammal_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "MAMMALS.shp"), eligible_lists, nnfg_bd)),
   tar_target(amphibian1_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "AMPHIBIANS_PART1.shp"), eligible_lists, nnfg_bd)),
   tar_target(amphibian2_iucn_map_list, build_iucn_available_maps(file.path(external_data_folder, "IUCN", "AMPHIBIANS_PART2.shp"), eligible_lists, nnfg_bd)),
@@ -119,6 +123,7 @@ list(
   )),
 
   ### Bien maps were retrieved with a non_target process!!
+  #UPDATE ALL eligible_lists$current_eligible to output_dne_eligible_lists
   tar_target(bien_plant_maps, load_bien_plant_maps("output/bien_test/1", eligible_lists$current_eligible_list)),
   tar_target(bird_maps, load_bird_maps(eligible_lists$current_eligible_list)),
   tar_target(map_source, build_map_source(output_dne_eligible_lists, all_iucn_map, bien_plant_maps, bird_maps)),
@@ -137,15 +142,16 @@ list(
   tar_target(crosswalk_habitats_to_species, build_species_habitats(ns_habitats, "data/habitat_binning_mpsg_bins.xlsx")),
 
   # ## Imbcr data cleaning and build narratives
+  ## Change Citation Brakets from {} to []
   tar_target(imbcr_trend, readxl::read_excel("data/imbcr/Reg_2_grasslands_estimates_9-17-24.xlsx", sheet = "trend") |> clean_names()),
   tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend)),
   tar_target(bbs_trend_narratives, build_bbs_trend_narratives()),
 
   ## Quarto Paramaterized reporting.
-  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations")),
+  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations"))
   # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
-  tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params)
+  # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params)
   # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params, debug = T, quiet = F)
   # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = sample_n(qmd_params, 15), debug = T, quiet = F),
   # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = slice(qmd_params, c(70:n())), debug = T)
