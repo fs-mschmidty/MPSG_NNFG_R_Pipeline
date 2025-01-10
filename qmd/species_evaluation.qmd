@@ -53,6 +53,18 @@ sp_names <- glue("{species_data$common_name} (*{species_data$scientific_name}*)"
 :::{custom-style="Body Text"}
 # `r species_data$common_name` (*`r species_data$scientific_name`*)
 
+## Specialist Recommendation:
+
+### MPSG Specialist Recommendation 
+[DEFAULTS: Likely to be of concern/Not likely to be of concern/Limited information to inform recommendation] 
+
+### Rationale 
+
+[`r str_to_upper('Short narrative – see Example rationales in Lolo overviews:')` [2023 Lolo SCC animal overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC animal overviews.pdf?csf=1&web=1&e=IJFJXn), [2023 Lolo SCC plant overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC plant overviews.pdf?csf=1&web=1&e=bpa1G0), [2023 Lolo SCC plant overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC plant overviews.pdf?csf=1&web=1&e=bpa1G0), and [Determination Rational Support.xlsx](https://usdagcc.sharepoint.com/:x:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Determination Rational Support.xlsx?d=wdbc0bc6f4b9f476ab31cf3bc0729fe1f&csf=1&web=1&e=5ZlEyW).]
+
+
+## Regional Summary:
+
 ## Species occurrence records and conservation categories
 
 ### What, if any, are the scientific name synonyms for the species?
@@ -68,15 +80,13 @@ if (length(synonyms) > 0) {
   synonyms <- synonyms |>
     paste(collapse = ", ")
 
-  synonyms <- glue("Current and historic synonyms for *{species_data$scientific_name}* are: *{synonyms}* {citation}.")
+  synonyms <- glue("Current and historic synonyms for *{species_data$scientific_name}* are: *{synonyms}* [citation].")
 } else {
-  synonyms <- glue("There are no known synonyms for this species {citation}.")
+  synonyms <- glue("There are no known synonyms for this species [citation].")
 }
 ```
 
 `r synonyms`
-
-[`r str_to_upper("Pulled from GBIF and then manually reviewed – e.g., USDA Plants, scientific literature, etc")`]
 
 ### NatureServe Conservation Status (Global/State):
 
@@ -528,7 +538,7 @@ p_base +
 ```
 
 
-### Is the species native and known to occur?
+### Is the species native to, and known to occur in, the plan area?
 
 ```{r}
 nn_base <- species_data |>
@@ -613,12 +623,12 @@ if (nrow(get_hab_types) > 0) {
 
 `r hab_type_narrative`
 
-[`r str_to_upper("Checklist of categories from Ecology Group pulled in from spreadsheet – this will get pulled in automatically from Mike’s NatureServe pull + crosswalk, but will still require manual review for accuracy (especially for the plantation category). See appendix for landscape-scale habitat availability and distribution in the plan area.")` ADD CITATIONS AS NEEDED!]
-
 
 #### Does the species respond uniquely to landscape-scale habitat threats and trends, and if so, how? 
 
 `r str_to_upper("Manually review and bring in any species-specific info about how the species responds to general habitat trends/threats. The appendix explains the macrohabitat availability, distribution, and threats, but this is where you would connect it to the species- e.g., if fire is a threat, but species actually needs fire for its seeds to germinate, or it actually uses roadside habitat so road development is not as much of a threat")`].
+
+The general trends and threats of this species’ landscape-scale habitats are discussed in the Appendix, and there is no evidence that this species responds in any unique ways to the landscape-scale habitat threats and trends.
 
 ### Species Fine-scale Habitat
 
@@ -635,9 +645,7 @@ if (nrow(get_hab_types) > 0) {
 
 #### Abundance and distribution of species in the plan area
 
-[DEFAULT: There are no known population estimates for the species in the plan area.]
-
-[`r str_to_upper("Pull in information from species records, literature, reports, species distribution models, etc.")`]
+[DEFAULT: No information could be found regarding the distribution, abundance and quality of this species’ microhabitat in the plan area.]
 
 #### Population trend of species on and off the plan area
 
@@ -681,7 +689,7 @@ if (!is.na(species_data$class) & species_data$class == "Aves") {
 
 `r if(!is.na(species_data$class) &species_data$class=="Aves"){ ifelse(bbs_narrative!="No narrative", bbs_narrative, "")}`
 
-[DEFAULT: There are no known population estimates for the species in the plan area. Beyond threats documented across the species range {CITATIONS}, there are no known unique threats to the species within the plan area.]
+[DEFAULT: There are no known population estimates for the species in the plan area. Beyond threats documented across the species range [CITATIONS], there are no known unique threats to the species within the plan area.]
 
 #### Non-habitat-mediated threats to populations (on or off the plan area)
 
@@ -702,18 +710,6 @@ if (!is.na(species_data$class) & species_data$class == "Aves") {
 #### Ecological specialization 
 
 [`r str_to_upper('Habitat or Substrate Specialist, Dietary Specialist, Symbiotic (mutualistic, parasitic, or commensal)')`]
-
-## Specialist Recommendation:
-
-### MPSG Specialist Recommendation 
-[DEFAULTS: Likely to be of concern/Not likely to be of concern/Limited information to inform recommendation] 
-
-### Rationale 
-
-[`r str_to_upper('Short narrative – see Example rationales in Lolo overviews:')` [2023 Lolo SCC animal overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC animal overviews.pdf?csf=1&web=1&e=IJFJXn), [2023 Lolo SCC plant overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC plant overviews.pdf?csf=1&web=1&e=bpa1G0), [2023 Lolo SCC plant overviews.pdf](https://usdagcc.sharepoint.com/:b:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Species overviews by region/R1/2023 Lolo SCC plant overviews.pdf?csf=1&web=1&e=bpa1G0), and [Determination Rational Support.xlsx](https://usdagcc.sharepoint.com/:x:/r/sites/fs-cio-mpsg/SCC Library/General Resources/Determination Rational Support.xlsx?d=wdbc0bc6f4b9f476ab31cf3bc0729fe1f&csf=1&web=1&e=5ZlEyW).]
-
-
-## Regional Summary:
 
 ## References
 
