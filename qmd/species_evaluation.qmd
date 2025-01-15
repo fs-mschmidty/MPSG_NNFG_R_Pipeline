@@ -188,8 +188,8 @@ base_map_data <- tar_read(evaluation_base_map_data)
 
 ```{r}    
 #| label: cont-range
-#| fig-cap: "Species range within the continental United States"
-#| fig-alt: "Species range within the continental United States"
+#| fig-cap: "Species range, clipped to show only the continental United States (note this may not reflect the species’ full range size)."
+#| fig-alt: "Species range, clipped to show only the continental United States (note this may not reflect the species’ full range size)."
 #| fig-height: 4.85
 
 
