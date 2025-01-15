@@ -559,16 +559,16 @@ nn_basi <- species_data |>
 
 #### What is the size of the species' range?
 
-[SELECT FROM: Large (i.e., roughly the area of the continental U.S. or larger), Moderate (i.e., roughly the ½ the area of the continental U.S.), Regional Endemic (i.e., occupying roughly the area of 2-4 states), State Endemic (i.e., only known to occur in the state overlapping the plan area but occupying an area larger than the environs of the plan area), Local Endemic (i.e., a state endemic only found within the plan area and the surrounding counties)]
+[SELECT FROM: [Large (i.e., roughly the area of the continental U.S. or larger), Moderate (i.e., roughly ½ the area of the continental U.S.), Regional Endemic (i.e., occupying roughly the area of 2-6 states), State Endemic (i.e., only known to occur in the state overlapping the plan area but occupying an area larger than the environs of the plan area), Local Endemic (i.e., a state endemic only found within the plan area and the surrounding counties), Unknown (no modeled range map could be found for the species)]
 
 
-#### What is the distance between the plan area and the closest edge of the species range? 
+#### Is the portion of the species’ range that overlaps the plan area disjunct from the main range of the species (i.e., the range overlapping the plan area is smaller and not connected to the larger range of the species)? 
 
-[SELECT FROM: unknown (i.e., no known range for the species), 0 miles (i.e. species range transects the plan area), 1-50 miles, 51-150 miles, 151-500 miles, 500 or more miles.]   
+[SELECT FROM: No, Unknown (no modeled range map could be found for the species), Yes, Yes – disjunct breeding population, Yes -- disjunct non-breeding population, Yes – disjunct year-round population]   
 
-#### Is the portion of the species range that overlaps the plan area disjunct from the main range of the species (i.e., the range overlapping the plan area is smaller and not connected to the larger range of the species)?
+#### Does the plan area transect the edge of the species modeled range?
 
-[SELECT FROM: Yes, No, Unknown]
+[SELECT FROM: No, Unknown (no modeled range map could be found for the species), Yes, Yes – edge of breeding range, Yes – edge of non-breeding range, Yes – edge of year-round range, Yes – edge of breeding and non-breeding range; species range does not overlap the plan area; see rationale for “known to occur”]
 
 ### Species’ Landscape-scale Habitat
 
