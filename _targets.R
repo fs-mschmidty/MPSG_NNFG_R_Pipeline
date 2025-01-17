@@ -150,9 +150,9 @@ list(
   tar_target(range_edge, read_excel(range_edge_xlsx, sheet = "bins")),
 
   ### Add in species of local concern to output_dne_eligible_lists and feed to build_quarto_params.  Need to both add column for species of local concern and make native and known == "Yes"
-
+  tar_target(final_eligible, build_final_eligible_list(output_dne_eligible_lists, sp_unit_concern, file.path(species_list_sp, "20240916_NNFG_SCC_Evaluation_Matrix.xlsx"), "Species to Add as Local Concern")),
   ## Quarto Paramaterized reporting.
-  tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations"))
+  tar_target(qmd_params, build_quarto_params(final_eligible, "output/species_evaluations"))
   # tar_quarto(test, "qmd/species_evaluation.qmd", debug = T, quiet = F)
   # tar_quarto(test, "qmd/species_evaluation.qmd")
   # tar_quarto_rep(param_reports, "qmd/species_evaluation.qmd", rep_workers = 4, execute_params = qmd_params)
