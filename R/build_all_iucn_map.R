@@ -2,26 +2,18 @@
 
 build_all_iucn_map <- function(
     mammals,
-    amphibians1,
     amphibians2,
     reptiles1,
     reptiles2,
     fwfish1,
-    fwfish2,
-    molluscs,
-    odonata,
-    crayfish) {
+    fwfish2) {
   all_maps <- bind_rows(
     mammals,
-    amphibians1,
     amphibians2,
     reptiles1,
     reptiles2,
     fwfish1,
-    fwfish2,
-    molluscs,
-    odonata,
-    crayfish
+    fwfish2
   )
 
   t_ids <- all_maps |>
@@ -35,11 +27,9 @@ build_all_iucn_map <- function(
       str_detect(file_path, "AMPHIBIANS") ~ "AMPHIBIANS_PART2",
       str_detect(file_path, "MAMMALS") ~ "MAMMALS",
       str_detect(file_path, "REPTILES_PART1") ~ "REPTILES_PART1",
+      str_detect(file_path, "REPTILES_PART2") ~ "REPTILES_PART2",
       str_detect(file_path, "FW_FISH_PART1") ~ "FW_FISH_PART1",
       str_detect(file_path, "FW_FISH_PART2") ~ "FW_FISH_PART2",
-      str_detect(file_path, "FW_CRAYFISH") ~ "FW_CRAYFISH",
-      str_detect(file_path, "FW_MOLLUSCS") ~ "FW_MOLLUSCS",
-      str_detect(file_path, "FW_ODONATA") ~ "FW_ODONATA"
     ))
 
   test_f <- function(file_path, where_in, layer_n) {

@@ -1,4 +1,4 @@
-load_bird_maps <- function(x) {
+load_bird_maps <- function(x, path) {
   bird_names <- x |>
     filter(class == "Aves", scientific_name != "Grus americana") |>
     pull(taxon_id)
@@ -10,7 +10,7 @@ load_bird_maps <- function(x) {
     sci_name <- bird_data |>
       pull(scientific_name)
 
-    load_ranges(sci_name, resolution = "27k") |>
+    load_ranges(sci_name, resolution = "27k", path = path) |>
       mutate(
         season = case_when(
           season == "breeding" ~ "Breeding",
