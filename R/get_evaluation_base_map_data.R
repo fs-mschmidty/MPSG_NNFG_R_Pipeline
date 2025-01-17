@@ -50,6 +50,7 @@ get_evaluation_base_map_data <- function(nnfg_aoa) {
 
   nnfg_dist_open <- arc_open("https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_RangerDistricts_03/MapServer/1")
 
+  ### Use geometry for select.....instead of Region and Forest Number. 
   nnfg_dist <- arc_select(nnfg_dist_open, where = "REGION = '02' AND FORESTNUMBER = '07'", fields = c("OBJECTID", "DISTRICTNAME")) |>
     st_transform(st_crs(nnfg_a))
 
