@@ -133,7 +133,7 @@ list(
 
 
   ## Get map background data for species evaluations
-  tar_target(evaluation_base_map_data, get_evaluation_base_map_data(nnfg_aoa)),
+  tar_target(evaluation_base_mfp_data, get_evaluation_base_map_data(nnfg_aoa)),
 
   ## Habitat Association Work
   tar_target(ns_habitats, get_ns_habitat(natureserve_state_data$unit_nature_serve_list, output_dne_eligible_lists)),
@@ -144,6 +144,12 @@ list(
   tar_target(imbcr_trend, readxl::read_excel("data/imbcr/Reg_2_grasslands_estimates_9-17-24.xlsx", sheet = "trend") |> clean_names()),
   tar_target(imbcr_trend_narratives, build_imbcr_trend_narratives(imbcr_trend)),
   tar_target(bbs_trend_narratives, build_bbs_trend_narratives()),
+
+  ## Range Determinations
+  tar_target(range_edge_xlsx, file.path("output", "manual_range_edge_binning.xlsx"), format = "file"),
+  tar_target(range_edge, read_excel(range_edge_xlsx, sheet = "bins")),
+
+  ### Add in species of local concern to output_dne_eligible_lists and feed to build_quarto_params.  Need to both add column for species of local concern and make native and known == "Yes"
 
   ## Quarto Paramaterized reporting.
   tar_target(qmd_params, build_quarto_params(output_dne_eligible_lists, "output/species_evaluations"))
