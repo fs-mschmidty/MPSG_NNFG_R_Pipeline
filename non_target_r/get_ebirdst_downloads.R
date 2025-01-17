@@ -9,7 +9,7 @@ library(sf)
 library(ggtext)
 loadfonts()
 
-eligible_birds <- tar_read(eligible_lists)$current_eligible_list |>
+eligible_birds <- tar_read(output_dne_eligible_lists) |>
   filter(class == "Aves") |>
   select(taxon_id, scientific_name) |>
   left_join(ebirdst_runs, by = "scientific_name")
@@ -25,9 +25,15 @@ eligible_birds_sci_names <- eligible_birds_w_dist |>
 
 ebirdst_data_dir()
 ## this downloads all of the bird distribution models from cornel.
-lapply(eligible_birds_sci_names, ebirdst_download_status, download_ranges = T, pattern = "range_smooth_27km|range_smooth_9km")
+lapply(
+  eligible_birds_sci_names,
+  ebirdst_download_status,
+  path = "output/ebirdst",
+  download_ranges = T,
+  pattern = "range_smooth_27km|range_smooth_9km"
+)
 
-test <- load_ranges("Aechmophorus clarkii", resolution = "9k") |>
+test <- load_ranges("Aechmophorus clarkii", resolution = "9k", path = "output/ebirdst") |>
   mutate(
     season = case_when(
       season == "breeding" ~ "Breeding",

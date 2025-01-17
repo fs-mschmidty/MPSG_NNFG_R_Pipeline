@@ -1,4 +1,4 @@
-build_output_dne_eligible_lists <- function(x, output_path, t_drive_path, species_list_sp, inputs_round1) {
+build_output_dne_eligible_lists <- function(x, output_path, t_drive_path, species_list_sp, inputs_round1, sp_unit_concern) {
   wb <- createWorkbook()
   date_string <- str_replace_all(Sys.Date(), "-", "")
   output_eligible_list <- paste(date_string, "NNFG_Eligible_Species_Lists.xlsx", sep = "_")
@@ -36,7 +36,9 @@ build_output_dne_eligible_lists <- function(x, output_path, t_drive_path, specie
         TRUE ~ `What is the rationale and supporting BASI for recommending that an observation does not meet the requirements of native to, and known to occur in the plan area?`
       )
     ) |>
-    bind_rows(taxon_review_cl)
+    bind_rows(taxon_review_cl) |>
+    bind_rows(sp_unit_concern)
+
 
 
   addWorksheet(wb, "Species_Overviews_Eligible_List")

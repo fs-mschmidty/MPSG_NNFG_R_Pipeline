@@ -8,7 +8,7 @@ library(rnaturalearth)
 library(extrafont)
 library(MetBrewer)
 
-curr_list <- tar_read(eligible_lists)$current_eligible_list
+curr_list <- tar_read(output_dne_eligible_lists)
 
 plants_eligible <- curr_list |>
   filter(kingdom == "Plantae")
@@ -57,6 +57,7 @@ ggplot() +
 plants_all <- plants_eligible |>
   pull(scientific_name)
 
+## This Downloads the plant maps
 plants_all_check <- BIEN_ranges_species_bulk(plants_all, directory = "output/bien_test")
 
 maps_test_available <- list.files("output/bien_test/1", pattern = ".shp") |>
