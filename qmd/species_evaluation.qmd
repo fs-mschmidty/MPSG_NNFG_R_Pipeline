@@ -557,18 +557,28 @@ nn_basi <- species_data |>
 
 ### Species Current Range Size and Configuration
 
+```{r}
+range_edge <- tar_read(range_edge) |> 
+  dplyr::filter(taxon_id == t_id)
+```
+
 #### What is the size of the species' range?
 
 [SELECT FROM: [Large (i.e., roughly the area of the continental U.S. or larger), Moderate (i.e., roughly ½ the area of the continental U.S.), Regional Endemic (i.e., occupying roughly the area of 2-6 states), State Endemic (i.e., only known to occur in the state overlapping the plan area but occupying an area larger than the environs of the plan area), Local Endemic (i.e., a state endemic only found within the plan area and the surrounding counties), Unknown (no modeled range map could be found for the species)]
 
+`r range_edge$'size of range'`
 
 #### Is the portion of the species’ range that overlaps the plan area disjunct from the main range of the species (i.e., the range overlapping the plan area is smaller and not connected to the larger range of the species)? 
 
 [SELECT FROM: No, Unknown (no modeled range map could be found for the species), Yes, Yes – disjunct breeding population, Yes -- disjunct non-breeding population, Yes – disjunct year-round population]   
 
+`r range_edge$disjunct`
+
 #### Does the plan area transect the edge of the species modeled range?
 
 [SELECT FROM: No, Unknown (no modeled range map could be found for the species), Yes, Yes – edge of breeding range, Yes – edge of non-breeding range, Yes – edge of year-round range, Yes – edge of breeding and non-breeding range; species range does not overlap the plan area; see rationale for “known to occur”]
+
+`r range_edge$Transect_Range_Summary`
 
 ### Species’ Landscape-scale Habitat
 
